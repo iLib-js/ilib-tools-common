@@ -17,6 +17,8 @@
  * limitations under the License.
  */
 
+import Resource from './Resource.js';
 import ResourceString from './ResourceString.js';
+import ResourceArray from './ResourceArray.js';
 
-export ResourceString;
+export { Resource, ResourceString, ResourceArray };

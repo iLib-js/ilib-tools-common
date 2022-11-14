@@ -18,8 +18,8 @@
  */
 
 const files = [
-    "testResourceString.js"
-    // "testscanres.js"
+    "testResourceString.js",
+    "testResourceArray.js"
     //"testassemble.js"
 ];
 
