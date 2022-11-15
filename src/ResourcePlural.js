@@ -40,7 +40,7 @@ class ResourcePlural extends Resource {
      * these properties:
      *
      * <ul>
-     * <li><i>strings</i> {Object} A hash of strings that map the categories
+     * <li><i>source</i> {Object} A hash of strings that map the categories
      * to translations.
      * </ul>
      *
@@ -60,88 +60,70 @@ class ResourcePlural extends Resource {
      */
     constructor(props) {
         super(props);
-    
-        this.sourceStrings = {};
-    
+
+        this.source = {};
+
         // deep copy this so that the props can have a different set of
         // plural forms than this instance
         if (props) {
-            const strings = props.sourceStrings || props.sourcePlurals || props.strings;
-            if (strings) {
-                for (let p in strings) {
-                    this.sourceStrings[p] = strings[p];
+            if (typeof(props.source) === 'object') {
+                for (let p in props.source) {
+                    this.source[p] = props.source[p];
                 }
             }
-    
-            const targetStrings = props.targetStrings || props.targetPlurals;
-            if (targetStrings) {
-                this.targetStrings = {};
-                for (let p in targetStrings) {
-                    this.targetStrings[p] = targetStrings[p];
+
+            if (typeof(props.target) === 'object') {
+                this.target = {};
+                for (let p in props.target) {
+                    this.target[p] = props.target[p];
                 }
             }
         }
-    
+
         this.datatype = this.datatype || "x-android-resource";
         this.resType = ResourcePlural.resClass;
     }
-    
-    /**
-     * Return the source plurals hash of this plurals resource.
-     *
-     * @returns {Object} the source hash
-     */
-    getSourcePlurals() {
-        return this.sourceStrings;
-    }
-    
-    /**
-     * Return the target plurals hash of this plurals resource.
-     *
-     * @returns {Object} the target hash
-     */
-    getTargetPlurals() {
-        return this.targetStrings;
-    }
-    
+
     /**
      * Set the source plurals hash of this plurals resource.
      *
      * @param {Object} plurals the source hash
      */
-    setSourcePlurals(plurals) {
-        this.sourceStrings = plurals;
+    setSource(plurals) {
+        if (typeof(plurals) !== 'object') return;
+        this.source = plurals;
     }
-    
+
     /**
      * Set the target plurals hash of this plurals resource.
      *
      * @param {Object} plurals the target hash
      */
-    setTargetPlurals(plurals) {
-        this.targetStrings = plurals;
+    setTarget(plurals) {
+        if (typeof(plurals) !== 'object') return;
+        this.target = plurals;
     }
-    
+
     /**
      * Return the source string of the given plural category.
      *
      * @returns {String} the source string for the given
      * plural category
      */
-    getSource(pluralClass) {
-        return this.sourceStrings && this.sourceStrings[pluralClass];
+    getSourcePlural(pluralClass) {
+        return this.source && this.source[pluralClass];
     }
-    
+
     /**
      * Return the target string of the given plural category.
      *
      * @returns {String} the target string for the given
      * plural category
      */
-    getTarget(pluralClass) {
-        return this.targetStrings && this.targetStrings[pluralClass];
+    getTargetPlural(pluralClass) {
+        return this.target && this.target[pluralClass];
     }
-    
+
     /**
      * Return an array of names of source categories of plurals
      * that are used in this resource.
@@ -153,7 +135,7 @@ class ResourcePlural extends Resource {
     getClasses() {
         return this.getCategories();
     }
-    
+
     /**
      * Return an array of names of source categories of plurals
      * that are used in this resource.
@@ -161,9 +143,9 @@ class ResourcePlural extends Resource {
      * @returns {Array.<string>} an array of source categories
      */
     getCategories() {
-        return this.sourceStrings && Object.keys(this.sourceStrings);
+        return this.source && Object.keys(this.source);
     }
-    
+
     /**
      * Return an array of names of all possible categories
      * of plurals, even if they are not currently used in this
@@ -174,7 +156,7 @@ class ResourcePlural extends Resource {
     getAllValidCategories() {
         return ResourcePlural.validPluralCategories;
     }
-    
+
     /**
      * Add a string with the given plural category to the source of
      * this plural resource.
@@ -182,15 +164,15 @@ class ResourcePlural extends Resource {
      * @param {String} pluralCategory the CLDR category of this string
      * @param {String} str the source string to add for the category
      */
-    addSource(pluralCategory, str) {
+    addSourcePlural(pluralCategory, str) {
         logger.trace("Adding string '" + str + "' with category " + pluralCategory);
         if (!pluralCategory || !str) return;
-        if (!this.sourceStrings) {
-            this.sourceStrings = {};
+        if (!this.source) {
+            this.source = {};
         }
-        this.sourceStrings[pluralCategory] = str;
+        this.source[pluralCategory] = str;
     }
-    
+
     /**
      * Add a string with the given plural category to the target of
      * this plural resource.
@@ -198,16 +180,16 @@ class ResourcePlural extends Resource {
      * @param {String} pluralCategory the CLDR category of this string
      * @param {String} str the target string to add for the category
      */
-    addTarget(pluralCategory, str) {
+    addTargetPlural(pluralCategory, str) {
         logger.trace("Adding string '" + str + "' with category " + pluralCategory);
         // have to have a source plural string in order to add the target
-        if (!pluralCategory || !str || !this.sourceStrings) return;
-        if (!this.targetStrings) {
-            this.targetStrings = {};
+        if (!pluralCategory || !str || !this.source) return;
+        if (!this.target) {
+            this.target = {};
         }
-        this.targetStrings[pluralCategory] = str;
+        this.target[pluralCategory] = str;
     }
-    
+
     /**
      * Return the length of the array of strings in this resource.
      *
@@ -215,13 +197,13 @@ class ResourcePlural extends Resource {
      * resource
      */
     size() {
-        let len = this.sourceStrings ? Object.keys(this.sourceStrings).length : 0;
-        if (this.targetStrings) {
-            len = Math.max(len, Object.keys(this.targetStrings).length);
+        let len = this.source ? Object.keys(this.source).length : 0;
+        if (this.target) {
+            len = Math.max(len, Object.keys(this.target).length);
         }
         return len;
     }
-        
+
     /**
      * Clone this resource and override the properties with the given ones.
      *
@@ -238,7 +220,7 @@ class ResourcePlural extends Resource {
         }
         return r;
     }
-    
+
     /**
      * Return true if the other resources contains the same resources as
      * the current one. The pathName, state, and comment fields are
@@ -248,11 +230,11 @@ class ResourcePlural extends Resource {
      */
     equals(other) {
         if (!other || !this.same(other)) return false;
-    
-        if (this.sourceStrings || other.sourceStrings) {
-            if (this.sourceStrings && other.sourceStrings) {
-                for (let p in this.sourceStrings) {
-                    if (this.sourceStrings[p] !== other.sourceStrings[p]) {
+
+        if (this.source || other.source) {
+            if (this.source && other.source) {
+                for (let p in this.source) {
+                    if (this.source[p] !== other.source[p]) {
                         return false;
                     }
                 }
@@ -260,11 +242,11 @@ class ResourcePlural extends Resource {
                 return false;
             }
         }
-    
-        if (this.targetStrings || other.targetStrings) {
-            if (this.targetStrings && other.targetStrings) {
-                for (let p in this.targetStrings) {
-                    if (this.targetStrings[p] !== other.targetStrings[p]) {
+
+        if (this.target || other.target) {
+            if (this.target && other.target) {
+                for (let p in this.target) {
+                    if (this.target[p] !== other.target[p]) {
                         return false;
                     }
                 }
@@ -272,10 +254,10 @@ class ResourcePlural extends Resource {
                 return false;
             }
         }
-    
+
         return true;
     }
-    
+
     /**
      * Calculate a resource key string for this category of resource given the
      * parameters.
@@ -288,7 +270,7 @@ class ResourcePlural extends Resource {
         logger.trace("Hashkey is " + key);
         return key;
     }
-    
+
     /**
      * Return the a hash key that uniquely identifies this resource.
      *
@@ -298,7 +280,7 @@ class ResourcePlural extends Resource {
         const locale = this.targetLocale || this.getSourceLocale();
         return ResourcePlural.hashKey(this.project, this.context, locale, this.reskey);
     }
-    
+
     /**
      * Return the a hash key that uniquely identifies the translation of
      * this resource to the given locale.
@@ -309,7 +291,7 @@ class ResourcePlural extends Resource {
     hashKeyForTranslation(locale) {
         return ResourcePlural.hashKey(this.project, this.context, locale, this.reskey);
     }
-    
+
     /**
      * Return the a hash key that uniquely identifies this resource.
      *
@@ -320,7 +302,7 @@ class ResourcePlural extends Resource {
         const locale = this.targetLocale || this.getSourceLocale();
         return ResourcePlural.hashKey(this.project, this.context, locale, cleaned);
     }
-    
+
     /**
      * Return the a hash key that uniquely identifies the translation of
      * this resource to the given locale.
@@ -332,7 +314,7 @@ class ResourcePlural extends Resource {
         const cleaned = this.reskey && this.reskey.replace(/\s+/g, " ").trim() || "";
         return ResourcePlural.hashKey(this.project, this.context, locale, cleaned);
     }
-    
+
     /**
      * Check if the given resource is an instance of the current
      * resource.
@@ -346,10 +328,10 @@ class ResourcePlural extends Resource {
         if (!super.isInstance(resource)) {
             return false;
         }
-    
+
         // now check the properties specific to this resource subclass
-        return Object.keys(this.sourceStrings).every(prop => {
-            return cleanString(this.sourceStrings[prop]) === cleanString(resource.sourceStrings[prop]);
+        return Object.keys(this.source).every(prop => {
+            return cleanString(this.source[prop]) === cleanString(resource.source[prop]);
         });
     }
 }

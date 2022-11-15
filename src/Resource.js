@@ -117,6 +117,26 @@ class Resource {
     }
 
     /**
+     * Return the source string or strings for this resource.
+     *
+     * @returns {String|Array.<String>|Object} the source string or
+     * strings of this resource
+     */
+    getSource() {
+        return this.source;
+    }
+
+    /**
+     * Return the target string or strings for this resource.
+     *
+     * @returns {String|Array.<String>|Object} the source string or
+     * strings of this resource
+     */
+    getTarget() {
+        return this.target;
+    }
+
+    /**
      * Return the resource type of this resource. This is one of
      * string, array, or plural.
      *

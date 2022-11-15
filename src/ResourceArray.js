@@ -49,8 +49,10 @@ class ResourceArray extends Resource {
      * from the base resource that has no special context. The default
      * if this property is not specified is undefined, meaning no
      * context.
-     * <li><i>array</i> {Array.&lt;String&gt;} An array of strings
-     * that are the value of this resource
+     * <li><i>source</i> {Array.&lt;String&gt;} An array of strings
+     * that are the source language values of this resource
+     * <li><i>target</i> {Array.&lt;String&gt;} An array of strings
+     * that are the target language values of this resource
      * </ul>
      *
      * @constructor
@@ -58,75 +60,65 @@ class ResourceArray extends Resource {
      */
     constructor(props) {
         super(props);
-    
-        this.sourceArray = [];
+
+        this.source = [];
         this.subtype = "string-array";
-    
+
         if (props) {
-            if (props.sourceArray && props.sourceArray.length) {
-                // make a deep copy of the array
-                this.sourceArray = props.sourceArray.map(item => {
-                     return new String(item).toString();
-                });
+            if (props.source) {
+                if (!Array.isArray(props.source)) {
+                    this.source = [props.source];
+                } else if (props.source.length) {
+                    // make a deep copy of the array
+                    this.source = props.source.map(item => {
+                         // both copies the string and ensures that it is a string type
+                         return new String(item).toString();
+                    });
+                }
             }
-            if (props.targetArray && props.targetArray.length) {
-                // make a deep copy of the array
-                this.targetArray = props.targetArray.map(item => {
-                     return new String(item).toString();
-                });
+            if (props.target) {
+                if (!Array.isArray(props.target)) {
+                    this.source = [props.target];
+                } else if (props.target.length) {
+                    // make a deep copy of the array
+                    this.target = props.target.map(item => {
+                         return new String(item).toString();
+                    });
+                }
             }
             if (props.subtype) {
                 this.subtype = props.subtype;
             }
         }
-    
+
         this.locale = this.locale || "en-US";
         this.datatype = this.datatype || "x-android-resource";
         this.resType = ResourceArray.resClass;
     }
-    
-    /**
-     * Return the array of source strings for this resource.
-     *
-     * @returns {Array.<String>} the array of strings that are
-     * the source of this resource
-     */
-    getSourceArray() {
-        return this.sourceArray;
-    }
-    
+
     /**
      * Set the array of source strings for this resource.
      *
+     * @override
      * @param {Array.<String>} arr the array of strings to set
      * as the source array
      */
-    setSourceArray(arr) {
-        if (!arr) return;
-        this.sourceArray = arr;
+    setSource(arr) {
+        if (!arr || !Array.isArray(arr)) return;
+        this.source = arr;
     }
-    
-    /**
-     * Return the array of target strings for this resource.
-     *
-     * @returns {Array.<String>} the array of strings that are
-     * the target value of this resource
-     */
-    getTargetArray() {
-        return this.targetArray;
-    }
-    
+
     /**
      * Set the array of target strings for this resource.
      *
      * @param {Array.<String>} arr the array of strings to set
      * as the target array
      */
-    setTargetArray(arr) {
-        if (!arr) return;
-        this.targetArray = arr;
+    setTarget(arr) {
+        if (!arr || !Array.isArray(arr)) return;
+        this.target = arr;
     }
-    
+
     /**
      * Return the source string with the given index into the array.
      *
@@ -134,10 +126,10 @@ class ResourceArray extends Resource {
      * @returns {String|undefined} the value of the string at index i or
      * undefined if i is outside the bounds of the array
      */
-    getSource(i) {
-        return (i >= 0 && i < this.sourceArray.length) ? this.sourceArray[i] : undefined;
+    getSourceItem(i) {
+        return (i >= 0 && i < this.source.length) ? this.source[i] : undefined;
     }
-    
+
     /**
      * Return the target string with the given index into the array.
      *
@@ -145,10 +137,10 @@ class ResourceArray extends Resource {
      * @returns {String|undefined} the value of the string at index i or
      * undefined if i is outside the bounds of the array
      */
-    getTarget(i) {
-        return (this.targetArray && i >= 0 && i < this.targetArray.length) ? this.targetArray[i] : undefined;
+    getTargetItem(i) {
+        return (this.target && i >= 0 && i < this.target.length) ? this.target[i] : undefined;
     }
-    
+
     /**
      * Add a string to the source array at index i.
      *
@@ -159,14 +151,14 @@ class ResourceArray extends Resource {
         if (typeof(i) === "undefined" || i < 0 || typeof(str) === "undefined") {
             return;
         }
-    
-        if (!this.sourceArray) {
-            this.sourceArray = [];
+
+        if (!this.source) {
+            this.source = [];
         }
-    
-        this.sourceArray[i] = str;
+
+        this.source[i] = str;
     }
-    
+
     /**
      * Add a string to the target array at index i.
      *
@@ -178,14 +170,14 @@ class ResourceArray extends Resource {
         if (typeof(i) === "undefined" || i < 0 || typeof(str) === "undefined") {
             return;
         }
-    
-        if (!this.targetArray) {
-            this.targetArray = [];
+
+        if (!this.target) {
+            this.target = [];
         }
-    
-        this.targetArray[i] = str;
+
+        this.target[i] = str;
     }
-    
+
     /**
      * Return the length of the array of strings in this resource.
      *
@@ -193,13 +185,13 @@ class ResourceArray extends Resource {
      * resource
      */
     size() {
-        let len = this.sourceArray ? this.sourceArray.length : 0;
-        if (this.targetArray) {
-            len = Math.max(len, this.targetArray.length);
+        let len = this.source ? this.source.length : 0;
+        if (this.target) {
+            len = Math.max(len, this.target.length);
         }
         return len;
     }
-        
+
     /**
      * Clone this resource and override the properties with the given ones.
      *
@@ -216,7 +208,7 @@ class ResourceArray extends Resource {
         }
         return r;
     }
-    
+
     /**
      * Return true if the other resources contains the same resources as
      * the current one. The pathName, state, and comment fields are
@@ -225,21 +217,21 @@ class ResourceArray extends Resource {
      * @returns {boolean} true if these represent the same resource, false otherwise
      */
     equals(other) {
-        if (!Resource.prototype.equals.call(this, other)) {
+        if (!super.equals(other)) {
             logger.trace("parent returned false");
             return false;
         }
-    
-        if (this.sourceArray || other.sourceArray) {
-            if (this.sourceArray && other.sourceArray) {
-                if (this.sourceArray.length !== other.sourceArray.length) {
+
+        if (this.source || other.source) {
+            if (this.source && other.source) {
+                if (this.source.length !== other.source.length) {
                     logger.trace("different length source arrays");
                     return false;
                 }
-    
-                for (let i = 0; i < this.sourceArray.length; i++) {
-                    if (this.sourceArray[i] !== other.array[i]) {
-                        logger.trace("differed in source content '" + this.sourceArray[i] + "' !== '" + other.sourceArray[i] + "'");
+
+                for (let i = 0; i < this.source.length; i++) {
+                    if (this.source[i] !== other.array[i]) {
+                        logger.trace("differed in source content '" + this.source[i] + "' !== '" + other.source[i] + "'");
                         return false;
                     }
                 }
@@ -248,17 +240,17 @@ class ResourceArray extends Resource {
                 return false;
             }
         }
-    
-        if (this.targetArray || other.targetArray) {
-            if (this.targetArray && other.targetArray) {
-                if (this.targetArray.length !== other.targetArray.length) {
+
+        if (this.target || other.target) {
+            if (this.target && other.target) {
+                if (this.target.length !== other.target.length) {
                     logger.trace("different length target arrays");
                     return false;
                 }
-    
-                for (let i = 0; i < this.targetArray.length; i++) {
-                    if (this.targetArray[i] !== other.targetArray[i]) {
-                        logger.trace("differed in target content '" + this.targetArray[i] + "' !== '" + other.targetArray[i] + "'");
+
+                for (let i = 0; i < this.target.length; i++) {
+                    if (this.target[i] !== other.target[i]) {
+                        logger.trace("differed in target content '" + this.target[i] + "' !== '" + other.target[i] + "'");
                         return false;
                     }
                 }
@@ -267,11 +259,11 @@ class ResourceArray extends Resource {
                 return false;
             }
         }
-    
+
         logger.trace("Both the same");
         return true;
     }
-    
+
     /**
      * Return true if the other resource contains the exact same resource as
      * the current one. All fields must match.
@@ -280,23 +272,23 @@ class ResourceArray extends Resource {
      * @returns {boolean} true if these represent the same resource, false otherwise
      */
     equals(other) {
-        if (!other || !this.same(other) || other.sourceArray.length !== this.sourceArray.length) return false;
-    
-        for (let i = 0; i < this.sourceArray.length; i++) {
-            if (this.sourceArray[i] !== other.sourceArray[i]) return false;
+        if (!other || !this.same(other) || other.source.length !== this.source.length) return false;
+
+        for (let i = 0; i < this.source.length; i++) {
+            if (this.source[i] !== other.source[i]) return false;
         }
-    
-        if (this.targetArray && this.targetArray.length) {
+
+        if (this.target && this.target.length) {
             // if this is a source-only resource, there will be no target, and that's okay. Just ignore
             // the target for the purposes of this comparison.
-            for (let i = 0; i < this.targetArray.length; i++) {
-                if (this.targetArray[i] !== other.targetArray[i]) return false;
+            for (let i = 0; i < this.target.length; i++) {
+                if (this.target[i] !== other.target[i]) return false;
             }
         }
-    
+
         return true;
     }
-    
+
     /**
      * Calculate a resource key string for this class of resource given the
      * parameters.
@@ -309,7 +301,7 @@ class ResourceArray extends Resource {
         logger.trace("Hashkey is " + key);
         return key;
     }
-    
+
     /**
      * Return the a hash key that uniquely identifies this resource.
      *
@@ -319,7 +311,7 @@ class ResourceArray extends Resource {
         const locale = this.targetLocale || this.getSourceLocale();
         return ResourceArray.hashKey(this.project, this.context, locale, this.reskey);
     }
-    
+
     /**
      * Return the a hash key that uniquely identifies the translation of
      * this resource to the given locale.
@@ -330,7 +322,7 @@ class ResourceArray extends Resource {
     hashKeyForTranslation(locale) {
         return ResourceArray.hashKey(this.project, this.context, locale, this.reskey);
     }
-    
+
     /**
      * Return the a hash key that uniquely identifies this resource, but uses the cleaned version of the string
      *
@@ -341,7 +333,7 @@ class ResourceArray extends Resource {
         const locale = this.targetLocale || this.getSourceLocale();
         return ResourceArray.hashKey(this.project, this.context, locale, cleaned);
     }
-    
+
     /**
      * Return the a hash key that uniquely identifies the translation of
      * this resource to the given locale.
@@ -353,7 +345,7 @@ class ResourceArray extends Resource {
         const cleaned = this.reskey && this.reskey.replace(/\s+/g, " ").trim() || "";
         return ResourceArray.hashKey(this.project, this.context, locale, cleaned);
     }
-    
+
     /**
      * Check if the given resource is an instance of the current
      * resource.
@@ -364,14 +356,14 @@ class ResourceArray extends Resource {
      * the current resource, false otherwise.
      */
     isInstance(resource) {
-        if (!Resource.prototype.isInstance.call(this, resource)) {
+        if (!super.isInstance(resource)) {
             return false;
         }
-    
+
         // now check the properties specific to this resource subclass
-        return this.sourceArray.every(function(str, i) {
-            return cleanString(str) === cleanString(resource.sourceArray[i]);
-        }.bind(this));
+        return this.source.every((str, i) => {
+            return cleanString(str) === cleanString(resource.source[i]);
+        });
     }
 }
 
@@ -382,6 +374,5 @@ class ResourceArray extends Resource {
  * @const
  */
 ResourceArray.resClass = "array";
-
 
 export default ResourceArray;

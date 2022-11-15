@@ -26,7 +26,7 @@ const logger = log4js.getLogger("tools-common.ResourceString");
 /**
  * @class Represents a string resource from a resource file or
  * extracted from the code.
- 
+
  * @extends Resource
  */
 class ResourceString extends Resource {
@@ -44,12 +44,12 @@ class ResourceString extends Resource {
      */
     constructor(props) {
         super(props);
-    
+
         if (props) {
             this.source = typeof(props.source) === 'string' ? props.source : props.text;
             this.target = props.target;
         }
-    
+
         this.origin = this.origin || "source";
         this.datatype = this.datatype || "plaintext";
         this.resType = ResourceString.resClass;
@@ -57,43 +57,26 @@ class ResourceString extends Resource {
     }
 
     /**
-     * Return the source string written in the source
-     * locale of this resource string.
-     *
-     * @returns {String} the source string
-     */
-    getSource() {
-        return this.source;
-    }
-    
-    /**
      * Set the source string written in the source
      * locale of this resource string.
      *
      * @param {String} str the source string
      */
     setSource(str) {
+        if (typeof(str) !== 'string') return;
         this.source = str;
     }
-    
-    /**
-     * Return the string written in the target locale.
-     *
-     * @returns {String} the source string
-     */
-    getTarget() {
-        return this.target;
-    }
-    
+
     /**
      * Set the target string of this resource.
      *
      * @param {String} str the target string
      */
     setTarget(str) {
+        if (typeof(str) !== 'string') return;
         this.target = str;
     }
-    
+
     /**
      * Return the number of strings in this resource.
      *
@@ -102,7 +85,7 @@ class ResourceString extends Resource {
     size() {
         return 1;
     }
-    
+
     /**
      * Clone this resource and override the properties with the given ones.
      *
@@ -119,7 +102,7 @@ class ResourceString extends Resource {
         }
         return r;
     }
-    
+
     /**
      * Return true if the other resource contains the exact same resource as
      * the current one. All fields must match.
@@ -129,10 +112,10 @@ class ResourceString extends Resource {
      */
     equals(other) {
         if (!other || !this.same(other)) return false;
-    
+
         return this.source === other.source;
     }
-    
+
     /**
      * Calculate a resource key string for this class of resource given the
      * parameters.
@@ -150,7 +133,7 @@ class ResourceString extends Resource {
         logger.trace("Hashkey is " + key);
         return key;
     }
-    
+
     /**
      * Calculate a resource key string for this class of resource given the
      * parameters.
@@ -169,7 +152,7 @@ class ResourceString extends Resource {
         logger.trace("CleanHashkey is " + key);
         return key;
     }
-    
+
     /**
      * Return the a hash key that uniquely identifies this resource.
      *
@@ -179,7 +162,7 @@ class ResourceString extends Resource {
         const locale = this.targetLocale || this.getSourceLocale();
         return ResourceString.hashKey(this.project, locale, this.reskey, this.datatype, this.flavor);
     }
-    
+
     /**
      * Return the a hash key that uniquely identifies the translation of
      * this resource to the given locale.
@@ -190,7 +173,7 @@ class ResourceString extends Resource {
     hashKeyForTranslation(locale) {
         return ResourceString.hashKey(this.project, locale, this.reskey, this.datatype, this.flavor);
     }
-    
+
     /**
      * Return the a hash key that uniquely identifies this resource, but cleaned
      *
@@ -200,7 +183,7 @@ class ResourceString extends Resource {
         const locale = this.targetLocale || this.getSourceLocale();
         return ResourceString.cleanHashKey(this.project, locale, this.reskey, this.datatype, this.flavor);
     }
-    
+
     /**
      * Return the a hash key that uniquely identifies the translation of
      * this resource to the given locale, but cleaned
@@ -211,7 +194,7 @@ class ResourceString extends Resource {
     cleanHashKeyForTranslation(locale) {
         return ResourceString.cleanHashKey(this.project, locale, this.reskey, this.datatype, this.flavor);
     }
-    
+
     /**
      * Check if the given resource is an instance of the current
      * resource.
@@ -225,7 +208,7 @@ class ResourceString extends Resource {
         if (!super.isInstance(resource)) {
             return false;
         }
-    
+
         // now check the properties specific to this resource subclass
         return cleanString(this.source) === cleanString(resource.source);
     }
@@ -238,6 +221,6 @@ class ResourceString extends Resource {
  * @const
  */
 ResourceString.resClass = "string";
-    
+
 
 export default ResourceString;

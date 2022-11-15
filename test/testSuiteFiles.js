@@ -18,6 +18,7 @@
  */
 
 const files = [
+    "testResource.js",
     "testResourceString.js",
     "testResourceArray.js",
     "testResourcePlural.js"

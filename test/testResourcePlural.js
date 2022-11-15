@@ -45,7 +45,7 @@ export const testResourcePlural = {
             key: "asdf",
             sourceLocale: "en-US",
             pathName: "a/b/c.java",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
@@ -64,7 +64,7 @@ export const testResourcePlural = {
             key: "asdf",
             sourceLocale: "en-US",
             pathName: "a/b/c.java",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
@@ -74,7 +74,7 @@ export const testResourcePlural = {
         test.ok(rp);
 
         test.equal(rp.getKey(), "asdf");
-        test.deepEqual(rp.getSourcePlurals(), {
+        test.deepEqual(rp.getSource(), {
             "one": "This is singular",
             "two": "This is double",
             "few": "This is the few case",
@@ -93,14 +93,14 @@ export const testResourcePlural = {
             key: "asdf",
             sourceLocale: "en-US",
             pathName: "a/b/c.java",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
                 "many": "This is the many case"
             },
             targetLocale: "de-DE",
-            targetStrings: {
+            target: {
                 "one": "Dies ist einzigartig",
                 "two": "Dies ist doppelt",
                 "few": "Dies ist der wenige Fall",
@@ -119,14 +119,14 @@ export const testResourcePlural = {
             key: "asdf",
             sourceLocale: "en-US",
             pathName: "a/b/c.java",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
                 "many": "This is the many case"
             },
             targetLocale: "de-DE",
-            targetStrings: {
+            target: {
                 "one": "Dies ist einzigartig",
                 "two": "Dies ist doppelt",
                 "few": "Dies ist der wenige Fall",
@@ -136,7 +136,7 @@ export const testResourcePlural = {
         test.ok(rp);
 
         test.equal(rp.getKey(), "asdf");
-        test.deepEqual(rp.getSourcePlurals(), {
+        test.deepEqual(rp.getSource(), {
             "one": "This is singular",
             "two": "This is double",
             "few": "This is the few case",
@@ -145,7 +145,7 @@ export const testResourcePlural = {
         test.equal(rp.getSourceLocale(), "en-US");
         test.equal(rp.pathName, "a/b/c.java");
         test.equal(rp.getTargetLocale(), "de-DE");
-        test.deepEqual(rp.getTargetPlurals(), {
+        test.deepEqual(rp.getTarget(), {
             "one": "Dies ist einzigartig",
             "two": "Dies ist doppelt",
             "few": "Dies ist der wenige Fall",
@@ -161,7 +161,7 @@ export const testResourcePlural = {
         const rp = new ResourcePlural({
             key: "asdf",
             pathName: "a/b/c.java",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
@@ -188,7 +188,7 @@ export const testResourcePlural = {
             key: "foo",
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
@@ -208,7 +208,7 @@ export const testResourcePlural = {
             key: "foo",
             pathName: "a/b/c.txt",
             sourceLocale: "en-US",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
@@ -216,10 +216,10 @@ export const testResourcePlural = {
             }
         });
         test.ok(rp);
-        test.equal(rp.getSource("one"), "This is singular");
-        test.equal(rp.getSource("two"), "This is double");
-        test.equal(rp.getSource("few"), "This is the few case");
-        test.equal(rp.getSource("many"), "This is the many case");
+        test.equal(rp.getSourcePlural("one"), "This is singular");
+        test.equal(rp.getSourcePlural("two"), "This is double");
+        test.equal(rp.getSourcePlural("few"), "This is the few case");
+        test.equal(rp.getSourcePlural("many"), "This is the many case");
 
         test.done();
     },
@@ -231,14 +231,14 @@ export const testResourcePlural = {
             key: "foo",
             pathName: "a/b/c.txt",
             sourceLocale: "en-US",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
                 "many": "This is the many case"
             },
             targetLocale: "de-DE",
-            targetStrings: {
+            target: {
                 "one": "Dies ist einzigartig",
                 "two": "Dies ist doppelt",
                 "few": "Dies ist der wenige Fall",
@@ -246,10 +246,10 @@ export const testResourcePlural = {
             }
         });
         test.ok(rp);
-        test.equal(rp.getTarget("one"), "Dies ist einzigartig");
-        test.equal(rp.getTarget("two"), "Dies ist doppelt");
-        test.equal(rp.getTarget("few"), "Dies ist der wenige Fall");
-        test.equal(rp.getTarget("many"), "Dies ist der viele Fall");
+        test.equal(rp.getTargetPlural("one"), "Dies ist einzigartig");
+        test.equal(rp.getTargetPlural("two"), "Dies ist doppelt");
+        test.equal(rp.getTargetPlural("few"), "Dies ist der wenige Fall");
+        test.equal(rp.getTargetPlural("many"), "Dies ist der viele Fall");
 
         test.done();
     },
@@ -261,7 +261,7 @@ export const testResourcePlural = {
             key: "foo",
             pathName: "a/b/c.txt",
             sourceLocale: "en-US",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
@@ -269,8 +269,8 @@ export const testResourcePlural = {
             }
         });
         test.ok(rp);
-        test.ok(!rp.getSource("zero"));
-        test.ok(!rp.getTarget("zero"));
+        test.ok(!rp.getSourcePlural("zero"));
+        test.ok(!rp.getTargetPlural("zero"));
 
         test.done();
     },
@@ -293,7 +293,7 @@ export const testResourcePlural = {
             pathName: "a/b/c.txt",
             sourceLocale: "en-US",
             context: "landscape",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
@@ -313,7 +313,7 @@ export const testResourcePlural = {
             key: "foo",
             pathName: "a/b/c.txt",
             sourceLocale: "en-US",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
@@ -333,7 +333,7 @@ export const testResourcePlural = {
             key: "foo",
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
@@ -341,7 +341,7 @@ export const testResourcePlural = {
             }
         });
         test.ok(rp);
-        test.deepEqual(rp.getSourcePlurals(), {
+        test.deepEqual(rp.getSource(), {
             "one": "This is singular",
             "two": "This is double",
             "few": "This is the few case",
@@ -358,14 +358,14 @@ export const testResourcePlural = {
             key: "foo",
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
                 "many": "This is the many case"
             },
             targetLocale: "de-DE",
-            targetStrings: {
+            target: {
                 "one": "Dies ist einzigartig",
                 "two": "Dies ist doppelt",
                 "few": "Dies ist der wenige Fall",
@@ -373,7 +373,7 @@ export const testResourcePlural = {
             }
         });
         test.ok(rp);
-        test.deepEqual(rp.getTargetPlurals(), {
+        test.deepEqual(rp.getTarget(), {
             "one": "Dies ist einzigartig",
             "two": "Dies ist doppelt",
             "few": "Dies ist der wenige Fall",
@@ -389,7 +389,7 @@ export const testResourcePlural = {
 
         const rp = new ResourcePlural();
         test.ok(rp);
-        const plurals = rp.getSourcePlurals();
+        const plurals = rp.getSource();
         const count = 0;
         for (const p in plurals) {
             count++;
@@ -407,7 +407,7 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
@@ -442,7 +442,7 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
@@ -480,7 +480,7 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
@@ -492,11 +492,11 @@ export const testResourcePlural = {
         });
         test.ok(rp);
 
-        test.ok(!rp.getSource("zero"));
+        test.ok(!rp.getSourcePlural("zero"));
 
-        rp.addSource("zero", "This is the zero one")
+        rp.addSourcePlural("zero", "This is the zero one")
 
-        test.equal(rp.getSource("zero"), "This is the zero one");
+        test.equal(rp.getSourcePlural("zero"), "This is the zero one");
 
         test.done();
     },
@@ -509,7 +509,7 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
@@ -521,11 +521,11 @@ export const testResourcePlural = {
         });
         test.ok(rp);
 
-        test.equal(rp.getSource("two"), "This is double");
+        test.equal(rp.getSourcePlural("two"), "This is double");
 
-        rp.addSource("two", "This is two at a time")
+        rp.addSourcePlural("two", "This is two at a time")
 
-        test.equal(rp.getSource("two"), "This is two at a time");
+        test.equal(rp.getSourcePlural("two"), "This is two at a time");
 
         test.done();
     },
@@ -538,7 +538,7 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case"
@@ -551,7 +551,7 @@ export const testResourcePlural = {
 
         test.equal(rp.size(), 3);
 
-        rp.addSource("many", "This is the many one")
+        rp.addSourcePlural("many", "This is the many one")
 
         test.equal(rp.size(), 4);
 
@@ -566,7 +566,7 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case"
@@ -577,11 +577,11 @@ export const testResourcePlural = {
         });
         test.ok(rp);
 
-        test.equal(rp.getSource("one"), "This is singular");
+        test.equal(rp.getSourcePlural("one"), "This is singular");
 
-        rp.addSource("one", undefined)
+        rp.addSourcePlural("one", undefined)
 
-        test.equal(rp.getSource("one"), "This is singular");
+        test.equal(rp.getSourcePlural("one"), "This is singular");
 
         test.done();
     },
@@ -594,7 +594,7 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case"
@@ -607,7 +607,7 @@ export const testResourcePlural = {
 
         test.equal(rp.size(), 3);
 
-        rp.addSource(undefined, "foobar")
+        rp.addSourcePlural(undefined, "foobar")
 
         test.equal(rp.size(), 3);
 
@@ -630,7 +630,7 @@ export const testResourcePlural = {
 
         test.equal(rp.size(), 0);
 
-        rp.addSource("one", "foobar")
+        rp.addSourcePlural("one", "foobar")
 
         test.equal(rp.size(), 1);
 
@@ -651,11 +651,11 @@ export const testResourcePlural = {
         });
         test.ok(rp);
 
-        test.ok(!rp.getSource("one"));
+        test.ok(!rp.getSourcePlural("one"));
 
-        rp.addSource("one", "foobar")
+        rp.addSourcePlural("one", "foobar")
 
-        test.equal(rp.getSource("one"), "foobar");
+        test.equal(rp.getSourcePlural("one"), "foobar");
 
         test.done();
     },
@@ -668,7 +668,7 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "two": "This is double",
                 "few": "This is the few case",
                 "many": "This is the many case"
@@ -680,14 +680,14 @@ export const testResourcePlural = {
 
         test.ok(rp);
 
-        rp.addSource("one", "This is singular");
-        rp.addSource("zero", "This is the zero one");
+        rp.addSourcePlural("one", "This is singular");
+        rp.addSourcePlural("zero", "This is the zero one");
 
-        test.equal(rp.getSource("zero"), "This is the zero one");
-        test.equal(rp.getSource("one"), "This is singular");
-        test.equal(rp.getSource("two"), "This is double");
-        test.equal(rp.getSource("few"), "This is the few case");
-        test.equal(rp.getSource("many"), "This is the many case");
+        test.equal(rp.getSourcePlural("zero"), "This is the zero one");
+        test.equal(rp.getSourcePlural("one"), "This is singular");
+        test.equal(rp.getSourcePlural("two"), "This is double");
+        test.equal(rp.getSourcePlural("few"), "This is the few case");
+        test.equal(rp.getSourcePlural("many"), "This is the many case");
 
         test.done();
     },
@@ -700,14 +700,14 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
                 "many": "This is the many case"
             },
             targetLocale: "de-DE",
-            targetStrings: {
+            target: {
                 "one": "Dies ist einzigartig",
                 "two": "Dies ist doppelt",
                 "few": "Dies ist der wenige Fall",
@@ -719,11 +719,11 @@ export const testResourcePlural = {
         });
         test.ok(rp);
 
-        test.ok(!rp.getTarget("zero"));
+        test.ok(!rp.getTargetPlural("zero"));
 
-        rp.addTarget("zero", "This is the zero one")
+        rp.addTargetPlural("zero", "This is the zero one")
 
-        test.equal(rp.getTarget("zero"), "This is the zero one");
+        test.equal(rp.getTargetPlural("zero"), "This is the zero one");
 
         test.done();
     },
@@ -736,14 +736,14 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case",
                 "many": "This is the many case"
             },
             targetLocale: "de-DE",
-            targetStrings: {
+            target: {
                 "one": "Dies ist einzigartig",
                 "two": "Dies ist doppelt",
                 "few": "Dies ist der wenige Fall",
@@ -755,11 +755,11 @@ export const testResourcePlural = {
         });
         test.ok(rp);
 
-        test.equal(rp.getTarget("two"), "Dies ist doppelt");
+        test.equal(rp.getTargetPlural("two"), "Dies ist doppelt");
 
-        rp.addTarget("two", "This is two at a time")
+        rp.addTargetPlural("two", "This is two at a time")
 
-        test.equal(rp.getTarget("two"), "This is two at a time");
+        test.equal(rp.getTargetPlural("two"), "This is two at a time");
 
         test.done();
     },
@@ -772,13 +772,13 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case"
             },
             targetLocale: "de-DE",
-            targetStrings: {
+            target: {
                 "one": "Dies ist einzigartig",
                 "two": "Dies ist doppelt",
                 "few": "Dies ist der wenige Fall"
@@ -791,7 +791,7 @@ export const testResourcePlural = {
 
         test.equal(rp.size(), 3);
 
-        rp.addTarget("many", "This is the many one")
+        rp.addTargetPlural("many", "This is the many one")
 
         test.equal(rp.size(), 4);
 
@@ -806,13 +806,13 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case"
             },
             targetLocale: "de-DE",
-            targetStrings: {
+            target: {
                 "one": "Dies ist einzigartig",
                 "two": "Dies ist doppelt",
                 "few": "Dies ist der wenige Fall",
@@ -824,11 +824,11 @@ export const testResourcePlural = {
         });
         test.ok(rp);
 
-        test.equal(rp.getTarget("one"), "Dies ist einzigartig");
+        test.equal(rp.getTargetPlural("one"), "Dies ist einzigartig");
 
-        rp.addTarget("one", undefined)
+        rp.addTargetPlural("one", undefined)
 
-        test.equal(rp.getTarget("one"), "Dies ist einzigartig");
+        test.equal(rp.getTargetPlural("one"), "Dies ist einzigartig");
 
         test.done();
     },
@@ -841,13 +841,13 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case"
             },
             targetLocale: "de-DE",
-            targetStrings: {
+            target: {
                 "one": "Dies ist einzigartig",
                 "two": "Dies ist doppelt",
                 "few": "Dies ist der wenige Fall"
@@ -860,7 +860,7 @@ export const testResourcePlural = {
 
         test.equal(rp.size(), 3);
 
-        rp.addTarget(undefined, "foobar")
+        rp.addTargetPlural(undefined, "foobar")
 
         test.equal(rp.size(), 3);
 
@@ -883,7 +883,7 @@ export const testResourcePlural = {
 
         test.equal(rp.size(), 0);
 
-        rp.addTarget("one", "foobar")
+        rp.addTargetPlural("one", "foobar")
 
         test.equal(rp.size(), 1);
 
@@ -904,11 +904,11 @@ export const testResourcePlural = {
         });
         test.ok(rp);
 
-        test.ok(!rp.getTarget("one"));
+        test.ok(!rp.getTargetPlural("one"));
 
-        rp.addTarget("one", "foobar")
+        rp.addTargetPlural("one", "foobar")
 
-        test.equal(rp.getTarget("one"), "foobar");
+        test.equal(rp.getTargetPlural("one"), "foobar");
 
         test.done();
     },
@@ -921,7 +921,7 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case"
@@ -936,7 +936,7 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case"
@@ -962,13 +962,13 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case"
             },
             targetLocale: "de-DE",
-            targetStrings: {
+            target: {
                 "one": "Dies ist einzigartig",
                 "two": "Dies ist doppelt",
                 "few": "Dies ist der wenige Fall",
@@ -984,13 +984,13 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case"
             },
             targetLocale: "de-DE",
-            targetStrings: {
+            target: {
                 "one": "Dies ist einzigartig",
                 "two": "Dies ist doppelt",
                 "few": "Dies ist der wenige Fall",
@@ -1017,7 +1017,7 @@ export const testResourcePlural = {
             context: "asdf",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case"
@@ -1032,7 +1032,7 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case"
@@ -1058,13 +1058,13 @@ export const testResourcePlural = {
             context: "asdf",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case"
             },
             targetLocale: "de-DE",
-            targetStrings: {
+            target: {
                 "one": "Dies ist einzigartig",
                 "two": "Dies ist doppelt",
                 "few": "Dies ist der wenige Fall",
@@ -1080,13 +1080,13 @@ export const testResourcePlural = {
             context: "asdf",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case"
             },
             targetLocale: "de-DE",
-            targetStrings: {
+            target: {
                 "one": "Dies ist einzigartig",
                 "two": "Dies ist ",
                 "few": "Dies ist der wenige Fall",
@@ -1113,7 +1113,7 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case"
@@ -1128,7 +1128,7 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case"
@@ -1154,7 +1154,7 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is the few case"
@@ -1169,7 +1169,7 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is a different case"
@@ -1211,7 +1211,7 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "en-US",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is a different case"
@@ -1235,13 +1235,13 @@ export const testResourcePlural = {
             context: "blah",
             sourceLocale: "en-US",
             key: "asdf",
-            sourceStrings: {
+            source: {
                 "one": "This is singular",
                 "two": "This is double",
                 "few": "This is a different case"
             },
             targetLocale: "de-DE",
-            targetStrings: {
+            target: {
                 "one": "Dies ist einzigartig",
                 "two": "Dies ist ",
                 "few": "Dies ist der wenige Fall",
@@ -1268,10 +1268,9 @@ export const testResourcePlural = {
             flavor: "asdf",
             project: "foo",
             reskey: "test.string",
-            resType: "string",
             sourceLocale: "en-US",
             targetLocale: "ja-JP",
-            sourceStrings: {
+            source: {
                 one: "This is a test",
                 other: "These are tests"
             }
@@ -1285,10 +1284,9 @@ export const testResourcePlural = {
             flavor: "asdf",
             project: "foo",
             reskey: "test.string",
-            resType: "string",
             sourceLocale: "en-US",
             targetLocale: "ja-JP",
-            sourceStrings: {
+            source: {
                 one: "This is a test",
                 other: "These are tests"
             }
@@ -1310,10 +1308,9 @@ export const testResourcePlural = {
             flavor: "asdf",
             project: "foo",
             reskey: "test.string",
-            resType: "string",
             sourceLocale: "en-US",
             targetLocale: "ja-JP",
-            sourceStrings: {
+            source: {
                 one: "This is a test ",
                 other: " These are tests"
             }
@@ -1327,10 +1324,9 @@ export const testResourcePlural = {
             flavor: "asdf",
             project: "foo",
             reskey: "test.string",
-            resType: "string",
             sourceLocale: "en-US",
             targetLocale: "ja-JP",
-            sourceStrings: {
+            source: {
                 one: "This is a \ttest    ",
                 other: " These  are tests "
             }
@@ -1352,10 +1348,9 @@ export const testResourcePlural = {
             flavor: "asdf",
             project: "foo",
             reskey: "test.string",
-            resType: "string",
             sourceLocale: "en-US",
             targetLocale: "ja-JP",
-            sourceStrings: {
+            source: {
                 one: "This is a test",
                 other: "These are tests"
             }
@@ -1369,10 +1364,9 @@ export const testResourcePlural = {
             flavor: "asdf",
             project: "foo",
             reskey: "test.string",
-            resType: "string",
             sourceLocale: "en-US",
             targetLocale: "ja-JP",
-            sourceStrings: {
+            source: {
                 one: "This is a test",
                 other: "These are tests."
             }

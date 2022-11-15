@@ -53,7 +53,7 @@ export const testResourceArray = {
 
         const ra = new ResourceArray({
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             sourceLocale: "de-DE",
             pathName: "a/b/c.java"
         });
@@ -67,14 +67,14 @@ export const testResourceArray = {
 
         const ra = new ResourceArray({
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             sourceLocale: "de-DE",
             pathName: "a/b/c.java"
         });
         test.ok(ra);
 
         test.equal(ra.getKey(), "asdf");
-        test.deepEqual(ra.getSourceArray(), ["This is a test", "This is also a test", "This is not"]);
+        test.deepEqual(ra.getSource(), ["This is a test", "This is also a test", "This is not"]);
         test.equal(ra.getSourceLocale(), "de-DE");
         test.equal(ra.pathName, "a/b/c.java");
 
@@ -86,9 +86,9 @@ export const testResourceArray = {
 
         const ra = new ResourceArray({
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             sourceLocale: "en-US",
-            targetArray: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
+            target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE",
             pathName: "a/b/c.java"
         });
@@ -102,18 +102,18 @@ export const testResourceArray = {
 
         const ra = new ResourceArray({
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             sourceLocale: "en-US",
-            targetArray: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
+            target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE",
             pathName: "a/b/c.java"
         });
         test.ok(ra);
 
         test.equal(ra.getKey(), "asdf");
-        test.deepEqual(ra.getSourceArray(), ["This is a test", "This is also a test", "This is not"]);
+        test.deepEqual(ra.getSource(), ["This is a test", "This is also a test", "This is not"]);
         test.equal(ra.getSourceLocale(), "en-US");
-        test.deepEqual(ra.getTargetArray(), ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."]);
+        test.deepEqual(ra.getTarget(), ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."]);
         test.equal(ra.getTargetLocale(), "de-DE");
         test.equal(ra.pathName, "a/b/c.java");
 
@@ -125,7 +125,7 @@ export const testResourceArray = {
 
         const ra = new ResourceArray({
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.java"
         });
         test.ok(ra);
@@ -150,7 +150,7 @@ export const testResourceArray = {
 
         const ra = new ResourceArray({
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             sourceLocale: "de-DE",
             pathName: "a/b/c.java"
         });
@@ -166,7 +166,7 @@ export const testResourceArray = {
 
         const ra = new ResourceArray({
             key: "foo",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
@@ -191,7 +191,7 @@ export const testResourceArray = {
 
         const ra = new ResourceArray({
             key: "foo",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE",
             context: "landscape"
@@ -207,7 +207,7 @@ export const testResourceArray = {
 
         const ra = new ResourceArray({
             key: "foo",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
@@ -217,27 +217,27 @@ export const testResourceArray = {
         test.done();
     },
 
-    testResourceArrayGetArray: function(test) {
+    testResourceArrayGetSource: function(test) {
         test.expect(2);
 
         const ra = new ResourceArray({
             key: "foo",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
         test.ok(ra);
-        test.deepEqual(ra.getSourceArray(), ["This is a test", "This is also a test", "This is not"]);
+        test.deepEqual(ra.getSource(), ["This is a test", "This is also a test", "This is not"]);
 
         test.done();
     },
 
-    testResourceArrayGetSourceArrayEmpty: function(test) {
+    testResourceArrayGetItemArrayEmpty: function(test) {
         test.expect(2);
 
         const ra = new ResourceArray();
         test.ok(ra);
-        test.deepEqual(ra.getSourceArray(), []);
+        test.deepEqual(ra.getSource(), []);
 
         test.done();
     },
@@ -247,24 +247,24 @@ export const testResourceArray = {
 
         const ra = new ResourceArray();
         test.ok(ra);
-        test.ok(!ra.getTargetArray());
+        test.ok(!ra.getTarget());
 
         test.done();
     },
 
-    testResourceArrayGetSource: function(test) {
+    testResourceArrayGetItem: function(test) {
         test.expect(4);
 
         const ra = new ResourceArray({
             key: "foo",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
         test.ok(ra);
-        test.equal(ra.getSource(0), "This is a test");
-        test.equal(ra.getSource(1), "This is also a test");
-        test.equal(ra.getSource(2), "This is not");
+        test.equal(ra.getSourceItem(0), "This is a test");
+        test.equal(ra.getSourceItem(1), "This is also a test");
+        test.equal(ra.getSourceItem(2), "This is not");
 
         test.done();
     },
@@ -274,31 +274,31 @@ export const testResourceArray = {
 
         const ra = new ResourceArray({
             key: "foo",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.txt",
             sourceLocale: "en-US",
-            targetArray: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
+            target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE"
         });
         test.ok(ra);
-        test.equal(ra.getTarget(0), "Dies ist einen Test.");
-        test.equal(ra.getTarget(1), "Dies ist auch einen Test.");
-        test.equal(ra.getTarget(2), "Dies ist nicht.");
+        test.equal(ra.getTargetItem(0), "Dies ist einen Test.");
+        test.equal(ra.getTargetItem(1), "Dies ist auch einen Test.");
+        test.equal(ra.getTargetItem(2), "Dies ist nicht.");
 
         test.done();
     },
 
-    testResourceArrayGetSourceNegativeIndex: function(test) {
+    testResourceArrayGetItemNegativeIndex: function(test) {
         test.expect(2);
 
         const ra = new ResourceArray({
             key: "foo",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
         test.ok(ra);
-        test.ok(!ra.getSource(-1));
+        test.ok(!ra.getSourceItem(-1));
 
         test.done();
     },
@@ -308,29 +308,29 @@ export const testResourceArray = {
 
         const ra = new ResourceArray({
             key: "foo",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.txt",
             sourceLocale: "en-US",
-            targetArray: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
+            target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE"
         });
         test.ok(ra);
-        test.ok(!ra.getTarget(-1));
+        test.ok(!ra.getTargetItem(-1));
 
         test.done();
     },
 
-    testResourceArrayGetSourceIndexTooBig: function(test) {
+    testResourceArrayGetItemIndexTooBig: function(test) {
         test.expect(2);
 
         const ra = new ResourceArray({
             key: "foo",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
         test.ok(ra);
-        test.ok(!ra.getSource(6));
+        test.ok(!ra.getSourceItem(6));
 
         test.done();
     },
@@ -340,14 +340,14 @@ export const testResourceArray = {
 
         const ra = new ResourceArray({
             key: "foo",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
-            targetArray: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
+            source: ["This is a test", "This is also a test", "This is not"],
+            target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE",
             pathName: "a/b/c.txt",
             sourceLocale: "en-US"
         });
         test.ok(ra);
-        test.ok(!ra.getTarget(6));
+        test.ok(!ra.getTargetItem(6));
 
         test.done();
     },
@@ -357,12 +357,12 @@ export const testResourceArray = {
 
         const ra = new ResourceArray({
             key: "foo",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
         test.ok(ra);
-        test.ok(!ra.getSource(2.6));
+        test.ok(!ra.getSourceItem(2.6));
 
         test.done();
     },
@@ -375,11 +375,11 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "en-US",
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted",
-            targetArray: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
+            target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE"
         });
         test.ok(ra);
@@ -391,12 +391,12 @@ export const testResourceArray = {
         test.equal(ra2.context, ra.context);
         test.equal(ra2.getSourceLocale(), ra.getSourceLocale());
         test.equal(ra2.reskey, ra.reskey);
-        test.deepEqual(ra2.sourceArray, ra.sourceArray);
+        test.deepEqual(ra2.source, ra.source);
         test.equal(ra2.pathName, ra.pathName);
         test.equal(ra2.comment, ra.comment);
         test.equal(ra2.state, ra.state);
         test.equal(ra2.getTargetLocale(), ra.getTargetLocale());
-        test.deepEqual(ra2.targetArray, ra.targetArray);
+        test.deepEqual(ra2.target, ra.target);
 
         test.done();
     },
@@ -409,7 +409,7 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted"
@@ -419,7 +419,7 @@ export const testResourceArray = {
         const ra2 = ra.clone({
             sourceLocale: "fr-FR",
             state: "asdfasdf",
-            targetArray: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
+            target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE"
         });
 
@@ -433,7 +433,7 @@ export const testResourceArray = {
         test.equal(ra2.comment, ra.comment);
         test.equal(ra2.state, "asdfasdf");
         test.equal(ra2.getTargetLocale(), "de-DE");
-        test.deepEqual(ra2.targetArray, ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."]);
+        test.deepEqual(ra2.target, ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."]);
 
         test.done();
     },
@@ -446,7 +446,7 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted"
@@ -455,7 +455,7 @@ export const testResourceArray = {
 
         ra.addSource(3, "This is the third one")
 
-        test.equal(ra.getSource(3), "This is the third one");
+        test.equal(ra.getSourceItem(3), "This is the third one");
 
         test.done();
     },
@@ -468,18 +468,18 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted",
-            targetArray: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
+            target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE"
         });
         test.ok(ra);
 
         ra.addTarget(3, "This is the third one")
 
-        test.equal(ra.getTarget(3), "This is the third one");
+        test.equal(ra.getTargetItem(3), "This is the third one");
 
         test.done();
     },
@@ -492,18 +492,18 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted"
         });
         test.ok(ra);
 
-        test.equal(ra.getSource(2), "This is not");
+        test.equal(ra.getSourceItem(2), "This is not");
 
         ra.addSource(2, "This isn't a test")
 
-        test.equal(ra.getSource(2), "This isn't a test");
+        test.equal(ra.getSourceItem(2), "This isn't a test");
 
         test.done();
     },
@@ -516,20 +516,20 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted",
-            targetArray: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
+            target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE"
         });
         test.ok(ra);
 
-        test.equal(ra.getTarget(2), "Dies ist nicht.");
+        test.equal(ra.getTargetItem(2), "Dies ist nicht.");
 
         ra.addTarget(2, "Dies ist nicht einen Test.")
 
-        test.equal(ra.getTarget(2), "Dies ist nicht einen Test.");
+        test.equal(ra.getTargetItem(2), "Dies ist nicht einen Test.");
 
         test.done();
     },
@@ -542,7 +542,7 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted"
@@ -566,11 +566,11 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "en-US",
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted",
-            targetArray: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
+            target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE"
         });
         test.ok(ra);
@@ -592,18 +592,18 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted"
         });
         test.ok(ra);
 
-        test.equal(ra.getSource(1), "This is also a test");
+        test.equal(ra.getSourceItem(1), "This is also a test");
 
         ra.addSource(1, undefined)
 
-        test.equal(ra.getSource(1), "This is also a test");
+        test.equal(ra.getSourceItem(1), "This is also a test");
 
         test.done();
     },
@@ -616,20 +616,20 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted",
-            targetArray: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
+            target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE"
         });
         test.ok(ra);
 
-        test.equal(ra.getTarget(1), "Dies ist auch einen Test.");
+        test.equal(ra.getTargetItem(1), "Dies ist auch einen Test.");
 
         ra.addTarget(1, undefined)
 
-        test.equal(ra.getTarget(1), "Dies ist auch einen Test.");
+        test.equal(ra.getTargetItem(1), "Dies ist auch einen Test.");
 
         test.done();
     },
@@ -642,7 +642,7 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted"
@@ -666,11 +666,11 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted",
-            targetArray: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
+            target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE"
         });
         test.ok(ra);
@@ -721,11 +721,11 @@ export const testResourceArray = {
         });
         test.ok(ra);
 
-        test.ok(!ra.getSource(0));
+        test.ok(!ra.getSourceItem(0));
 
         ra.addSource(0, "foobar")
 
-        test.equal(ra.getSource(0), "foobar");
+        test.equal(ra.getSourceItem(0), "foobar");
 
         test.done();
     },
@@ -744,11 +744,11 @@ export const testResourceArray = {
         });
         test.ok(ra);
 
-        test.ok(!ra.getTarget(0));
+        test.ok(!ra.getTargetItem(0));
 
         ra.addTarget(0, "foobar")
 
-        test.equal(ra.getTarget(0), "foobar");
+        test.equal(ra.getTargetItem(0), "foobar");
 
         test.done();
     },
@@ -761,7 +761,7 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted"
@@ -771,11 +771,11 @@ export const testResourceArray = {
         ra.addSource(3, "This is the third one")
         ra.addSource(4, "This is the fourth one")
 
-        test.equal(ra.getSource(0), "This is a test");
-        test.equal(ra.getSource(1), "This is also a test");
-        test.equal(ra.getSource(2), "This is not");
-        test.equal(ra.getSource(3), "This is the third one");
-        test.equal(ra.getSource(4), "This is the fourth one");
+        test.equal(ra.getSourceItem(0), "This is a test");
+        test.equal(ra.getSourceItem(1), "This is also a test");
+        test.equal(ra.getSourceItem(2), "This is not");
+        test.equal(ra.getSourceItem(3), "This is the third one");
+        test.equal(ra.getSourceItem(4), "This is the fourth one");
 
         test.done();
     },
@@ -788,7 +788,7 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["a", "b", "c"],
+            source: ["a", "b", "c"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted"
@@ -799,7 +799,7 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["a", "b", "c"],
+            source: ["a", "b", "c"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted"
@@ -821,8 +821,8 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["a", "b", "c"],
-            targetArray: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
+            source: ["a", "b", "c"],
+            target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE",
             pathName: "a/b/c.java",
             comment: "foobar foo",
@@ -834,8 +834,8 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["a", "b", "c"],
-            targetArray: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
+            source: ["a", "b", "c"],
+            target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE",
             pathName: "a/b/c.java",
             comment: "foobar foo",
@@ -858,7 +858,7 @@ export const testResourceArray = {
             context: "asdf",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["a", "b", "c"],
+            source: ["a", "b", "c"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted"
@@ -869,7 +869,7 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["a", "b", "c"],
+            source: ["a", "b", "c"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted"
@@ -891,8 +891,8 @@ export const testResourceArray = {
             context: "asdf",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["a", "b", "c"],
-            targetArray: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
+            source: ["a", "b", "c"],
+            target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE",
             pathName: "a/b/c.java",
             comment: "foobar foo",
@@ -904,8 +904,8 @@ export const testResourceArray = {
             context: "asdf",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["a", "b", "c"],
-            targetArray: ["Dies ist einen Test.", "Dies ist auch Test.", "Dies ist nicht."],
+            source: ["a", "b", "c"],
+            target: ["Dies ist einen Test.", "Dies ist auch Test.", "Dies ist nicht."],
             targetLocale: "de-DE",
             pathName: "a/b/c.java",
             comment: "foobar foo",
@@ -928,7 +928,7 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["a", "b", "c"],
+            source: ["a", "b", "c"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted"
@@ -939,7 +939,7 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["a", "b", "c"],
+            source: ["a", "b", "c"],
             pathName: "x.java",
             comment: "asdf asdf asdf asdf asdf",
             state: "done"
@@ -961,7 +961,7 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["a", "b", "c"],
+            source: ["a", "b", "c"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted"
@@ -972,7 +972,7 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "de-DE",
             key: "asdf",
-            sourceArray: ["a", "b", "d"],
+            source: ["a", "b", "d"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted"
@@ -1010,7 +1010,7 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "en-US",
             key: "asdf",
-            sourceArray: ["a", "b", "c"],
+            source: ["a", "b", "c"],
             pathName: "a/b/c.java",
             comment: "foobar foo",
             state: "accepted"
@@ -1030,8 +1030,8 @@ export const testResourceArray = {
             context: "blah",
             sourceLocale: "en-US",
             key: "asdf",
-            sourceArray: ["a", "b", "c"],
-            targetArray: ["Dies ist einen Test.", "Dies ist auch Test.", "Dies ist nicht."],
+            source: ["a", "b", "c"],
+            target: ["Dies ist einen Test.", "Dies ist auch Test.", "Dies ist nicht."],
             targetLocale: "de-DE",
             pathName: "a/b/c.java",
             comment: "foobar foo",
@@ -1057,7 +1057,7 @@ export const testResourceArray = {
             resType: "string",
             sourceLocale: "en-US",
             targetLocale: "ja-JP",
-            sourceArray: ["a", "b", "c"]
+            source: ["a", "b", "c"]
         });
         test.ok(rs);
 
@@ -1071,7 +1071,7 @@ export const testResourceArray = {
             resType: "string",
             sourceLocale: "en-US",
             targetLocale: "ja-JP",
-            sourceArray: ["a", "b", "c"]
+            source: ["a", "b", "c"]
         });
         test.ok(dup);
 
@@ -1093,7 +1093,7 @@ export const testResourceArray = {
             resType: "string",
             sourceLocale: "en-US",
             targetLocale: "ja-JP",
-            sourceArray: ["a b c", "b", "c"]
+            source: ["a b c", "b", "c"]
         });
         test.ok(rs);
 
@@ -1107,7 +1107,7 @@ export const testResourceArray = {
             resType: "string",
             sourceLocale: "en-US",
             targetLocale: "ja-JP",
-            sourceArray: [" a   b\t\tc  \t", " b", "c "]
+            source: [" a   b\t\tc  \t", " b", "c "]
         });
         test.ok(dup);
 
@@ -1129,7 +1129,7 @@ export const testResourceArray = {
             resType: "string",
             sourceLocale: "en-US",
             targetLocale: "ja-JP",
-            sourceArray: ["a", "b", "c"]
+            source: ["a", "b", "c"]
         });
         test.ok(rs);
 
@@ -1143,7 +1143,7 @@ export const testResourceArray = {
             resType: "string",
             sourceLocale: "en-US",
             targetLocale: "ja-JP",
-            sourceArray: ["a", "b", "cd"]
+            source: ["a", "b", "cd"]
         });
         test.ok(dup);
 
