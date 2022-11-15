@@ -19,8 +19,8 @@
 
 const files = [
     "testResourceString.js",
-    "testResourceArray.js"
-    //"testassemble.js"
+    "testResourceArray.js",
+    "testResourcePlural.js"
 ];
 
 export default files;

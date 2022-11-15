@@ -20,5 +20,6 @@
 import Resource from './Resource.js';
 import ResourceString from './ResourceString.js';
 import ResourceArray from './ResourceArray.js';
+import ResourcePlural from './ResourcePlural.js';
 
-export { Resource, ResourceString, ResourceArray };
+export { Resource, ResourceString, ResourceArray, ResourcePlural };
