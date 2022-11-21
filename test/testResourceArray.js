@@ -120,6 +120,29 @@ export const testResourceArray = {
         test.done();
     },
 
+    testResourceArrayConstructorBackwardsCompatible: function(test) {
+        test.expect(7);
+
+        const ra = new ResourceArray({
+            key: "asdf",
+            sourceArray: ["This is a test", "This is also a test", "This is not"],
+            sourceLocale: "en-US",
+            targetArray: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
+            targetLocale: "de-DE",
+            pathName: "a/b/c.java"
+        });
+        test.ok(ra);
+
+        test.equal(ra.getKey(), "asdf");
+        test.deepEqual(ra.getSourceArray(), ["This is a test", "This is also a test", "This is not"]);
+        test.equal(ra.getSourceLocale(), "en-US");
+        test.deepEqual(ra.getTargetArray(), ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."]);
+        test.equal(ra.getTargetLocale(), "de-DE");
+        test.equal(ra.pathName, "a/b/c.java");
+
+        test.done();
+    },
+
     testResourceArrayConstructorDefaults: function(test) {
         test.expect(8);
 

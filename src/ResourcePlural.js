@@ -66,16 +66,18 @@ class ResourcePlural extends Resource {
         // deep copy this so that the props can have a different set of
         // plural forms than this instance
         if (props) {
-            if (typeof(props.source) === 'object') {
-                for (let p in props.source) {
-                    this.source[p] = props.source[p];
+            const source = props.source || props.sourceStrings || props.sourcePlurals;
+            if (typeof(source) === 'object') {
+                for (let p in source) {
+                    this.source[p] = source[p];
                 }
             }
 
-            if (typeof(props.target) === 'object') {
+            const target = props.target || props.targetStrings || props.targetPlurals;
+            if (typeof(target) === 'object') {
                 this.target = {};
-                for (let p in props.target) {
-                    this.target[p] = props.target[p];
+                for (let p in target) {
+                    this.target[p] = target[p];
                 }
             }
         }
@@ -92,6 +94,50 @@ class ResourcePlural extends Resource {
     setSource(plurals) {
         if (typeof(plurals) !== 'object') return;
         this.source = plurals;
+    }
+
+    /**
+     * Return the array of source strings. This method is here
+     * for backwards compatilibity with the loctool plugins.
+     *
+     * @deprecated Use getSource() instead
+     * @returns {Array.<String>} the array of source strings
+     */
+    getSourcePlurals() {
+        return this.getSource();
+    }
+
+    /**
+     * Return the array of target strings. This method is here
+     * for backwards compatilibity with the loctool plugins.
+     *
+     * @deprecated Use getTarget() instead
+     * @returns {Array.<String>} the array of target strings
+     */
+    getTargetPlurals() {
+        return this.getTarget();
+    }
+
+    /**
+     * Return the array of source strings. This method is here
+     * for backwards compatilibity with the loctool plugins.
+     *
+     * @deprecated Use getSource() instead
+     * @returns {Array.<String>} the array of source strings
+     */
+    getSourceStrings() {
+        return this.getSource();
+    }
+
+    /**
+     * Return the array of target strings. This method is here
+     * for backwards compatilibity with the loctool plugins.
+     *
+     * @deprecated Use getTarget() instead
+     * @returns {Array.<String>} the array of target strings
+     */
+    getTargetStrings() {
+        return this.getTarget();
     }
 
     /**
