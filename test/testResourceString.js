@@ -557,7 +557,15 @@ export const testResourceString = {
     testResourceStringStaticHashKey: function(test) {
         test.expect(1);
 
-        test.equal(ResourceString.hashKey("iosapp", "de-DE", "This is a test", "html", "chocolate"), "rs_iosapp_de-DE_This is a test_html_chocolate");
+        test.equal(ResourceString.hashKey("iosapp", "de-DE", "This is a test", "html", "chocolate"), "rs_iosapp_de-DE_This is a test_html_chocolate_");
+
+        test.done();
+    },
+
+    testResourceStringStaticHashKeyWithContext: function(test) {
+        test.expect(1);
+
+        test.equal(ResourceString.hashKey("iosapp", "de-DE", "This is a test", "html", "chocolate", "context"), "rs_iosapp_de-DE_This is a test_html_chocolate_context");
 
         test.done();
     },
@@ -565,7 +573,7 @@ export const testResourceString = {
     testResourceStringStaticHashKeyMissingParts: function(test) {
         test.expect(1);
 
-        test.equal(ResourceString.hashKey(undefined, "de-DE", undefined, undefined), "rs__de-DE___");
+        test.equal(ResourceString.hashKey(undefined, "de-DE", undefined, undefined), "rs__de-DE____");
 
         test.done();
     },
@@ -585,7 +593,7 @@ export const testResourceString = {
         });
         test.ok(rs);
 
-        test.equal(rs.hashKey(), "rs_iosapp_de-DE_This is a test_html_");
+        test.equal(rs.hashKey(), "rs_iosapp_de-DE_This is a test_html__");
 
         test.done();
     },
@@ -606,7 +614,29 @@ export const testResourceString = {
         });
         test.ok(rs);
 
-        test.equal(rs.hashKey(), "rs_iosapp_de-DE_This is a test_html_chocolate");
+        test.equal(rs.hashKey(), "rs_iosapp_de-DE_This is a test_html_chocolate_");
+
+        test.done();
+    },
+
+    testResourceStringHashKeyWithFlavorAndContext: function(test) {
+        test.expect(2);
+
+        const rs = new ResourceString({
+            project: "iosapp",
+            key: "This is a test",
+            source: "This is a test",
+            sourceLocale: "en-US",
+            target: "Dies ist einen Test.",
+            targetLocale: "de-DE",
+            pathName: "a/b/c.java",
+            datatype: "html",
+            flavor: "chocolate",
+            context: "context"
+        });
+        test.ok(rs);
+
+        test.equal(rs.hashKey(), "rs_iosapp_de-DE_This is a test_html_chocolate_context");
 
         test.done();
     },
@@ -624,7 +654,7 @@ export const testResourceString = {
         });
         test.ok(rs);
 
-        test.equal(rs.hashKey(), "rs_iosapp_en-US_This is a test_html_");
+        test.equal(rs.hashKey(), "rs_iosapp_en-US_This is a test_html__");
 
         test.done();
     },

@@ -21,7 +21,7 @@ limitations under the License.
 
 ## Release Notes
 
-### v1.0.0
+### v1.0.1
 
 - Introduced some backwards compatibility support so that this library
   can be used with loctool plugins.

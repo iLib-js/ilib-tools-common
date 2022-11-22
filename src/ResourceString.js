@@ -125,11 +125,12 @@ class ResourceString extends Resource {
      * @param {String} reskey the key of the string
      * @param {String} datatype the datatype of the string
      * @param {String} flavor the flavor of the string
+     * @param {String} context the context of the string
      * @static
      * @return {String} a hash key
      */
-    static hashKey(project, locale, reskey, datatype, flavor) {
-        const key = ["rs", project, locale, reskey, datatype, flavor].join("_");
+    static hashKey(project, locale, reskey, datatype, flavor, context) {
+        const key = ["rs", project, locale, reskey, datatype, flavor, context].join("_");
         logger.trace("Hashkey is " + key);
         return key;
     }
@@ -143,12 +144,13 @@ class ResourceString extends Resource {
      * @param {String} reskey the key of the string
      * @param {String} datatype the datatype of the string
      * @param {String} flavor the flavor of the string
+     * @param {String} context the context of the string
      * @static
      * @return {String} a hash key
      */
-    static cleanHashKey(project, locale, reskey, datatype, flavor) {
+    static cleanHashKey(project, locale, reskey, datatype, flavor, context) {
         const cleaned = reskey && reskey.replace(/\s+/g, " ").trim() || "";
-        const key = ["rs", project, locale, cleaned, datatype, flavor].join("_");
+        const key = ["rs", project, locale, cleaned, datatype, flavor, context].join("_");
         logger.trace("CleanHashkey is " + key);
         return key;
     }
@@ -160,7 +162,7 @@ class ResourceString extends Resource {
      */
     hashKey() {
         const locale = this.targetLocale || this.getSourceLocale();
-        return ResourceString.hashKey(this.project, locale, this.reskey, this.datatype, this.flavor);
+        return ResourceString.hashKey(this.project, locale, this.reskey, this.datatype, this.flavor, this.context);
     }
 
     /**
@@ -171,7 +173,7 @@ class ResourceString extends Resource {
      * @return {String} a unique hash key for this resource
      */
     hashKeyForTranslation(locale) {
-        return ResourceString.hashKey(this.project, locale, this.reskey, this.datatype, this.flavor);
+        return ResourceString.hashKey(this.project, locale, this.reskey, this.datatype, this.flavor, this.context);
     }
 
     /**
@@ -181,7 +183,7 @@ class ResourceString extends Resource {
      */
     cleanHashKey() {
         const locale = this.targetLocale || this.getSourceLocale();
-        return ResourceString.cleanHashKey(this.project, locale, this.reskey, this.datatype, this.flavor);
+        return ResourceString.cleanHashKey(this.project, locale, this.reskey, this.datatype, this.flavor, this.context);
     }
 
     /**
@@ -192,7 +194,7 @@ class ResourceString extends Resource {
      * @return {String} a unique hash key for this resource's string
      */
     cleanHashKeyForTranslation(locale) {
-        return ResourceString.cleanHashKey(this.project, locale, this.reskey, this.datatype, this.flavor);
+        return ResourceString.cleanHashKey(this.project, locale, this.reskey, this.datatype, this.flavor, this.context);
     }
 
     /**
