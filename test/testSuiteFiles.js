@@ -22,7 +22,7 @@ const files = [
     "testResourceString.js",
     "testResourceArray.js",
     "testResourcePlural.js",
-    "testTranslationSet.js",
+    //"testTranslationSet.js",
     //"testResXliff.js",
     //"testResXliff20.js"
 ];
