@@ -155,6 +155,49 @@ export const testResourcePlural = {
         test.done();
     },
 
+    testResourcePluralConstructorBackwardsCompatible: function(test) {
+        test.expect(7);
+
+        const rp = new ResourcePlural({
+            key: "asdf",
+            sourceLocale: "en-US",
+            pathName: "a/b/c.java",
+            sourceStrings: {
+                "one": "This is singular",
+                "two": "This is double",
+                "few": "This is the few case",
+                "many": "This is the many case"
+            },
+            targetLocale: "de-DE",
+            targetStrings: {
+                "one": "Dies ist einzigartig",
+                "two": "Dies ist doppelt",
+                "few": "Dies ist der wenige Fall",
+                "many": "Dies ist der viele Fall"
+            }
+        });
+        test.ok(rp);
+
+        test.equal(rp.getKey(), "asdf");
+        test.deepEqual(rp.getSourceStrings(), {
+            "one": "This is singular",
+            "two": "This is double",
+            "few": "This is the few case",
+            "many": "This is the many case"
+        });
+        test.equal(rp.getSourceLocale(), "en-US");
+        test.equal(rp.pathName, "a/b/c.java");
+        test.equal(rp.getTargetLocale(), "de-DE");
+        test.deepEqual(rp.getTargetStrings(), {
+            "one": "Dies ist einzigartig",
+            "two": "Dies ist doppelt",
+            "few": "Dies ist der wenige Fall",
+            "many": "Dies ist der viele Fall"
+        });
+
+        test.done();
+    },
+
     testResourcePluralConstructorDefaults: function(test) {
         test.expect(5);
 

@@ -65,23 +65,25 @@ class ResourceArray extends Resource {
         this.subtype = "string-array";
 
         if (props) {
-            if (props.source) {
-                if (!Array.isArray(props.source)) {
-                    this.source = [props.source];
-                } else if (props.source.length) {
+            const source = props.source || props.sourceArray;
+            if (source) {
+                if (!Array.isArray(source)) {
+                    this.source = [source];
+                } else if (source.length) {
                     // make a deep copy of the array
-                    this.source = props.source.map(item => {
+                    this.source = source.map(item => {
                          // both copies the string and ensures that it is a string type
                          return new String(item).toString();
                     });
                 }
             }
-            if (props.target) {
-                if (!Array.isArray(props.target)) {
-                    this.source = [props.target];
-                } else if (props.target.length) {
+            const target = props.target || props.targetArray;
+            if (target) {
+                if (!Array.isArray(target)) {
+                    this.target = [target];
+                } else if (target.length) {
                     // make a deep copy of the array
-                    this.target = props.target.map(item => {
+                    this.target = target.map(item => {
                          return new String(item).toString();
                     });
                 }
@@ -117,6 +119,28 @@ class ResourceArray extends Resource {
     setTarget(arr) {
         if (!arr || !Array.isArray(arr)) return;
         this.target = arr;
+    }
+
+    /**
+     * Return the array of source strings. This method is here
+     * for backwards compatilibity with the loctool plugins.
+     *
+     * @deprecated Use getSource() instead
+     * @returns {Array.<String>} the array of source strings
+     */
+    getSourceArray() {
+        return this.getSource();
+    }
+
+    /**
+     * Return the array of target strings. This method is here
+     * for backwards compatilibity with the loctool plugins.
+     *
+     * @deprecated Use getTarget() instead
+     * @returns {Array.<String>} the array of target strings
+     */
+    getTargetArray() {
+        return this.getTarget();
     }
 
     /**
