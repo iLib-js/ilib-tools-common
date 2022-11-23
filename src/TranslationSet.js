@@ -32,7 +32,7 @@ const logger = log4js.getLogger("tools-common.TranslationSet");
 class TranslationSet {
     constructor(sourceLocale) {
         this.sourceLocale = sourceLocale || "zxx-XX";
-    
+
         this.resources = [];
         this.byHashKey = {};
         this.byCleanHashKey = {};
@@ -41,7 +41,7 @@ class TranslationSet {
         this.byResKey = {};
         this.resourceIndex = 0;
     }
-    
+
     /**
      * Get a resource by its hashkey.
      *
@@ -53,7 +53,7 @@ class TranslationSet {
         logger.trace("Get a resource by hashkey " + hashkey);
         return this.byHashKey[hashkey];
     }
-    
+
     /**
      * Get a resource by its clean string hashkey.
      *
@@ -65,7 +65,7 @@ class TranslationSet {
         logger.trace("Get a resource by clean hashkey " + hashkey);
         return this.byCleanHashKey[hashkey];
     }
-    
+
     /**
      * Get a resource by its source string and context. The source string must be written
      * in the language and script of the source locale. For array types, the
@@ -85,7 +85,7 @@ class TranslationSet {
         logger.trace("Get a resource by source");
         return this.stringsBySource[source + '@' + context];
     }
-    
+
     /**
      * Return all resources in this set.
      *
@@ -95,13 +95,13 @@ class TranslationSet {
     getAll() {
         return this.resources;
     }
-    
+
     /**
      * @private
      */
     addRes(resource, hashKey, cleanKey) {
         const existingClean = this.byCleanHashKey[cleanKey];
-        
+
         logger.trace("New resource " + hashKey + " " + cleanKey);
         this.resources.push(resource);
         this.byHashKey[hashKey] = resource;
@@ -127,15 +127,15 @@ class TranslationSet {
      */
     add(resource) {
         if (!resource) return;
-    
+
         let existing;
         const key = resource.getKey(), hashKey = resource.hashKey();
         const cleanKey = resource.cleanHashKey();
         logger.trace("Add a resource. Hash: " + hashKey + " clean: " + cleanKey + " resource:" + JSON.stringify(resource));
-    
+
         existing = this.byHashKey[hashKey];
         const existingClean = this.byCleanHashKey[cleanKey];
-    
+
         if (existing) {
             logger.trace("Same key as existing resource: " + JSON.stringify(existing));
             if (existing.isInstance(resource)) {
@@ -149,7 +149,7 @@ class TranslationSet {
                     logger.debug("Key: " + key);
                     logger.debug("Existing Source: " + existing.getSource() + "(" + existing.pathName + ")");
                     logger.debug("New Source: " + resource.getSource() + "(" + resource.pathName + ")");
-    
+
                     resource = { ...resource, ...existing };
                     this.dirty = true;
                 } else {
@@ -160,7 +160,7 @@ class TranslationSet {
             this.addRes(resource, hashKey, cleanKey);
         }
     }
-    
+
     /**
      * Add every resource in the given array to this set.
      * @param {Array.<Resource>} resources an array of resources to add
@@ -173,7 +173,7 @@ class TranslationSet {
             }.bind(this));
         }
     }
-    
+
     /**
      * Add every resource in the given translation set to this set,
      * merging the results together.
@@ -188,7 +188,7 @@ class TranslationSet {
             logger.trace("addSet: nothing to add");
         }
     }
-    
+
     /**
      * Return the number of unique resources in this set.
      * @returns {number} the number of unique resources in this set
@@ -196,7 +196,7 @@ class TranslationSet {
     size() {
         return this.resources.length;
     }
-    
+
     /**
      * Reset the dirty flag to false, meaning the set is clean. This will
      * allow callers to tell if any more resources were added after
@@ -206,7 +206,7 @@ class TranslationSet {
     setClean() {
         this.dirty = false;
     }
-    
+
     /**
      * Return whether or not this set is dirty. The dirty flag is set
      * whenever a new resource was added to or removed from the set
@@ -217,7 +217,7 @@ class TranslationSet {
     isDirty() {
         return this.dirty;
     }
-    
+
     /**
      * Remove a resource from the set. The resource must have at
      * least enough fields specified to uniquely identify the
@@ -230,7 +230,7 @@ class TranslationSet {
      */
     remove(resource) {
         let ret = false;
-    
+
         if (resource && resource.project && resource.context && resource.targetLocale && resource.reskey && resource.resType) {
             for (let i = 0; i < this.resources.length; i++) {
                 const res = this.resources[i];
@@ -253,16 +253,16 @@ class TranslationSet {
         } else {
             logger.warn("Invalid call to remove resource " + JSON.stringify(resource));
         }
-    
+
         return ret;
     }
-    
+
     /**
      * @private
      */
     _select(criteria) {
         const fields = Object.keys(criteria);
-    
+
         return this.resources.filter(function(res) {
             return fields.every(function(field) {
                 return Array.isArray(criteria[field]) ?
@@ -274,7 +274,7 @@ class TranslationSet {
             });
         });
     }
-    
+
     /**
      * Get a resource by the given criteria.
      * @param {Object} criteria the filter criteria to select the resources to return
@@ -283,10 +283,10 @@ class TranslationSet {
      */
     getBy(options) {
         logger.trace("Getting resources by criteria");
-    
+
         return this._select(options);
     }
-    
+
     /**
      * Return an array of all the project names in the database.
      *
@@ -295,11 +295,11 @@ class TranslationSet {
      */
     getProjects() {
         const set = new Set();
-    
+
         this.resources.map(res => {
             set.add(res.getProject());
         });
-    
+
         const projects = [ ... set.values() ];
         return projects.length ? projects : undefined;
     }
@@ -317,18 +317,18 @@ class TranslationSet {
      */
     getContexts(project) {
         const set = new Set();
-    
+
         this.resources.map(res => {
             if (!project || res.getProject() === project) {
                 const context = res.getContext();
                 set.add(context ? context : "");
             }
         });
-    
+
         const contexts = [ ... set.values() ];
         return contexts.length ? contexts : undefined;
     }
-    
+
     /**
      * Return an array of all the locales available within the given
      * project and context in the set. The root context is just
@@ -345,17 +345,17 @@ class TranslationSet {
      */
     getLocales(project, context) {
         const set = new Set();
-    
+
         this.resources.map(res => {
             if ((!project || res.getProject() === project) && (!context || res.getContext() === context)) {
                 set.add(res.getTargetLocale());
             }
         });
-    
+
         const locales = [ ... set.values() ].sort();
         return locales.length ? locales : undefined;
     }
-    
+
     /**
      * Clear all resources from this set.
      */
@@ -366,7 +366,7 @@ class TranslationSet {
         this.stringsBySource = {};
         this.byResKey = {};
     }
-    
+
     /**
      * Return a new translation set that contains the differences
      * between the current set and the other set. Resources are
@@ -382,16 +382,16 @@ class TranslationSet {
         const otherres = other.getAll();
         const diff = new TranslationSet(this.sourceLocale);
         let res, existing;
-    
+
         for (let i = 0; i < otherres.length; i++) {
             res = otherres[i];
             existing = this.byHashKey[res.hashKey()];
-    
+
             if (!existing || !existing.equals(res)) {
                 diff.add(res);
             }
         }
-    
+
         return diff;
     }
 }

@@ -42,3 +42,18 @@ export function cleanString(str) {
         replace(/&amp;/g, "&").
         replace(/’/g, "'");
 };
+
+export function isEmpty(obj) {
+    var prop = undefined;
+
+    if (!obj) {
+        return true;
+    }
+
+    for (prop in obj) {
+        if (prop && obj[prop]) {
+            return false;
+        }
+    }
+    return true;
+};
