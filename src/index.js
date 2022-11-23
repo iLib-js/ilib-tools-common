@@ -22,7 +22,7 @@ import ResourceString from './ResourceString.js';
 import ResourceArray from './ResourceArray.js';
 import ResourcePlural from './ResourcePlural.js';
 import TranslationSet from './TranslationSet.js';
-import TranslationSet from './ResXliff.js';
+import ResXliff from './ResXliff.js';
 
 export {
     Resource,
