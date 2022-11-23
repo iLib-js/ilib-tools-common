@@ -73,6 +73,6 @@
     },
     "dependencies": {
         "@log4js-node/log4js-api": "^1.0.2",
-        "ilib-xliff": "file:../xliff/ilib-xliff-1.0.0.tgz"
+        "ilib-xliff": "^1.0.0"
     }
 }
