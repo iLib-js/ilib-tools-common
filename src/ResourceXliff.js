@@ -26,7 +26,7 @@ import ResourcePlural from './ResourcePlural.js';
 import TranslationSet from './TranslationSet.js';
 import { isEmpty } from './utils.js';
 
-const logger = log4js.getLogger("tools-common.ResXliff");
+const logger = log4js.getLogger("tools-common.ResourceXliff");
 
 function generatePluralComment(res, sourcePlurals, form) {
     var json = {};
@@ -50,7 +50,7 @@ function generatePluralComment(res, sourcePlurals, form) {
 /**
  * @class a class that represents resources as an xliff file.
  */
-class ResXliff {
+class ResourceXliff {
     /**
      * Construct a new resource xliff instance. Operation of the instance
      * is controlled via the options. The options may be undefined, which represents a new,
@@ -439,4 +439,4 @@ class ResXliff {
     }
 }
 
-export default ResXliff;
+export default ResourceXliff;

@@ -23,8 +23,8 @@ const files = [
     "testResourceArray.js",
     "testResourcePlural.js",
     "testTranslationSet.js",
-    "testResXliff.js",
-    "testResXliff20.js"
+    "testResourceXliff.js",
+    "testResourceXliff20.js"
 ];
 
 export default files;

@@ -1,7 +1,7 @@
 /*
- * testXliff.js - test the Xliff object.
+ * testXliff20.js - test the Xliff 2.0 object.
  *
- * Copyright © 2016-2017, 2019-2022 HealthTap, Inc. and JEDLSoft
+ * Copyright © 2019,2021 JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,12 +22,12 @@ import fs from "node:fs";
 import ResourceArray from "../src/ResourceArray.js";
 import ResourcePlural from "../src/ResourcePlural.js";
 import ResourceString from "../src/ResourceString.js";
-import ResXliff from "../src/ResXliff.js";
+import ResourceXliff from "../src/ResourceXliff.js";
 
 function diff(a, b) {
-    const min = Math.min(a.length, b.length);
+    var min = Math.min(a.length, b.length);
 
-    for (let i = 0; i < min; i++) {
+    for (var i = 0; i < min; i++) {
         if (a[i] !== b[i]) {
             console.log("Found difference at character " + i);
             console.log("a: " + a.substring(i));
@@ -37,31 +37,61 @@ function diff(a, b) {
     }
 }
 
-export const testResXliff = {
-    testResXliffConstructor: function(test) {
+export const testResourceXliff20 = {
+    testXliff20Constructor: function(test) {
         test.expect(1);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
         test.done();
     },
 
-    testResXliffConstructorIsEmpty: function(test) {
+    testXliff20ConstructorIsEmpty: function(test) {
         test.expect(2);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
         test.equal(x.size(), 0);
-
         test.done();
     },
 
-    testResXliffConstructorFull: function(test) {
-        test.expect(7);
+    testXliff20ConstructorRightVersion: function(test) {
+        test.expect(2);
 
-        const x = new ResXliff({
+        var x = new ResourceXliff({version: "2.0"});
+        test.ok(x);
+
+        test.equal(x.getVersion(), "2.0");
+        test.done();
+    },
+
+    testXliff20ConstructorNumericVersion12: function(test) {
+        test.expect(2);
+
+        var x = new ResourceXliff({version: 1.2});
+        test.ok(x);
+
+        test.equal(x.getVersion(), "1.2");
+        test.done();
+    },
+
+    testXliff20ConstructorNumericVersion20: function(test) {
+        test.expect(2);
+
+        var x = new ResourceXliff({version: 2.0});
+        test.ok(x);
+
+        test.equal(x.getVersion(), "2.0");
+        test.done();
+    },
+
+    testXliff20ConstructorFull: function(test) {
+        test.expect(8);
+
+        var x = new ResourceXliff({
+            version: "2.0",
             "tool-id": "loctool",
             "tool-name": "Localization Tool",
             "tool-version": "1.2.34",
@@ -70,6 +100,8 @@ export const testResXliff = {
             path: "a/b/c.xliff"
         });
         test.ok(x);
+
+        test.equal(x.getVersion(), "2.0");
 
         test.equal(x["tool-id"], "loctool");
         test.equal(x["tool-name"], "Localization Tool"),
@@ -81,10 +113,11 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffGetPath: function(test) {
+    testXliff20GetPath: function(test) {
         test.expect(2);
 
-        const x = new ResXliff({
+        var x = new ResourceXliff({
+            version: "2.0",
             path: "foo/bar/x.xliff"
         });
         test.ok(x);
@@ -95,10 +128,11 @@ export const testResXliff = {
     },
 
 
-    testResXliffSetPath: function(test) {
+    testXliff20SetPath: function(test) {
         test.expect(3);
 
-        const x = new ResXliff({
+        var x = new ResourceXliff({
+            version: "2.0",
             path: "foo/bar/x.xliff"
         });
         test.ok(x);
@@ -112,10 +146,10 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffSetPathInitiallyEmpty: function(test) {
+    testXliff20SetPathInitiallyEmpty: function(test) {
         test.expect(3);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
         test.ok(!x.getPath());
@@ -127,13 +161,13 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffAddResource: function(test) {
+    testXliff20AddResource: function(test) {
         test.expect(11);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
-        const res = new ResourceString({
+        var res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -147,7 +181,7 @@ export const testResXliff = {
 
         x.addResource(res);
 
-        const reslist = x.getResources({
+        var reslist = x.getResources({
             reskey: "foobar"
         });
 
@@ -166,13 +200,13 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffSize: function(test) {
+    testXliff20Size: function(test) {
         test.expect(3);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
-        const res = new ResourceString({
+        var res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -193,13 +227,13 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffAddMultipleResources: function(test) {
+    testXliff20AddMultipleResources: function(test) {
         test.expect(8);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
-        let res = new ResourceString({
+        var res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -219,7 +253,7 @@ export const testResXliff = {
 
         x.addResource(res);
 
-        const reslist = x.getResources({
+        var reslist = x.getResources({
             reskey: "foobar"
         });
 
@@ -235,14 +269,14 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffAddMultipleResourcesRightSize: function(test) {
+    testXliff20AddMultipleResourcesRightSize: function(test) {
         test.expect(3);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
         test.equal(x.size(), 0);
 
-        let res = new ResourceString({
+        var res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -267,13 +301,13 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffAddMultipleResourcesAddInstance: function(test) {
+    testXliff20AddMultipleResourcesAddInstance: function(test) {
         test.expect(17);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
-        let res = new ResourceString({
+        var res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -296,7 +330,7 @@ export const testResXliff = {
 
         x.addResource(res);
 
-        const reslist = x.getResources({
+        var reslist = x.getResources({
             reskey: "foobar"
         });
 
@@ -324,15 +358,15 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffAddMultipleResourcesOverwriteRightSize: function(test) {
+    testXliff20AddMultipleResourcesOverwriteRightSize: function(test) {
         test.expect(4);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
         test.equal(x.size(), 0);
 
-        let res = new ResourceString({
+        var res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -362,13 +396,13 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffAddMultipleResourcesNoOverwrite: function(test) {
+    testXliff20AddMultipleResourcesNoOverwrite: function(test) {
         test.expect(13);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
-        let res = new ResourceString({
+        var res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -391,7 +425,7 @@ export const testResXliff = {
 
         x.addResource(res);
 
-        const reslist = x.getResources({
+        var reslist = x.getResources({
             reskey: "foobar"
         });
 
@@ -414,15 +448,16 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffAddResourceDontAddSourceLocaleAsTarget: function(test) {
+    testXliff20AddResourceDontAddSourceLocaleAsTarget: function(test) {
         test.expect(2);
 
-        const x = new ResXliff({
+        var x = new ResourceXliff({
+            version: "2.0",
             sourceLocale: "en-US"
         });
         test.ok(x);
 
-        let res = new ResourceString({
+        var res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -450,13 +485,13 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffGetResourcesMultiple: function(test) {
+    testXliff20GetResourcesMultiple: function(test) {
         test.expect(11);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
-        let res = new ResourceString({
+        var res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -478,7 +513,7 @@ export const testResXliff = {
 
         x.addResource(res);
 
-        const reslist = x.getResources({
+        var reslist = x.getResources({
             sourceLocale: "en-US"
         });
 
@@ -499,10 +534,10 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffGetTextWithExplicitIds: function(test) {
+    testXliff20GetTextWithExplicitIds: function(test) {
         test.expect(2);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
         let res = new ResourceString({
@@ -532,21 +567,25 @@ export const testResXliff = {
 
         x.addResource(res);
 
-        const actual = x.getText();
-        const expected =
+        var actual = x.getText();
+        var expected =
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="nl-NL" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="4444444" resname="foobar" restype="string" datatype="plaintext">\n' +
-                '        <source>Asdf asdf</source>\n' +
-                '        <target>baby baby</target>\n' +
-                '      </trans-unit>\n' +
-                '      <trans-unit id="4444445" resname="asdf" restype="string" datatype="plaintext">\n' +
-                '        <source>abcdef</source>\n' +
-                '        <target>hijklmn</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="nl-NL" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <group id="group_1" name="plaintext">\n' +
+                '      <unit id="4444444" name="foobar" type="res:string" l:datatype="plaintext">\n' +
+                '        <segment>\n' +
+                '          <source>Asdf asdf</source>\n' +
+                '          <target>baby baby</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '      <unit id="4444445" name="asdf" type="res:string" l:datatype="plaintext">\n' +
+                '        <segment>\n' +
+                '          <source>abcdef</source>\n' +
+                '          <target>hijklmn</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '    </group>\n' +
                 '  </file>\n' +
                 '</xliff>';
         diff(actual, expected);
@@ -555,13 +594,13 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffGetTextWithSourceAndTarget: function(test) {
+    testXliff20GetTextWithSourceAndTarget: function(test) {
         test.expect(2);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
-        let res = new ResourceString({
+        var res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             target: "foobarfoo",
@@ -578,7 +617,7 @@ export const testResXliff = {
             source: "baby baby",
             sourceLocale: "en-US",
             target: "bebe bebe",
-            targetLocale: "fr-FR",
+            targetLocale: "de-DE",
             key: "huzzah",
             pathName: "foo/bar/j.java",
             project: "webapp",
@@ -587,58 +626,44 @@ export const testResXliff = {
 
         x.addResource(res);
 
-        diff(x.getText(),
+        var expected =
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="de-DE" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="string" datatype="plaintext">\n' +
-                '        <source>Asdf asdf</source>\n' +
-                '        <target>foobarfoo</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="de-DE" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="webapp">\n' +
+                '    <group id="group_1" name="plaintext">\n' +
+                '      <unit id="1" name="foobar" type="res:string" l:datatype="plaintext">\n' +
+                '        <segment>\n' +
+                '          <source>Asdf asdf</source>\n' +
+                '          <target>foobarfoo</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '    </group>\n' +
                 '  </file>\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" target-language="fr-FR" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah" restype="string" datatype="plaintext">\n' +
-                '        <source>baby baby</source>\n' +
-                '        <target>bebe bebe</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '  <file original="foo/bar/j.java" l:project="webapp">\n' +
+                '    <group id="group_2" name="plaintext">\n' +
+                '      <unit id="2" name="huzzah" type="res:string" l:datatype="plaintext">\n' +
+                '        <segment>\n' +
+                '          <source>baby baby</source>\n' +
+                '          <target>bebe bebe</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '    </group>\n' +
                 '  </file>\n' +
-                '</xliff>');
+                '</xliff>';
 
-        test.equal(x.getText(),
-                '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="de-DE" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="string" datatype="plaintext">\n' +
-                '        <source>Asdf asdf</source>\n' +
-                '        <target>foobarfoo</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
-                '  </file>\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" target-language="fr-FR" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah" restype="string" datatype="plaintext">\n' +
-                '        <source>baby baby</source>\n' +
-                '        <target>bebe bebe</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
-                '  </file>\n' +
-                '</xliff>');
+        diff(x.getText(), expected);
+        test.equal(x.getText(), expected);
 
         test.done();
     },
 
-    testResXliffGetTextWithSourceAndTargetAndComment: function(test) {
+    testXliff20GetTextWithSourceAndTargetAndComment: function(test) {
         test.expect(2);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
-        let res = new ResourceString({
+        var res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             target: "foobarfoo",
@@ -655,7 +680,7 @@ export const testResXliff = {
             source: "baby baby",
             sourceLocale: "en-US",
             target: "bebe bebe",
-            targetLocale: "fr-FR",
+            targetLocale: "de-DE",
             key: "huzzah",
             pathName: "foo/bar/j.java",
             project: "webapp",
@@ -664,30 +689,38 @@ export const testResXliff = {
 
         x.addResource(res);
 
-        const expected =
+        var expected =
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="de-DE" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="string" datatype="plaintext">\n' +
-                '        <source>Asdf asdf</source>\n' +
-                '        <target>foobarfoo</target>\n' +
-                '        <note>foobar is where it\'s at!</note>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="de-DE" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="webapp">\n' +
+                '    <group id="group_1" name="plaintext">\n' +
+                '      <unit id="1" name="foobar" type="res:string" l:datatype="plaintext">\n' +
+                '        <notes>\n' +
+                '          <note appliesTo="source">foobar is where it\'s at!</note>\n' +
+                '        </notes>\n' +
+                '        <segment>\n' +
+                '          <source>Asdf asdf</source>\n' +
+                '          <target>foobarfoo</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '    </group>\n' +
                 '  </file>\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" target-language="fr-FR" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah" restype="string" datatype="plaintext">\n' +
-                '        <source>baby baby</source>\n' +
-                '        <target>bebe bebe</target>\n' +
-                '        <note>come &amp; enjoy it with us</note>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '  <file original="foo/bar/j.java" l:project="webapp">\n' +
+                '    <group id="group_2" name="plaintext">\n' +
+                '      <unit id="2" name="huzzah" type="res:string" l:datatype="plaintext">\n' +
+                '        <notes>\n' +
+                '          <note appliesTo="source">come &amp; enjoy it with us</note>\n' +
+                '        </notes>\n' +
+                '        <segment>\n' +
+                '          <source>baby baby</source>\n' +
+                '          <target>bebe bebe</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '    </group>\n' +
                 '  </file>\n' +
                 '</xliff>';
 
-        const actual = x.getText();
+        var actual = x.getText();
 
         diff(actual, expected);
         test.equal(actual, expected);
@@ -695,10 +728,11 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffGetTextWithHeader: function(test) {
+    testXliff20GetTextWithHeader: function(test) {
         test.expect(2);
 
-        const x = new ResXliff({
+        var x = new ResourceXliff({
+            version: "2.0",
             "tool-id": "loctool",
             "tool-name": "Localization Tool",
             "tool-version": "1.2.34",
@@ -721,20 +755,22 @@ export const testResXliff = {
 
         x.addResource(res);
 
-        const actual = x.getText();
-        const expected =
+        var actual = x.getText();
+        var expected =
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="nl-NL" product-name="webapp">\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="nl-NL" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="webapp">\n' +
+                '    <group id="group_1" name="plaintext">\n' +
+                '      <unit id="1" name="foobar" type="res:string" l:datatype="plaintext">\n' +
+                '        <segment>\n' +
+                '          <source>Asdf asdf</source>\n' +
+                '          <target>baby baby</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '    </group>\n' +
                 '    <header>\n' +
                 '      <tool tool-id="loctool" tool-name="Localization Tool" tool-version="1.2.34" tool-company="My Company, Inc." copyright="Copyright 2016, My Company, Inc. All rights reserved."/>\n' +
                 '    </header>\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="string" datatype="plaintext">\n' +
-                '        <source>Asdf asdf</source>\n' +
-                '        <target>baby baby</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
                 '  </file>\n' +
                 '</xliff>';
 
@@ -743,13 +779,13 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffGetTextWithPlurals: function(test) {
+    testXliff20GetTextWithPlurals: function(test) {
         test.expect(2);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
-        let res = new ResourcePlural({
+        const res = new ResourcePlural({
             source: {
                 "one": "There is 1 object.",
                 "other": "There are {n} objects."
@@ -772,23 +808,31 @@ export const testResXliff = {
 
         x.addResource(res);
 
-        const actual = x.getText();
-        const expected =
+        var actual = x.getText();
+        var expected =
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="de-DE" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="plural" datatype="ruby" extype="one">\n' +
-                '        <source>There is 1 object.</source>\n' +
-                '        <target state="new">Da gibts 1 Objekt.</target>\n' +
-                '        <note>{"pluralForm":"one","pluralFormOther":"foobar"}</note>\n' +
-                '      </trans-unit>\n' +
-                '      <trans-unit id="2" resname="foobar" restype="plural" datatype="ruby" extype="other">\n' +
-                '        <source>There are {n} objects.</source>\n' +
-                '        <target state="new">Da gibts {n} Objekten.</target>\n' +
-                '        <note>{"pluralForm":"other","pluralFormOther":"foobar"}</note>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="de-DE" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <group id="group_1" name="ruby">\n' +
+                '      <unit id="1" name="foobar" type="res:plural" l:datatype="ruby" l:category="one">\n' +
+                '        <notes>\n' +
+                '          <note appliesTo="source">{"pluralForm":"one","pluralFormOther":"foobar"}</note>\n' +
+                '        </notes>\n' +
+                '        <segment>\n' +
+                '          <source>There is 1 object.</source>\n' +
+                '          <target state="new">Da gibts 1 Objekt.</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '      <unit id="2" name="foobar" type="res:plural" l:datatype="ruby" l:category="other">\n' +
+                '        <notes>\n' +
+                '          <note appliesTo="source">{"pluralForm":"other","pluralFormOther":"foobar"}</note>\n' +
+                '        </notes>\n' +
+                '        <segment>\n' +
+                '          <source>There are {n} objects.</source>\n' +
+                '          <target state="new">Da gibts {n} Objekten.</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '    </group>\n' +
                 '  </file>\n' +
                 '</xliff>';
         diff(actual, expected);
@@ -797,10 +841,10 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffGetTextWithPluralsToLangWithMorePluralsThanEnglish: function(test) {
+    testXliff20GetTextWithPluralsToLangWithMorePluralsThanEnglish: function(test) {
         test.expect(2);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
         const res = new ResourcePlural({
@@ -827,28 +871,40 @@ export const testResXliff = {
 
         x.addResource(res);
 
-        const actual = x.getText();
-        const expected =
+        var actual = x.getText();
+        var expected =
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="ru-RU" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="plural" datatype="ruby" extype="one">\n' +
-                '        <source>There is 1 object.</source>\n' +
-                '        <target state="new">Имеется {n} объект.</target>\n' +
-                '        <note>{"pluralForm":"one","pluralFormOther":"foobar"}</note>\n' +
-                '      </trans-unit>\n' +
-                '      <trans-unit id="2" resname="foobar" restype="plural" datatype="ruby" extype="few">\n' +
-                '        <source>There are {n} objects.</source>\n' +
-                '        <target state="new">Есть {n} объекта.</target>\n' +
-                '        <note>{"pluralForm":"few","pluralFormOther":"foobar"}</note>\n' +
-                '      </trans-unit>\n' +
-                '      <trans-unit id="3" resname="foobar" restype="plural" datatype="ruby" extype="other">\n' +
-                '        <source>There are {n} objects.</source>\n' +
-                '        <target state="new">Всего {n} объектов.</target>\n' +
-                '        <note>{"pluralForm":"other","pluralFormOther":"foobar"}</note>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="ru-RU" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <group id="group_1" name="ruby">\n' +
+                '      <unit id="1" name="foobar" type="res:plural" l:datatype="ruby" l:category="one">\n' +
+                '        <notes>\n' +
+                '          <note appliesTo="source">{"pluralForm":"one","pluralFormOther":"foobar"}</note>\n' +
+                '        </notes>\n' +
+                '        <segment>\n' +
+                '          <source>There is 1 object.</source>\n' +
+                '          <target state="new">Имеется {n} объект.</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '      <unit id="2" name="foobar" type="res:plural" l:datatype="ruby" l:category="few">\n' +
+                '        <notes>\n' +
+                '          <note appliesTo="source">{"pluralForm":"few","pluralFormOther":"foobar"}</note>\n' +
+                '        </notes>\n' +
+                '        <segment>\n' +
+                '          <source>There are {n} objects.</source>\n' +
+                '          <target state="new">Есть {n} объекта.</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '      <unit id="3" name="foobar" type="res:plural" l:datatype="ruby" l:category="other">\n' +
+                '        <notes>\n' +
+                '          <note appliesTo="source">{"pluralForm":"other","pluralFormOther":"foobar"}</note>\n' +
+                '        </notes>\n' +
+                '        <segment>\n' +
+                '          <source>There are {n} objects.</source>\n' +
+                '          <target state="new">Всего {n} объектов.</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '    </group>\n' +
                 '  </file>\n' +
                 '</xliff>';
         diff(actual, expected);
@@ -857,14 +913,14 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffGetTextWithArrays: function(test) {
+    testXliff20GetTextWithArrays: function(test) {
         test.expect(2);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
         const res = new ResourceArray({
-            source: ["Zero", "One", "Two"],
+            sourceArray: ["Zero", "One", "Two"],
             sourceLocale: "en-US",
             targetArray: ["Zero", "Eins", "Zwei"],
             targetLocale: "de-DE",
@@ -876,25 +932,31 @@ export const testResXliff = {
 
         x.addResource(res);
 
-        const actual = x.getText();
-        const expected =
+        var actual = x.getText();
+        var expected =
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="de-DE" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="array" datatype="x-android-resource" extype="0">\n' +
-                '        <source>Zero</source>\n' +
-                '        <target>Zero</target>\n' +
-                '      </trans-unit>\n' +
-                '      <trans-unit id="2" resname="foobar" restype="array" datatype="x-android-resource" extype="1">\n' +
-                '        <source>One</source>\n' +
-                '        <target>Eins</target>\n' +
-                '      </trans-unit>\n' +
-                '      <trans-unit id="3" resname="foobar" restype="array" datatype="x-android-resource" extype="2">\n' +
-                '        <source>Two</source>\n' +
-                '        <target>Zwei</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="de-DE" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <group id="group_1" name="x-android-resource">\n' +
+                '      <unit id="1" name="foobar" type="res:array" l:datatype="x-android-resource" l:index="0">\n' +
+                '        <segment>\n' +
+                '          <source>Zero</source>\n' +
+                '          <target>Zero</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '      <unit id="2" name="foobar" type="res:array" l:datatype="x-android-resource" l:index="1">\n' +
+                '        <segment>\n' +
+                '          <source>One</source>\n' +
+                '          <target>Eins</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '      <unit id="3" name="foobar" type="res:array" l:datatype="x-android-resource" l:index="2">\n' +
+                '        <segment>\n' +
+                '          <source>Two</source>\n' +
+                '          <target>Zwei</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '    </group>\n' +
                 '  </file>\n' +
                 '</xliff>';
         diff(actual, expected)
@@ -902,13 +964,13 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffGetTextWithXMLEscaping: function(test) {
+    testXliff20GetTextWithXMLEscaping: function(test) {
         test.expect(2);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
-        let res = new ResourceString({
+        var res = new ResourceString({
             source: "Asdf <b>asdf</b>",
             sourceLocale: "en-US",
             target: "Asdf 'quotes'",
@@ -934,25 +996,29 @@ export const testResXliff = {
 
         x.addResource(res);
 
-        const actual = x.getText();
-        const expected =
+        var actual = x.getText();
+        var expected =
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="de-DE" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar &quot;asdf&quot;" restype="string" datatype="plaintext">\n' +
-                '        <source>Asdf &lt;b&gt;asdf&lt;/b&gt;</source>\n' +
-                '        <target>Asdf \'quotes\'</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="de-DE" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <group id="group_1" name="plaintext">\n' +
+                '      <unit id="1" name="foobar &quot;asdf&quot;" type="res:string" l:datatype="plaintext">\n' +
+                '        <segment>\n' +
+                '          <source>Asdf &lt;b&gt;asdf&lt;/b&gt;</source>\n' +
+                '          <target>Asdf \'quotes\'</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '    </group>\n' +
                 '  </file>\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" target-language="de-DE" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah &amp;quot;asdf&amp;quot; #(test)" restype="string" datatype="plaintext">\n' +
-                '        <source>baby &amp;lt;b&amp;gt;baby&amp;lt;/b&amp;gt;</source>\n' +   // double escaped!
-                '        <target>baby #(test)</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '  <file original="foo/bar/j.java" l:project="webapp">\n' +
+                '    <group id="group_2" name="plaintext">\n' +
+                '      <unit id="2" name="huzzah &amp;quot;asdf&amp;quot; #(test)" type="res:string" l:datatype="plaintext">\n' +
+                '        <segment>\n' +
+                '          <source>baby &amp;lt;b&amp;gt;baby&amp;lt;/b&amp;gt;</source>\n' +   // double escaped!
+                '          <target>baby #(test)</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '    </group>\n' +
                 '  </file>\n' +
                 '</xliff>';
 
@@ -961,72 +1027,13 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffGetTextWithXMLEscapingInResname: function(test) {
+    testXliff20GetTextWithXMLEscapingWithQuotes: function(test) {
         test.expect(2);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
-        let res = new ResourceString({
-            source: "Asdf <b>asdf</b>",
-            sourceLocale: "en-US",
-            target: "Asdf 'quotes'",
-            targetLocale: "de-DE",
-            key: 'foobar <i>asdf</i>',
-            pathName: "foo/bar/asdf.java",
-            project: "androidapp",
-            origin: "target"
-        });
-
-        x.addResource(res);
-
-        res = new ResourceString({
-            source: "baby &lt;b&gt;baby&lt;/b&gt;",
-            sourceLocale: "en-US",
-            target: "baby #(test)",
-            targetLocale: "de-DE",
-            key: "huzzah <b>asdf</b> #(test)",
-            pathName: "foo/bar/j.java",
-            project: "webapp",
-            origin: "target"
-        });
-
-        x.addResource(res);
-
-        const actual = x.getText();
-        const expected =
-                '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="de-DE" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar &lt;i>asdf&lt;/i>" restype="string" datatype="plaintext">\n' +
-                '        <source>Asdf &lt;b&gt;asdf&lt;/b&gt;</source>\n' +
-                '        <target>Asdf \'quotes\'</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
-                '  </file>\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" target-language="de-DE" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah &lt;b>asdf&lt;/b> #(test)" restype="string" datatype="plaintext">\n' +
-                '        <source>baby &amp;lt;b&amp;gt;baby&amp;lt;/b&amp;gt;</source>\n' +   // double escaped!
-                '        <target>baby #(test)</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
-                '  </file>\n' +
-                '</xliff>';
-
-        diff(actual, expected);
-        test.equal(actual, expected);
-        test.done();
-    },
-
-    testResXliffGetTextWithXMLEscapingWithQuotes: function(test) {
-        test.expect(2);
-
-        const x = new ResXliff();
-        test.ok(x);
-
-        const res = new ResourceString({
+        var res = new ResourceString({
             source: "Here are \"double\" and 'single' quotes.",
             sourceLocale: "en-US",
             target: "Hier zijn \"dubbel\" en 'singel' quotaties.",
@@ -1041,32 +1048,34 @@ export const testResXliff = {
 
         test.equal(x.getText(),
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="nl-NL" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="&quot;double&quot; and &apos;single&apos;" restype="string" datatype="plaintext">\n' +
-                '        <source>Here are "double" and \'single\' quotes.</source>\n' +
-                '        <target>Hier zijn "dubbel" en \'singel\' quotaties.</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="nl-NL" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <group id="group_1" name="plaintext">\n' +
+                '      <unit id="1" name="&quot;double&quot; and &apos;single&apos;" type="res:string" l:datatype="plaintext">\n' +
+                '        <segment>\n' +
+                '          <source>Here are "double" and \'single\' quotes.</source>\n' +
+                '          <target>Hier zijn "dubbel" en \'singel\' quotaties.</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '    </group>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
         test.done();
     },
 
-    testResXliffGetTextWithEscapeCharsInResname: function(test) {
+    testXliff20GetTextWithEscapeCharsInResname: function(test) {
         test.expect(2);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
-        let res = new ResourceString({
-            source: "Asdf asdf",
+        var res = new ResourceString({
+            source: "Here are \\ndouble\\n quotes.",
             sourceLocale: "en-US",
-            target: "Asdf translated",
-            targetLocale: "de-DE",
-            key: 'asdf \\n\\nasdf',
+            target: "Hier zijn \\ndubbel\\n quotaties.",
+            targetLocale: "nl-NL",
+            key: 'Double \\ndouble\\n.',
             pathName: "foo/bar/asdf.java",
             project: "androidapp",
             origin: "target"
@@ -1074,53 +1083,31 @@ export const testResXliff = {
 
         x.addResource(res);
 
-        res = new ResourceString({
-            source: "asdf \\t\\n\\n asdf\\n",
-            sourceLocale: "en-US",
-            target: "fdsa \\t\\n\\n fdsa\\n",
-            targetLocale: "de-DE",
-            key: "asdf \\t\\n\\n asdf\\n",
-            pathName: "foo/bar/j.java",
-            project: "webapp",
-            origin: "target"
-        });
-
-        x.addResource(res);
-
-        const actual = x.getText();
-        const expected =
+        test.equal(x.getText(),
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="de-DE" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="asdf \\n\\nasdf" restype="string" datatype="plaintext">\n' +
-                '        <source>Asdf asdf</source>\n' +
-                '        <target>Asdf translated</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="nl-NL" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <group id="group_1" name="plaintext">\n' +
+                '      <unit id="1" name="Double \\ndouble\\n." type="res:string" l:datatype="plaintext">\n' +
+                '        <segment>\n' +
+                '          <source>Here are \\ndouble\\n quotes.</source>\n' +
+                '          <target>Hier zijn \\ndubbel\\n quotaties.</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '    </group>\n' +
                 '  </file>\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" target-language="de-DE" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="asdf \\t\\n\\n asdf\\n" restype="string" datatype="plaintext">\n' +
-                '        <source>asdf \\t\\n\\n asdf\\n</source>\n' +
-                '        <target>fdsa \\t\\n\\n fdsa\\n</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
-                '  </file>\n' +
-                '</xliff>';
+                '</xliff>');
 
-        diff(actual, expected);
-        test.equal(actual, expected);
         test.done();
     },
 
-    testResXliffGetTextWithComments: function(test) {
+    testXliff20GetTextWithComments: function(test) {
         test.expect(2);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff({version: "2.0"});
         test.ok(x);
 
-        let res = new ResourceString({
+        const res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             target: "baby baby",
@@ -1136,47 +1123,52 @@ export const testResXliff = {
 
         test.equal(x.getText(),
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="nl-NL" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="string" datatype="plaintext">\n' +
-                '        <source>Asdf asdf</source>\n' +
-                '        <target>baby baby</target>\n' +
-                '        <note>A very nice string</note>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="nl-NL" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <group id="group_1" name="plaintext">\n' +
+                '      <unit id="1" name="foobar" type="res:string" l:datatype="plaintext">\n' +
+                '        <notes>\n' +
+                '          <note appliesTo="source">A very nice string</note>\n' +
+                '        </notes>\n' +
+                '        <segment>\n' +
+                '          <source>Asdf asdf</source>\n' +
+                '          <target>baby baby</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '    </group>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
         test.done();
     },
 
-    testResXliffParseWithSourceOnly: function(test) {
+    testXliff20ParseWithSourceOnly: function(test) {
         test.expect(21);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="de-DE" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="string" datatype="plaintext">\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="de-DE" \n' +
+                '  xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <unit id="1" name="foobar" type="res:string" l:datatype="plaintext">\n' +
+                '      <segment>\n' +
                 '        <source>Asdf asdf</source>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" target-language="fr-FR" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah" restype="string" datatype="plaintext">\n' +
+                '  <file original="foo/bar/j.java" l:project="webapp">\n' +
+                '    <unit id="2" name="huzzah" type="res:string" l:datatype="plaintext">\n' +
+                '      <segment>\n' +
                 '        <source>baby baby</source>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
@@ -1195,7 +1187,7 @@ export const testResXliff = {
         test.equal(reslist[1].getSource(), "baby baby");
         test.equal(reslist[1].getSourceLocale(), "en-US");
         test.ok(!reslist[1].getTarget());
-        test.equal(reslist[1].getTargetLocale(), "fr-FR");
+        test.equal(reslist[1].getTargetLocale(), "de-DE");
         test.equal(reslist[1].getKey(), "huzzah");
         test.equal(reslist[1].getPath(), "foo/bar/j.java");
         test.equal(reslist[1].getProject(), "webapp");
@@ -1205,35 +1197,35 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffParseWithSourceAndTarget: function(test) {
+    testXliff20ParseWithSourceAndTarget: function(test) {
         test.expect(21);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="de-DE" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="string">\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="de-DE" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <unit id="1" name="foobar" type="res:string">\n' +
+                '      <segment>\n' +
                 '        <source>Asdf asdf</source>\n' +
                 '        <target>foobarfoo</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" target-language="fr-FR" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah" restype="string">\n' +
+                '  <file original="foo/bar/j.java" l:project="webapp">\n' +
+                '    <unit id="2" name="huzzah" type="res:string">\n' +
+                '      <segment>\n' +
                 '        <source>baby baby</source>\n' +
                 '        <target>bebe bebe</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
         // console.log("x is " + JSON.stringify(x, undefined, 4));
-        const reslist = x.getResources();
+        var reslist = x.getResources();
         // console.log("x is now " + JSON.stringify(x, undefined, 4));
 
         test.ok(reslist);
@@ -1258,37 +1250,37 @@ export const testResXliff = {
         test.equal(reslist[1].resType, "string");
         test.equal(reslist[1].getId(), "2");
         test.equal(reslist[1].getTarget(), "bebe bebe");
-        test.equal(reslist[1].getTargetLocale(), "fr-FR");
+        test.equal(reslist[1].getTargetLocale(), "de-DE");
 
         test.done();
     },
 
-    testResXliffParseWithXMLUnescaping: function(test) {
+    testXliff20ParseWithXMLUnescaping: function(test) {
         test.expect(19);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="string">\n' +
+                '<xliff version="2.0" xmlns:l="http://ilib-js.com/loctool" srcLang="en-US">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <unit id="1" name="foobar" type="res:string">\n' +
+                '      <segment>\n' +
                 '        <source>Asdf &lt;b&gt;asdf&lt;/b&gt;</source>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah" restype="string">\n' +
+                '  <file original="foo/bar/j.java" l:project="webapp">\n' +
+                '    <unit id="2" name="huzzah" type="res:string">\n' +
+                '      <segment>\n' +
                 '        <source>baby &amp;lt;b&amp;gt;baby&amp;lt;/b&amp;gt;</source>\n' +   // double escaped!
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
@@ -1315,84 +1307,33 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffParseWithXMLUnescapingInResname: function(test) {
-        test.expect(19);
-
-        const x = new ResXliff();
-        test.ok(x);
-
-        x.parse(
-                '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar &lt;a>link&lt;/a>" restype="string">\n' +
-                '        <source>Asdf &lt;b&gt;asdf&lt;/b&gt;</source>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
-                '  </file>\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="&lt;b>huzzah&lt;/b>" restype="string">\n' +
-                '        <source>baby &amp;lt;b&amp;gt;baby&amp;lt;/b&amp;gt;</source>\n' +   // double escaped!
-                '      </trans-unit>\n' +
-                '    </body>\n' +
-                '  </file>\n' +
-                '</xliff>');
-
-        const reslist = x.getResources();
-
-        test.ok(reslist);
-
-        test.equal(reslist.length, 2);
-
-        test.equal(reslist[0].getSource(), "Asdf <b>asdf</b>");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar <a>link</a>");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "androidapp");
-        test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].getId(), "1");
-        test.ok(!reslist[0].getTarget());
-
-        test.equal(reslist[1].getSource(), "baby &lt;b&gt;baby&lt;/b&gt;");
-        test.equal(reslist[1].getSourceLocale(), "en-US");
-        test.equal(reslist[1].getKey(), "<b>huzzah</b>");
-        test.equal(reslist[1].getPath(), "foo/bar/j.java");
-        test.equal(reslist[1].getProject(), "webapp");
-        test.equal(reslist[1].resType, "string");
-        test.equal(reslist[1].getId(), "2");
-        test.ok(!reslist[1].getTarget());
-
-        test.done();
-    },
-
-    testResXliffParseWithEscapedNewLines: function(test) {
+    testXliff20ParseWithEscapedNewLines: function(test) {
         test.expect(17);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="en-CA" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="string">\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="en-CA" \n' +
+                '  xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <unit id="1" name="foobar" type="res:string">\n' +
+                '      <segment>\n' +
                 '        <source>a\\nb</source>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" target-language="en-CA" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah" restype="string">\n' +
+                '  <file original="foo/bar/j.java" l:project="webapp">\n' +
+                '    <unit id="2" name="huzzah" type="res:string">\n' +
+                '      <segment>\n' +
                 '        <source>e\\nh</source>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
@@ -1417,32 +1358,33 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffParseWithEscapedNewLinesInResname: function(test) {
+    testXliff20ParseWithEscapedNewLinesInResname: function(test) {
         test.expect(17);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="en-CA" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar\\n\\nasdf" restype="string">\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="en-CA" \n' +
+                '  xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <unit id="1" name="foobar\\nbar\\t" type="res:string">\n' +
+                '      <segment>\n' +
                 '        <source>a\\nb</source>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" target-language="en-CA" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah\\t\\n" restype="string">\n' +
+                '  <file original="foo/bar/j.java" l:project="webapp">\n' +
+                '    <unit id="2" name="huzzah\\n\\na plague on both your houses" type="res:string">\n' +
+                '      <segment>\n' +
                 '        <source>e\\nh</source>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
@@ -1450,7 +1392,7 @@ export const testResXliff = {
 
         test.equal(reslist[0].getSource(), "a\\nb");
         test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar\\n\\nasdf");
+        test.equal(reslist[0].getKey(), "foobar\\nbar\\t");
         test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
         test.equal(reslist[0].getProject(), "androidapp");
         test.equal(reslist[0].resType, "string");
@@ -1458,7 +1400,7 @@ export const testResXliff = {
 
         test.equal(reslist[1].getSource(), "e\\nh");
         test.equal(reslist[1].getSourceLocale(), "en-US");
-        test.equal(reslist[1].getKey(), "huzzah\\t\\n");
+        test.equal(reslist[1].getKey(), "huzzah\\n\\na plague on both your houses");
         test.equal(reslist[1].getPath(), "foo/bar/j.java");
         test.equal(reslist[1].getProject(), "webapp");
         test.equal(reslist[1].resType, "string");
@@ -1467,30 +1409,32 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffParseWithPlurals: function(test) {
+    testXliff20ParseWithPlurals: function(test) {
         test.expect(10);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="plural" datatype="x-android-resource" extype="one">\n' +
+                '<xliff version="2.0" xmlns:l="http://ilib-js.com/loctool" srcLang="en-US">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <unit id="1" name="foobar" type="res:plural" l:datatype="x-android-resource" l:category="one">\n' +
+                '      <segment>\n' +
                 '        <source>There is 1 object.</source>\n' +
-                '      </trans-unit>\n' +
-                '      <trans-unit id="2" resname="foobar" restype="plural" datatype="x-android-resource" extype="other">\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
+                '    <unit id="2" name="foobar" type="res:plural" l:datatype="x-android-resource" l:category="other">\n' +
+                '      <segment>\n' +
                 '        <source>There are {n} objects.</source>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
         // console.log("x is " + JSON.stringify(x, undefined, 4));
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         // console.log("after get resources x is " + JSON.stringify(x, undefined, 4));
 
@@ -1512,32 +1456,34 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffParseWithPluralsTranslated: function(test) {
+    testXliff20ParseWithPluralsTranslated: function(test) {
         test.expect(13);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="es-US" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="plural" datatype="x-android-resource" extype="one">\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="es-US" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <unit id="1" name="foobar" type="res:plural" l:datatype="x-android-resource" l:category="one">\n' +
+                '      <segment>\n' +
                 '        <source>There is 1 object.</source>\n' +
                 '        <target>Hay 1 objeto.</target>\n' +
-                '      </trans-unit>\n' +
-                '      <trans-unit id="2" resname="foobar" restype="plural" datatype="x-android-resource" extype="other">\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
+                '    <unit id="2" name="foobar" type="res:plural" l:datatype="x-android-resource" l:category="other">\n' +
+                '      <segment>\n' +
                 '        <source>There are {n} objects.</source>\n' +
                 '        <target>Hay {n} objetos.</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
         // console.log("x is " + JSON.stringify(x, undefined, 4));
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         // console.log("after get resources x is " + JSON.stringify(x, undefined, 4));
 
@@ -1566,31 +1512,35 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffParseWithArrays: function(test) {
+    testXliff20ParseWithArrays: function(test) {
         test.expect(10);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="de-DE" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="array" datatype="x-android-resource" extype="0">\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="de-DE" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <unit id="1" name="foobar" type="res:array" l:datatype="x-android-resource" l:index="0">\n' +
+                '      <segment>\n' +
                 '        <source>Zero</source>\n' +
-                '      </trans-unit>\n' +
-                '      <trans-unit id="2" resname="foobar" restype="array" datatype="x-android-resource" extype="1">\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
+                '    <unit id="2" name="foobar" type="res:array" l:datatype="x-android-resource" l:index="1">\n' +
+                '      <segment>\n' +
                 '        <source>One</source>\n' +
-                '      </trans-unit>\n' +
-                '      <trans-unit id="3" resname="foobar" restype="array" datatype="x-android-resource" extype="2">\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
+                '    <unit id="3" name="foobar" type="res:array" l:datatype="x-android-resource" l:index="2">\n' +
+                '      <segment>\n' +
                 '        <source>Two</source>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
@@ -1607,34 +1557,38 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffParseWithArraysTranslated: function(test) {
+    testXliff20ParseWithArraysTranslated: function(test) {
         test.expect(12);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="de-DE" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="array" datatype="x-android-resource" extype="0">\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="de-DE" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <unit id="1" name="foobar" type="res:array" l:datatype="x-android-resource" l:index="0">\n' +
+                '      <segment>\n' +
                 '        <source>Zero</source>\n' +
                 '        <target>Zero</target>\n' +
-                '      </trans-unit>\n' +
-                '      <trans-unit id="2" resname="foobar" restype="array" datatype="x-android-resource" extype="1">\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
+                '    <unit id="2" name="foobar" type="res:array" l:datatype="x-android-resource" l:index="1">\n' +
+                '      <segment>\n' +
                 '        <source>One</source>\n' +
                 '        <target>Eins</target>\n' +
-                '      </trans-unit>\n' +
-                '      <trans-unit id="3" resname="foobar" restype="array" datatype="x-android-resource" extype="2">\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
+                '    <unit id="3" name="foobar" type="res:array" l:datatype="x-android-resource" l:index="2">\n' +
+                '      <segment>\n' +
                 '        <source>Two</source>\n' +
                 '        <target>Zwei</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
@@ -1653,38 +1607,44 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffParseWithArraysAndTranslations: function(test) {
+    testXliff20ParseWithArraysAndTranslations: function(test) {
         test.expect(20);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="res/values/arrays.xml" source-language="en-US" target-language="es-US" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah" restype="array" datatype="x-android-resource" extype="0">\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="es-US" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="res/values/arrays.xml" l:project="androidapp">\n' +
+                '    <unit id="2" name="huzzah" type="res:array" l:datatype="x-android-resource" l:index="0">\n' +
+                '      <segment>\n' +
                 '        <source>This is element 0</source>\n' +
                 '        <target>Este es 0</target>\n' +
-                '      </trans-unit>\n' +
-                '      <trans-unit id="3" resname="huzzah" restype="array" datatype="x-android-resource" extype="1">\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
+                '    <unit id="3" name="huzzah" type="res:array" l:datatype="x-android-resource" l:index="1">\n' +
+                '      <segment>\n' +
                 '        <source>This is element 1</source>\n' +
                 '        <target>Este es 1</target>\n' +
-                '      </trans-unit>\n' +
-                '      <trans-unit id="4" resname="huzzah" restype="array" datatype="x-android-resource" extype="2">\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
+                '    <unit id="4" name="huzzah" type="res:array" l:datatype="x-android-resource" l:index="2">\n' +
+                '      <segment>\n' +
                 '        <source>This is element 2</source>\n' +
                 '        <target>Este es 2</target>\n' +
-                '      </trans-unit>\n' +
-                '      <trans-unit id="5" resname="huzzah" restype="array" datatype="x-android-resource" extype="3">\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
+                '    <unit id="5" name="huzzah" type="res:array" l:datatype="x-android-resource" l:index="3">\n' +
+                '      <segment>\n' +
                 '        <source>This is element 3</source>\n' +
                 '        <target>Este es 3</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
@@ -1698,7 +1658,7 @@ export const testResXliff = {
         test.equal(reslist[0].resType, "array");
         test.equal(reslist[0].getOrigin(), "source");
 
-        let items = reslist[0].getSource();
+        var items = reslist[0].getSourceArray();
 
         test.equal(items.length, 4);
         test.equal(items[0], "This is element 0");
@@ -1706,7 +1666,7 @@ export const testResXliff = {
         test.equal(items[2], "This is element 2");
         test.equal(items[3], "This is element 3");
 
-        items = reslist[0].getTarget();
+        items = reslist[0].getTargetArray();
 
         test.equal(items.length, 4);
         test.equal(items[0], "Este es 0");
@@ -1717,26 +1677,26 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffParseWithArraysAndTranslationsPartial: function(test) {
+    testXliff20ParseWithArraysAndTranslationsPartial: function(test) {
         test.expect(20);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="res/values/arrays.xml" source-language="en-US" target-language="es-US" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="5" resname="huzzah" restype="array" datatype="x-android-resource" extype="3">\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="es-US" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="res/values/arrays.xml" l:project="androidapp">\n' +
+                '    <unit id="5" name="huzzah" type="res:array" l:datatype="x-android-resource" l:index="3">\n' +
+                '      <segment>\n' +
                 '        <source>This is element 3</source>\n' +
                 '        <target>Este es 3</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
@@ -1750,7 +1710,7 @@ export const testResXliff = {
         test.equal(reslist[0].resType, "array");
         test.equal(reslist[0].getOrigin(), "source");
 
-        let items = reslist[0].getSourceArray();
+        var items = reslist[0].getSourceArray();
 
         test.equal(items.length, 4);
         test.equal(items[0], null);
@@ -1769,34 +1729,38 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffParseWithComments: function(test) {
+    testXliff20ParseWithComments: function(test) {
         test.expect(18);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="string">\n' +
+                '<xliff version="2.0" xmlns:l="http://ilib-js.com/loctool" srcLang="en-US">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <unit id="1" name="foobar" type="res:string">\n' +
+                '      <notes>\n' +
+                '        <note appliesTo="source">A very nice string</note>\n' +
+                '      </notes>\n' +
+                '      <segment>\n' +
                 '        <source>Asdf asdf</source>\n' +
-                '        <note>A very nice string</note>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah" restype="string">\n' +
+                '  <file original="foo/bar/j.java" l:project="webapp">\n' +
+                '    <unit id="2" name="huzzah" type="res:string">\n' +
+                '      <notes>\n' +
+                '        <note appliesTo="source">Totally awesome.</note>\n' +
+                '      </notes>\n' +
+                '      <segment>\n' +
                 '        <source>baby baby</source>\n' +
-                '        <note>Totally awesome.</note>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
@@ -1821,32 +1785,32 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffParseWithContext: function(test) {
+    testXliff20ParseWithContext: function(test) {
         test.expect(19);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="de-DE" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="string" x-context="na na na">\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="de-DE" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <unit id="1" name="foobar" type="res:string" l:context="na na na">\n' +
+                '      <segment>\n' +
                 '        <source>Asdf asdf</source>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" target-language="fr-FR" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah" restype="string" x-context="asdf">\n' +
+                '  <file original="foo/bar/j.java" l:project="webapp">\n' +
+                '    <unit id="2" name="huzzah" type="res:string" l:context="asdf">\n' +
+                '      <segment>\n' +
                 '        <source>baby baby</source>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
@@ -1873,17 +1837,17 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffParseRealFile: function(test) {
+    testXliff20ParseRealFile: function(test) {
         test.expect(3);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
-        const str = fs.readFileSync("test/testfiles/test.xliff", "utf-8");
+        var str = fs.readFileSync("test/testfiles/test4.xliff", "utf-8");
 
         x.parse(str);
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
@@ -1892,34 +1856,34 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffParseEmptySource: function(test) {
+    testXliff20ParseEmptySource: function(test) {
         test.expect(12);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="de-DE" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="string" x-context="na na na">\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="de-DE" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <unit id="1" name="foobar" type="res:string" l:context="na na na">\n' +
+                '      <segment>\n' +
                 '        <source></source>\n' +
                 '        <target>Baby Baby</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" target-language="fr-FR" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah" restype="string">\n' +
+                '  <file original="foo/bar/j.java" l:project="webapp">\n' +
+                '    <unit id="2" name="huzzah" type="res:string">\n' +
+                '      <segment>\n' +
                 '        <source>baby baby</source>\n' +
                 '        <target>bebe bebe</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
@@ -1934,38 +1898,38 @@ export const testResXliff = {
         test.equal(reslist[0].getId(), "2");
 
         test.equal(reslist[0].getTarget(), "bebe bebe");
-        test.equal(reslist[0].getTargetLocale(), "fr-FR");
+        test.equal(reslist[0].getTargetLocale(), "de-DE");
 
         test.done();
     },
 
-    testResXliffParseEmptyTarget: function(test) {
-        test.expect(19);
+    testXliff20ParseEmptyTarget: function(test) {
+        test.expect(23);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="de-DE" product-name="androidapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="1" resname="foobar" restype="string">\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="fr-FR" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <unit id="1" name="foobar" type="res:string">\n' +
+                '      <segment>\n' +
                 '        <source>Asdf asdf</source>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" target-language="fr-FR" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah" restype="string">\n' +
+                '  <file original="foo/bar/j.java" l:project="webapp">\n' +
+                '    <unit id="2" name="huzzah" type="res:string">\n' +
+                '      <segment>\n' +
                 '        <source>baby baby</source>\n' +
                 '        <target></target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
@@ -1973,6 +1937,8 @@ export const testResXliff = {
 
         test.equal(reslist[0].getSource(), "Asdf asdf");
         test.equal(reslist[0].getSourceLocale(), "en-US");
+        test.ok(!reslist[0].getTarget());
+        test.equal(reslist[0].getTargetLocale(), "fr-FR");
         test.equal(reslist[0].getKey(), "foobar");
         test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
         test.equal(reslist[0].getProject(), "androidapp");
@@ -1982,6 +1948,8 @@ export const testResXliff = {
 
         test.equal(reslist[1].getSource(), "baby baby");
         test.equal(reslist[1].getSourceLocale(), "en-US");
+        test.ok(!reslist[0].getTarget());
+        test.equal(reslist[0].getTargetLocale(), "fr-FR");
         test.equal(reslist[1].getKey(), "huzzah");
         test.equal(reslist[1].getPath(), "foo/bar/j.java");
         test.equal(reslist[1].getProject(), "webapp");
@@ -1992,105 +1960,97 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffParseWithMrkTagInTarget: function(test) {
-        test.expect(12);
+    testXliff20ParseEmptyTargetNoTargetLocale: function(test) {
+        test.expect(23);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" target-language="fr-FR" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah" restype="string">\n' +
-                '        <source>baby baby</source><seg-source><mrk mtype="seg" mid="4">baby baby</mrk></seg-source><target><mrk mtype="seg" mid="4">bebe bebe</mrk></target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '<xliff version="2.0" xmlns:l="http://ilib-js.com/loctool" srcLang="en-US">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <unit id="1" name="foobar" type="res:string">\n' +
+                '      <segment>\n' +
+                '        <source>Asdf asdf</source>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
+                '  </file>\n' +
+                '  <file original="foo/bar/j.java" l:project="webapp">\n' +
+                '    <unit id="2" name="huzzah" type="res:string">\n' +
+                '      <segment>\n' +
+                '        <source>baby baby</source>\n' +
+                '        <target></target>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
-        test.equal(reslist.length, 1);
+        test.equal(reslist.length, 2);
 
-        test.equal(reslist[0].getSource(), "baby baby");
+        test.equal(reslist[0].getSource(), "Asdf asdf");
         test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "huzzah");
-        test.equal(reslist[0].getPath(), "foo/bar/j.java");
-        test.equal(reslist[0].getProject(), "webapp");
+        test.ok(!reslist[0].getTarget());
+        test.ok(!reslist[0].getTargetLocale());
+        test.equal(reslist[0].getKey(), "foobar");
+        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
+        test.equal(reslist[0].getProject(), "androidapp");
         test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].getId(), "2");
-
-        test.equal(reslist[0].getTarget(), "bebe bebe");
-        test.equal(reslist[0].getTargetLocale(), "fr-FR");
-
-        test.done();
-    },
-
-    testResXliffParseWithEmptyMrkTagInTarget: function(test) {
-        test.expect(11);
-
-        const x = new ResXliff();
-        test.ok(x);
-
-        x.parse(
-                '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" target-language="fr-FR" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah" restype="string">\n' +
-                '        <source>baby baby</source><seg-source><mrk mtype="seg" mid="4">baby baby</mrk></seg-source><target><mrk mtype="seg" mid="4"/></target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
-                '  </file>\n' +
-                '</xliff>');
-
-        const reslist = x.getResources();
-
-        test.ok(reslist);
-
-        test.equal(reslist.length, 1);
-
-        test.equal(reslist[0].getSource(), "baby baby");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "huzzah");
-        test.equal(reslist[0].getPath(), "foo/bar/j.java");
-        test.equal(reslist[0].getProject(), "webapp");
-        test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].getId(), "2");
+        test.equal(reslist[0].getId(), "1");
         test.equal(reslist[0].getOrigin(), "source");
 
+        test.equal(reslist[1].getSource(), "baby baby");
+        test.equal(reslist[1].getSourceLocale(), "en-US");
+        test.ok(!reslist[0].getTarget());
+        test.ok(!reslist[0].getTargetLocale());
+        test.equal(reslist[1].getKey(), "huzzah");
+        test.equal(reslist[1].getPath(), "foo/bar/j.java");
+        test.equal(reslist[1].getProject(), "webapp");
+        test.equal(reslist[1].resType, "string");
+        test.equal(reslist[1].getId(), "2");
+        test.equal(reslist[1].getOrigin(), "source");
+
         test.done();
     },
 
-    testResXliffParseWithMultipleMrkTagsInTargetEuro: function(test) {
+    testXliff20ParseWithMultipleSegments: function(test) {
         test.expect(12);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" target-language="fr-FR" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah" restype="string">\n' +
-                '        <source>baby baby</source><seg-source><mrk mtype="seg" mid="4">baby baby</mrk></seg-source><target><mrk mtype="seg" mid="4">This is segment 1.</mrk> <mrk mtype="seg" mid="5">This is segment 2.</mrk> <mrk mtype="seg" mid="6">This is segment 3.</mrk></target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="fr-FR" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/j.java" l:project="webapp">\n' +
+                '    <unit id="2" name="huzzah" type="res:string">\n' +
+                '      <segment id="1">\n' +
+                '        <source>seg1 </source>\n' +
+                '        <target>This is segment 1. </target>\n' +
+                '      </segment>\n' +
+                '      <segment id="2">\n' +
+                '        <source>seg2 </source>\n' +
+                '        <target>This is segment 2. </target>\n' +
+                '      </segment>\n' +
+                '      <segment id="3">\n' +
+                '        <source>seg3</source>\n' +
+                '        <target>This is segment 3.</target>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
         test.equal(reslist.length, 1);
 
-        test.equal(reslist[0].getSource(), "baby baby");
+        test.equal(reslist[0].getSource(), "seg1 seg2 seg3");
         test.equal(reslist[0].getSourceLocale(), "en-US");
         test.equal(reslist[0].getKey(), "huzzah");
         test.equal(reslist[0].getPath(), "foo/bar/j.java");
@@ -2104,64 +2064,26 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffParseWithMultipleMrkTagsInTargetAsian: function(test) {
-        test.expect(12);
-
-        const x = new ResXliff();
-        test.ok(x);
-
-        x.parse(
-                '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="foo/bar/j.java" source-language="en-US" target-language="zh-Hans-CN" product-name="webapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="2" resname="huzzah" restype="string">\n' +
-                '        <source>baby baby</source><seg-source><mrk mtype="seg" mid="4">baby baby</mrk></seg-source><target><mrk mtype="seg" mid="4">This is segment 1.</mrk> <mrk mtype="seg" mid="5">This is segment 2.</mrk> <mrk mtype="seg" mid="6">This is segment 3.</mrk></target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
-                '  </file>\n' +
-                '</xliff>');
-
-        const reslist = x.getResources();
-
-        test.ok(reslist);
-
-        test.equal(reslist.length, 1);
-
-        test.equal(reslist[0].getSource(), "baby baby");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "huzzah");
-        test.equal(reslist[0].getPath(), "foo/bar/j.java");
-        test.equal(reslist[0].getProject(), "webapp");
-        test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].getId(), "2");
-
-        test.equal(reslist[0].getTarget(), "This is segment 1.This is segment 2.This is segment 3.");
-        test.equal(reslist[0].getTargetLocale(), "zh-Hans-CN");
-
-        test.done();
-    },
-
-    testResXliffParsePreserveSourceWhitespace: function(test) {
+    testXliff20ParsePreserveSourceWhitespace: function(test) {
         test.expect(9);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="UI/AddAnotherButtonView.m" source-language="en-US" target-language="es-US" product-name="iosapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="196" resname="      Add Another" restype="string" datatype="x-objective-c">\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="es-US" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="UI/AddAnotherButtonView.m" l:project="iosapp">\n' +
+                '    <unit id="196" name="      Add Another" type="res:string" l:datatype="x-objective-c">\n' +
+                '      <segment>\n' +
                 '        <source>      Add Another</source>\n' +
                 '        <target>Añadir Otro</target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
@@ -2177,26 +2099,26 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffParsePreserveTargetWhitespace: function(test) {
+    testXliff20ParsePreserveTargetWhitespace: function(test) {
         test.expect(9);
 
-        const x = new ResXliff();
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
-                '<xliff version="1.2">\n' +
-                '  <file original="UI/AddAnotherButtonView.m" source-language="en-US" target-language="es-US" product-name="iosapp">\n' +
-                '    <body>\n' +
-                '      <trans-unit id="196" resname="      Add Another" restype="string" datatype="x-objective-c">\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="es-US" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="UI/AddAnotherButtonView.m" l:project="iosapp">\n' +
+                '    <unit id="196" name="      Add Another" type="res:string" l:datatype="x-objective-c">\n' +
+                '      <segment>\n' +
                 '        <source>      Add Another</source>\n' +
                 '        <target> Añadir    Otro  </target>\n' +
-                '      </trans-unit>\n' +
-                '    </body>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
                 '  </file>\n' +
                 '</xliff>');
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
@@ -2212,15 +2134,16 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffAddResourcesWithInstances: function(test) {
+    testXliff20AddResourcesWithInstances: function(test) {
         test.expect(9);
 
-        const x = new ResXliff({
+        var x = new ResourceXliff({
+            version: "2.0",
             allowDups: true
         });
         test.ok(x);
 
-        const res = new ResourceString({
+        var res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -2228,7 +2151,7 @@ export const testResXliff = {
             project: "webapp"
         });
 
-        const res2 = new ResourceString({
+        var res2 = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -2240,7 +2163,7 @@ export const testResXliff = {
 
         x.addResource(res);
 
-        const reslist = x.getResources({
+        var reslist = x.getResources({
             reskey: "foobar"
         });
 
@@ -2257,15 +2180,16 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffAddMultipleResourcesAddInstances: function(test) {
+    testXliff20AddMultipleResourcesAddInstances: function(test) {
         test.expect(17);
 
-        const x = new ResXliff({
+        var x = new ResourceXliff({
+            version: "2.0",
             allowDups: true
         });
         test.ok(x);
 
-        let res = new ResourceString({
+        var res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -2288,7 +2212,7 @@ export const testResXliff = {
 
         x.addResource(res);
 
-        const reslist = x.getResources({
+        var reslist = x.getResources({
             reskey: "foobar"
         });
 
@@ -2302,7 +2226,7 @@ export const testResXliff = {
         test.equal(reslist[0].getProject(), "webapp");
         test.ok(!reslist[0].getComment());
 
-        const instances = reslist[0].getInstances();
+        var instances = reslist[0].getInstances();
         test.ok(instances);
         test.equal(instances.length, 1);
 
@@ -2316,15 +2240,16 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffGetTextWithResourcesWithInstances: function(test) {
+    testXliff20GetTextWithResourcesWithInstancesWithNoTarget: function(test) {
         test.expect(2);
 
-        const x = new ResXliff({
+        var x = new ResourceXliff({
+            version: "2.0",
             allowDups: true
         });
         test.ok(x);
 
-        let res = new ResourceString({
+        var res = new ResourceString({
             source: "Asdf asdf",
             sourceLocale: "en-US",
             key: "foobar",
@@ -2347,23 +2272,29 @@ export const testResXliff = {
 
         x.addResource(res);
 
-        const expected =
+        var expected =
             '<?xml version="1.0" encoding="utf-8"?>\n' +
-            '<xliff version="1.2">\n' +
-            '  <file original="foo/bar/asdf.java" source-language="en-US" product-name="webapp">\n' +
-            '    <body>\n' +
-            '      <trans-unit id="1" resname="foobar" restype="string" datatype="plaintext">\n' +
-            '        <source>Asdf asdf</source>\n' +
-            '      </trans-unit>\n' +
-            '      <trans-unit id="2" resname="foobar" restype="string" datatype="plaintext">\n' +
-            '        <source>Asdf asdf</source>\n' +
-            '        <note>blah blah blah</note>\n' +
-            '      </trans-unit>\n' +
-            '    </body>\n' +
+            '<xliff version="2.0" srcLang="en-US" xmlns:l="http://ilib-js.com/loctool">\n' +
+            '  <file original="foo/bar/asdf.java" l:project="webapp">\n' +
+            '    <group id="group_1" name="plaintext">\n' +
+            '      <unit id="1" name="foobar" type="res:string" l:datatype="plaintext">\n' +
+            '        <segment>\n' +
+            '          <source>Asdf asdf</source>\n' +
+            '        </segment>\n' +
+            '      </unit>\n' +
+            '      <unit id="2" name="foobar" type="res:string" l:datatype="plaintext">\n' +
+            '        <notes>\n' +
+            '          <note appliesTo="source">blah blah blah</note>\n' +
+            '        </notes>\n' +
+            '        <segment>\n' +
+            '          <source>Asdf asdf</source>\n' +
+            '        </segment>\n' +
+            '      </unit>\n' +
+            '    </group>\n' +
             '  </file>\n' +
             '</xliff>';
 
-        const actual = x.getText();
+        var actual = x.getText();
         diff(actual, expected);
 
         test.equal(actual, expected);
@@ -2371,34 +2302,41 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffParseCreateInstances: function(test) {
+    testXliff20ParseCreateInstances: function(test) {
         test.expect(21);
 
-        const x = new ResXliff({
+        var x = new ResourceXliff({
+            version: "2.0",
             allowDups: true
         });
         test.ok(x);
 
         x.parse(
             '<?xml version="1.0" encoding="utf-8"?>\n' +
-            '<xliff version="1.2">\n' +
-            '  <file original="/a/b/asdf.js" source-language="en-US" target-language="fr-FR" product-name="iosapp">\n' +
-            '    <body>\n' +
-            '      <trans-unit id="2333" resname="asdf" restype="string" x-context="asdfasdf">\n' +
+            '<xliff version="2.0" srcLang="en-US" trgLang="fr-FR" xmlns:l="http://ilib-js.com/loctool">\n' +
+            '  <file original="/a/b/asdf.js" l:project="iosapp">\n' +
+            '    <unit id="2333" name="asdf" type="res:string" l:context="asdfasdf">\n' +
+            '      <notes>\n' +
+            '        <note appliesTo="source">this is a comment</note>\n' +
+            '      </notes>\n' +
+            '      <segment>\n' +
             '        <source>bababa</source>\n' +
             '        <target>ababab</target>\n' +
-            '        <note>this is a comment</note>\n' +
-            '      </trans-unit>\n' +
-            '      <trans-unit id="2334" resname="asdf" restype="string" x-context="asdfasdf">\n' +
+            '      </segment>\n' +
+            '    </unit>\n' +
+            '    <unit id="2334" name="asdf" type="res:string" l:context="asdfasdf">\n' +
+            '      <notes>\n' +
+            '        <note appliesTo="source">this is a different comment</note>\n' +
+            '      </notes>\n' +
+            '      <segment>\n' +
             '        <source>bababa</source>\n' +
             '        <target>ababab</target>\n' +
-            '        <note>this is a different comment</note>\n' +
-            '      </trans-unit>\n' +
-            '    </body>\n' +
+            '      </segment>\n' +
+            '    </unit>\n' +
             '  </file>\n' +
             '</xliff>');
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
@@ -2413,7 +2351,7 @@ export const testResXliff = {
         test.equal(reslist[0].context, "asdfasdf");
         test.equal(reslist[0].comment, "this is a comment");
 
-        const instances = reslist[0].getInstances();
+        var instances = reslist[0].getInstances();
         test.ok(instances);
         test.equal(instances.length, 1);
 
@@ -2429,60 +2367,114 @@ export const testResXliff = {
         test.done();
     },
 
-    testResXliffParseStillAcceptsAnnotatesAttr: function(test) {
-        test.expect(21);
+    testXliff20ParseLGStyleXliff: function(test) {
+        test.expect(24);
 
-        const x = new ResXliff({
-            allowDups: true
-        });
+        var x = new ResourceXliff();
         test.ok(x);
 
         x.parse(
-            '<?xml version="1.0" encoding="utf-8"?>\n' +
-            '<xliff version="1.2">\n' +
-            '  <file original="/a/b/asdf.js" source-language="en-US" target-language="fr-FR" product-name="iosapp">\n' +
-            '    <body>\n' +
-            '      <trans-unit id="2333" resname="asdf" restype="string" x-context="asdfasdf">\n' +
-            '        <source>bababa</source>\n' +
-            '        <target>ababab</target>\n' +
-            '        <note annotates="source">this is a comment</note>\n' +
-            '      </trans-unit>\n' +
-            '      <trans-unit id="2334" resname="asdf" restype="string" x-context="asdfasdf">\n' +
-            '        <source>bababa</source>\n' +
-            '        <target>ababab</target>\n' +
-            '        <note annotates="source">this is a different comment</note>\n' +
-            '      </trans-unit>\n' +
-            '    </body>\n' +
-            '  </file>\n' +
-            '</xliff>');
+                '<?xml version="1.0" encoding="utf-8"?>\n' +
+                '<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en-KR" trgLang="ko-KR">\n' +
+                '  <file id="f1" original="foo/bar/asdf.java" >\n' +
+                '    <group id="g1" name="javascript">\n' +
+                '      <unit id="1">\n' +
+                '        <segment>\n' +
+                '          <source>Closed Caption Settings</source>\n' +
+                '          <target>자막 설정</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '      <unit id="2">\n' +
+                '        <segment>\n' +
+                '          <source>Low</source>\n' +
+                '          <target>낮음</target>\n' +
+                '        </segment>\n' +
+                '      </unit>\n' +
+                '    </group>\n' +
+                '  </file>\n' +
+                '</xliff>');
 
-        const reslist = x.getResources();
+        var reslist = x.getResources();
 
         test.ok(reslist);
 
-        test.equal(reslist.length, 1);
-
-        test.equal(reslist[0].getTarget(), "ababab");
-        test.equal(reslist[0].getTargetLocale(), "fr-FR");
-        test.equal(reslist[0].getKey(), "asdf");
-        test.equal(reslist[0].getPath(), "/a/b/asdf.js");
-        test.equal(reslist[0].getProject(), "iosapp");
+        test.equal(reslist[0].getSource(), "Closed Caption Settings");
+        test.equal(reslist[0].getSourceLocale(), "en-KR");
+        test.equal(reslist[0].getTarget(), "자막 설정");
+        test.equal(reslist[0].getTargetLocale(), "ko-KR");
+        test.equal(reslist[0].getKey(), "Closed Caption Settings");
+        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
+        test.equal(reslist[0].getProject(), "foo/bar/asdf.java");
         test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].context, "asdfasdf");
-        test.equal(reslist[0].comment, "this is a comment");
+        test.equal(reslist[0].datatype, "javascript");
+        test.ok(!reslist[0].getComment());
+        test.equal(reslist[0].getId(), "1");
 
-        const instances = reslist[0].getInstances();
-        test.ok(instances);
-        test.equal(instances.length, 1);
+        test.equal(reslist[1].getSource(), "Low");
+        test.equal(reslist[1].getSourceLocale(), "en-KR");
+        test.equal(reslist[1].getTarget(), "낮음");
+        test.equal(reslist[1].getTargetLocale(), "ko-KR");
+        test.equal(reslist[1].getKey(), "Low");
+        test.equal(reslist[1].getPath(), "foo/bar/asdf.java");
+        test.equal(reslist[1].getProject(), "foo/bar/asdf.java");
+        test.equal(reslist[1].resType, "string");
+        test.equal(reslist[1].datatype, "javascript");
+        test.ok(!reslist[1].getComment());
+        test.equal(reslist[1].getId(), "2");
 
-        test.equal(instances[0].getTarget(), "ababab");
-        test.equal(instances[0].getTargetLocale(), "fr-FR");
-        test.equal(instances[0].getKey(), "asdf");
-        test.equal(instances[0].getPath(), "/a/b/asdf.js");
-        test.equal(instances[0].getProject(), "iosapp");
-        test.equal(instances[0].resType, "string");
-        test.equal(instances[0].context, "asdfasdf");
-        test.equal(instances[0].comment, "this is a different comment");
+        test.done();
+    },
+
+    testXliff20ParseRealLGFile: function(test) {
+        test.expect(37);
+
+        var x = new ResourceXliff();
+        test.ok(x);
+
+        var str = fs.readFileSync("test/testfiles/test5.xliff", "utf-8");
+
+        x.parse(str);
+
+        var reslist = x.getResources();
+        test.ok(reslist);
+        test.equal(reslist.length, 7);
+
+        test.equal(reslist[0].getSource(), "Closed Caption Settings");
+        test.equal(reslist[0].getSourceLocale(), "en-KR");
+        test.equal(reslist[0].getTarget(), "자막 설정");
+        test.equal(reslist[0].getTargetLocale(), "ko-KR");
+        test.equal(reslist[0].getKey(), "Closed Caption Settings");
+        test.equal(reslist[0].getPath(), "settings");
+        test.equal(reslist[0].getProject(), "settings");
+        test.equal(reslist[0].resType, "string");
+        test.equal(reslist[0].datatype, "javascript");
+        test.ok(!reslist[0].getComment());
+        test.equal(reslist[0].getId(), "settings_1");
+
+        test.equal(reslist[3].getSource(), "Low");
+        test.equal(reslist[3].getSourceLocale(), "en-KR");
+        test.equal(reslist[3].getTarget(), "낮음");
+        test.equal(reslist[3].getTargetLocale(), "ko-KR");
+        test.equal(reslist[3].getKey(), "pictureControlLow_Male");
+        test.equal(reslist[3].getPath(), "settings");
+        test.equal(reslist[3].getProject(), "settings");
+        test.equal(reslist[3].resType, "string");
+        test.equal(reslist[3].datatype, "javascript");
+        test.ok(!reslist[3].getComment());
+        test.equal(reslist[3].getId(), "settings_1524");
+
+        test.equal(reslist[6].getSource(), "SEARCH");
+        test.equal(reslist[6].getSourceLocale(), "en-KR");
+        test.equal(reslist[6].getTarget(), "검색");
+        test.equal(reslist[6].getTargetLocale(), "ko-KR");
+        test.equal(reslist[6].getKey(), "SEARCH");
+        test.equal(reslist[6].getPath(), "settings");
+        test.equal(reslist[6].getProject(), "settings");
+        test.equal(reslist[6].resType, "string");
+        test.equal(reslist[6].datatype, "x-qml");
+        test.ok(reslist[6].getComment());
+        test.equal(reslist[6].getComment(), "copy strings from voice app");
+        test.equal(reslist[6].getId(), "settings_22");
 
         test.done();
     }
