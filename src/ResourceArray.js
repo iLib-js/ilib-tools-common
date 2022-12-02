@@ -171,7 +171,7 @@ class ResourceArray extends Resource {
      * @param {number} i the index at which to add the string
      * @param {String} str the string to add
      */
-    addSource(i, str) {
+    addSourceItem(i, str) {
         if (typeof(i) === "undefined" || i < 0 || typeof(str) === "undefined") {
             return;
         }
@@ -189,7 +189,7 @@ class ResourceArray extends Resource {
      * @param {number} i the index at which to add the string
      * @param {String} str the string to add
      */
-    addTarget(i, str) {
+    addTargetItem(i, str) {
         // can only add a target string if there is already a source string
         if (typeof(i) === "undefined" || i < 0 || typeof(str) === "undefined") {
             return;

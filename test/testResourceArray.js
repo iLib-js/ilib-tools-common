@@ -476,7 +476,7 @@ export const testResourceArray = {
         });
         test.ok(ra);
 
-        ra.addSource(3, "This is the third one")
+        ra.addSourceItem(3, "This is the third one")
 
         test.equal(ra.getSourceItem(3), "This is the third one");
 
@@ -500,7 +500,7 @@ export const testResourceArray = {
         });
         test.ok(ra);
 
-        ra.addTarget(3, "This is the third one")
+        ra.addTargetItem(3, "This is the third one")
 
         test.equal(ra.getTargetItem(3), "This is the third one");
 
@@ -524,7 +524,7 @@ export const testResourceArray = {
 
         test.equal(ra.getSourceItem(2), "This is not");
 
-        ra.addSource(2, "This isn't a test")
+        ra.addSourceItem(2, "This isn't a test")
 
         test.equal(ra.getSourceItem(2), "This isn't a test");
 
@@ -550,7 +550,7 @@ export const testResourceArray = {
 
         test.equal(ra.getTargetItem(2), "Dies ist nicht.");
 
-        ra.addTarget(2, "Dies ist nicht einen Test.")
+        ra.addTargetItem(2, "Dies ist nicht einen Test.")
 
         test.equal(ra.getTargetItem(2), "Dies ist nicht einen Test.");
 
@@ -574,7 +574,7 @@ export const testResourceArray = {
 
         test.equal(ra.size(), 3);
 
-        ra.addSource(3, "This is the third one")
+        ra.addSourceItem(3, "This is the third one")
 
         test.equal(ra.size(), 4);
 
@@ -600,7 +600,7 @@ export const testResourceArray = {
 
         test.equal(ra.size(), 3);
 
-        ra.addTarget(3, "This is the third one")
+        ra.addTargetItem(3, "This is the third one")
 
         test.equal(ra.size(), 4);
 
@@ -624,7 +624,7 @@ export const testResourceArray = {
 
         test.equal(ra.getSourceItem(1), "This is also a test");
 
-        ra.addSource(1, undefined)
+        ra.addSourceItem(1, undefined)
 
         test.equal(ra.getSourceItem(1), "This is also a test");
 
@@ -650,7 +650,7 @@ export const testResourceArray = {
 
         test.equal(ra.getTargetItem(1), "Dies ist auch einen Test.");
 
-        ra.addTarget(1, undefined)
+        ra.addTargetItem(1, undefined)
 
         test.equal(ra.getTargetItem(1), "Dies ist auch einen Test.");
 
@@ -674,7 +674,7 @@ export const testResourceArray = {
 
         test.equal(ra.size(), 3);
 
-        ra.addSource(undefined, "foobar")
+        ra.addSourceItem(undefined, "foobar")
 
         test.equal(ra.size(), 3);
 
@@ -700,7 +700,7 @@ export const testResourceArray = {
 
         test.equal(ra.size(), 3);
 
-        ra.addTarget(undefined, "foobar")
+        ra.addTargetItem(undefined, "foobar")
 
         test.equal(ra.size(), 3);
 
@@ -723,7 +723,7 @@ export const testResourceArray = {
 
         test.equal(ra.size(), 0);
 
-        ra.addSource(0, "foobar")
+        ra.addSourceItem(0, "foobar")
 
         test.equal(ra.size(), 1);
 
@@ -746,7 +746,7 @@ export const testResourceArray = {
 
         test.ok(!ra.getSourceItem(0));
 
-        ra.addSource(0, "foobar")
+        ra.addSourceItem(0, "foobar")
 
         test.equal(ra.getSourceItem(0), "foobar");
 
@@ -769,7 +769,7 @@ export const testResourceArray = {
 
         test.ok(!ra.getTargetItem(0));
 
-        ra.addTarget(0, "foobar")
+        ra.addTargetItem(0, "foobar")
 
         test.equal(ra.getTargetItem(0), "foobar");
 
@@ -791,8 +791,8 @@ export const testResourceArray = {
         });
         test.ok(ra);
 
-        ra.addSource(3, "This is the third one")
-        ra.addSource(4, "This is the fourth one")
+        ra.addSourceItem(3, "This is the third one")
+        ra.addSourceItem(4, "This is the fourth one")
 
         test.equal(ra.getSourceItem(0), "This is a test");
         test.equal(ra.getSourceItem(1), "This is also a test");

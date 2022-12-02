@@ -21,5 +21,14 @@ import Resource from './Resource.js';
 import ResourceString from './ResourceString.js';
 import ResourceArray from './ResourceArray.js';
 import ResourcePlural from './ResourcePlural.js';
+import TranslationSet from './TranslationSet.js';
+import ResourceXliff from './ResourceXliff.js';
 
-export { Resource, ResourceString, ResourceArray, ResourcePlural };
+export {
+    Resource,
+    ResourceString,
+    ResourceArray,
+    ResourcePlural,
+    TranslationSet,
+    ResourceXliff
+};

@@ -21,8 +21,10 @@ limitations under the License.
 
 ## Release Notes
 
-### v1.0.1
+### v1.1.0
 
+- Added ResourceXliff class (represents an xliff file as a list of Resource instances)
+- Added TranslationSet class (sets of Resources)
 - Introduced some backwards compatibility support so that this library
   can be used with loctool plugins.
     - added some deprecated methods and accept some deprecated
