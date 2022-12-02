@@ -23,7 +23,7 @@ limitations under the License.
 
 ### v1.1.0
 
-- Added ResXliff class (represents an xliff file as a list of Resource instances)
+- Added ResourceXliff class (represents an xliff file as a list of Resource instances)
 - Added TranslationSet class (sets of Resources)
 - Introduced some backwards compatibility support so that this library
   can be used with loctool plugins.
