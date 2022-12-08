@@ -21,6 +21,10 @@ limitations under the License.
 
 ## Release Notes
 
+### v1.2.0
+
+- Added formatPath and getLocaleFromPath utility function
+
 ### v1.1.0
 
 - Added ResourceXliff class (represents an xliff file as a list of Resource instances)
