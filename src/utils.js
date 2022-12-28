@@ -20,6 +20,8 @@
 import path from 'node:path';
 import Locale from 'ilib-locale';
 
+import { isAlnum, isIdeo } from 'ilib-ctype';
+
 /**
  * Clean a string for matching against other strings by removing
  * differences that are inconsequential for translation.
@@ -311,4 +313,62 @@ export function getLocaleFromPath(template, pathname) {
     }
 
     return "";
+};
+
+export function makeDirs(path) {
+    const parts = path.split(/[\\\/]/);
+
+    for (let i = 1; i <= parts.length; i++) {
+        const p = parts.slice(0, i).join("/");
+        if (p && p.length > 0 && !fs.existsSync(p)) {
+            fs.mkdirSync(p);
+        }
+    }
+};
+
+/**
+ * Return true if the string still contains some text after removing all HTML tags and entities.
+ * @param {string} str the string to check
+ * @returns {boolean} true if there is text left over, and false otherwise
+ */
+export function containsActualText(str) {
+    // remove the html and entities first
+    const cleaned = str.replace(/<("(\\"|[^"])*"|'(\\'|[^'])*'|[^>])*>/g, "").replace(/&[a-zA-Z]+;/g, "");
+
+    for (let i = 0; i < cleaned.length; i++) {
+        const c = cleaned.charAt(i);
+        if (isAlnum(c) || isIdeo(c)) return true;
+    }
+    return false;
+};
+
+function isPrimitive(type) {
+    return ["boolean", "number", "integer", "string"].indexOf(type) > -1;
+}
+
+/**
+ * Recursively visit every node in an object and call the visitor on any
+ * primitive values.
+ * @param {*} object any object, arrary, or primitive
+ * @param {Function(*)} visitor function to call on any primitive
+ * @returns {*} the same type as the original object, but with every
+ * primitive processed by the visitor function
+ */
+export function objectMap(object, visitor) {
+    if (!object) return object;
+    if (isPrimitive(typeof(object))) {
+        return visitor(object);
+    } else if (Array.isArray(object)) {
+        return object.map(item => {
+            return objectMap(item, visitor);
+        });
+    } else {
+        const ret = {};
+        for (let prop in object) {
+            if (object.hasOwnProperty(prop)) {
+                ret[prop] = objectMap(object[prop], visitor);
+            }
+        }
+        return ret;
+    }
 };
