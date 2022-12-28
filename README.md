@@ -21,6 +21,15 @@ limitations under the License.
 
 ## Release Notes
 
+### v1.3.0
+
+- Added more utility functions:
+    - isEmpty - return whether or not an object is empty
+    - cleanString - removing differences that are inconsequential for translation such as leading whitespace
+    - makeDirs - create directories on disk
+    - containsActualText - test if there is text left over after HTML and entities are stripped
+    - objectMap - visitor pattern for objects
+
 ### v1.2.0
 
 - Added formatPath and getLocaleFromPath utility function

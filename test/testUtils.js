@@ -17,7 +17,15 @@
  * limitations under the License.
  */
 
-import { formatPath, getLocaleFromPath, cleanString, isEmpty } from "../src/utils.js";
+import {
+    formatPath,
+    getLocaleFromPath,
+    cleanString,
+    isEmpty,
+    makeDirs,
+    containsActualText,
+    objectMap
+} from "../src/utils.js";
 
 export const testUtils = {
     testUtilsIsEmpty: function(test) {
@@ -463,5 +471,72 @@ export const testUtils = {
         test.equals(getLocaleFromPath('[dir]/strings_[localeLower].json', "x/y/strings_zh-hans-cn.json"), "zh-Hans-CN");
 
         test.done();
-    }
+    },
+
+    testContainsActualTextHtml: function(test) {
+        test.expect(1);
+
+        test.ok(containsActualText(`<html><body>text</body></html>`));
+
+        test.done();
+    },
+
+    testContainsActualTextHtml: function(test) {
+        test.expect(1);
+
+        test.ok(!containsActualText(`<html><body><img src="This is a test"/></body></html>`));
+
+        test.done();
+    },
+
+    testContainsActualTextEntities: function(test) {
+        test.expect(1);
+
+        test.ok(containsActualText(`&uuml; text &lt;`));
+
+        test.done();
+    },
+
+    testContainsActualTextEntitiesFalse: function(test) {
+        test.expect(1);
+
+        test.ok(!containsActualText(`&uuml; &lt;`));
+
+        test.done();
+    },
+
+    testObjectMapCount: function(test) {
+        test.expect(1);
+
+        const obj = {
+            subobj: {
+                number: 4,
+                bool: true
+            },
+            another: {
+                yetAnother: {
+                    text: "hey yeah"
+                }
+            }
+        };
+        const expected = {
+            subobj: {
+                number: "foo",
+                bool: "foo"
+            },
+            another: {
+                yetAnother: {
+                    text: "foo"
+                }
+            }
+        };
+        const actual = objectMap(obj, (node) => {
+            return "foo";
+        });
+
+        test.deepEqual(actual, expected);
+
+        test.done();
+    },
+
 };

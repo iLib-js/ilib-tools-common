@@ -23,7 +23,15 @@ import ResourceArray from './ResourceArray.js';
 import ResourcePlural from './ResourcePlural.js';
 import TranslationSet from './TranslationSet.js';
 import ResourceXliff from './ResourceXliff.js';
-import { formatPath, getLocaleFromPath } from './utils.js';
+import {
+    formatPath,
+    getLocaleFromPath,
+    cleanString,
+    isEmpty,
+    makeDirs,
+    containsActualText,
+    objectMap
+} from './utils.js';
 
 export {
     Resource,
@@ -33,5 +41,10 @@ export {
     TranslationSet,
     ResourceXliff,
     formatPath,
-    getLocaleFromPath
+    getLocaleFromPath,
+    cleanString,
+    isEmpty,
+    makeDirs,
+    containsActualText,
+    objectMap
 };
