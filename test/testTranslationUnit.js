@@ -243,5 +243,27 @@ export const testTranslationUnit = {
         });
 
         test.done();
+    },
+
+    testTranslationUnitHashKey: function(test) {
+        test.expect(2);
+
+        const tu = new TranslationUnit({
+            source: "a",
+            sourceLocale: "en-US",
+            key: "key",
+            file: "a/b/c.js",
+            project: "bigproject",
+            target: "b",
+            targetLocale: "de-DE",
+            resType: "string",
+            state: "translated",
+            comment: "no comment",
+            datatype: "javascript",
+            flavor: "chocolate"
+        });
+        test.ok(tu);
+        test.equal(tu.hashKey(), "r6355537_en-US_javascript");
+        test.done();
     }
 };

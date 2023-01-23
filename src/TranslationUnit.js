@@ -75,7 +75,7 @@ class TranslationUnit {
         this.properties = {};
 
         if (options) {
-            const requiredFields = ["source", "sourceLocale", "key", "file", "project"];
+            const requiredFields = ["source", "sourceLocale"];
             const missing = requiredFields.filter(p => {
                 if (typeof(options[p]) !== "undefined") {
                     this[p] = options[p];
@@ -88,7 +88,7 @@ class TranslationUnit {
                 throw new Error("Missing required parameters in the TranslationUnit constructor: " + missing.join(", "));
             }
 
-            const otherFields = ["target", "targetLocale", "resType", "state", "comment", "datatype", "flavor"];
+            const otherFields = ["key", "file", "project", "target", "targetLocale", "resType", "state", "comment", "datatype", "flavor"];
             for (var p of otherFields) {
                 this[p] = options[p];
             }
@@ -112,7 +112,7 @@ class TranslationUnit {
      * @returns {string} the unique hash key
      */
     hashKey() {
-        return [hashKey(this.string), this.locale, this.datatype].join("_");
+        return [hashKey(this.source), this.sourceLocale, this.datatype].join("_");
     }
 
     /**
