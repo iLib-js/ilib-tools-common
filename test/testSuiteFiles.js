@@ -1,7 +1,7 @@
 /*
  * testSuiteFiles.js - list the test files in this directory
  * 
- * Copyright © 2022, JEDLSoft
+ * Copyright © 2022-2023, JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,12 +19,14 @@
 
 const files = [
     "testResource.js",
-    "testResourceString.js",
     "testResourceArray.js",
     "testResourcePlural.js",
-    "testTranslationSet.js",
+    "testResourceString.js",
     "testResourceXliff.js",
     "testResourceXliff20.js",
+    "testTranslationSet.js",
+    "testTranslationUnit.js",
+    "testTranslationVariant.js",
     "testUtils.js"
 ];
 

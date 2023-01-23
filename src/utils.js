@@ -1,7 +1,7 @@
 /*
  * utils.js - utility functions to support the other code
  *
- * Copyright © 2022 JEDLSoft
+ * Copyright © 2022-2023 JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -371,4 +371,33 @@ export function objectMap(object, visitor) {
         }
         return ret;
     }
+};
+
+/**
+ * Return a standard hash of the given source string.
+ *
+ * @param {String} source the source string as extracted from the
+ * source code, unmodified
+ * @returns {String} the hash key
+ */
+export function hashKey(source) {
+    if (!source) return undefined;
+    let hash = 0;
+    // these two numbers together = 46 bits so it won't blow out the precision of an integer in javascript
+    const modulus = 1073741789;  // largest prime number that fits in 30 bits
+    const multiple = 65521;      // largest prime that fits in 16 bits, co-prime with the modulus
+
+    // logger.trace("hash starts off at " + hash);
+
+    for (let i = 0; i < source.length; i++) {
+        // logger.trace("hash " + hash + " char " + source.charCodeAt(i) + "=" + source.charAt(i));
+        hash += source.charCodeAt(i);
+        hash *= multiple;
+        hash %= modulus;
+    }
+    const value = "r" + hash;
+
+    // System.out.println("String '" + source + "' hashes to " + value);
+
+    return value;
 };
