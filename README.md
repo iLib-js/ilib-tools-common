@@ -25,6 +25,7 @@ limitations under the License.
 
 - Added TranslationUnit and TranslationVariant classes
 - added hashKey function to the utilities
+- fixed missing import for makeDirs() utility function
 
 ### v1.3.0
 

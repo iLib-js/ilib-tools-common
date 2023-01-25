@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import fs from 'node:fs';
 import {
     formatPath,
     getLocaleFromPath,
@@ -614,6 +615,18 @@ export const testUtils = {
 
         test.equal(hashKey("This is a test"), "r654479252");
         test.equal(hashKey("This is a test"), "r654479252");
+
+        test.done();
+    },
+
+    testMakeDirs: function(test) {
+        test.expect(2);
+
+        fs.rmSync("./testfiles/testdir", {recursive: true, force: true});
+        test.ok(!fs.existsSync("./testfiles/testdir"));
+        makeDirs("./testfiles/testdir");
+        test.ok(fs.existsSync("./testfiles/testdir"));
+        fs.rmSync("./testfiles/testdir", {recursive: true, force: true});
 
         test.done();
     }
