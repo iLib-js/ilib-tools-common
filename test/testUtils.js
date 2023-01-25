@@ -622,11 +622,11 @@ export const testUtils = {
     testMakeDirs: function(test) {
         test.expect(2);
 
-        fs.rmdirSync("./testfiles/testdir");
+        fs.rmSync("./testfiles/testdir", {recursive: true, force: true});
         test.ok(!fs.existsSync("./testfiles/testdir"));
         makeDirs("./testfiles/testdir");
         test.ok(fs.existsSync("./testfiles/testdir"));
-        fs.rmdirSync("./testfiles/testdir");
+        fs.rmSync("./testfiles/testdir", {recursive: true, force: true});
 
         test.done();
     }
