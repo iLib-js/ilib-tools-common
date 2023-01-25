@@ -17,6 +17,7 @@
  * limitations under the License.
  */
 
+import fs from 'node:fs';
 import path from 'node:path';
 import Locale from 'ilib-locale';
 
