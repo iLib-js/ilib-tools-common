@@ -23,6 +23,8 @@ import ResourceArray from './ResourceArray.js';
 import ResourcePlural from './ResourcePlural.js';
 import TranslationSet from './TranslationSet.js';
 import ResourceXliff from './ResourceXliff.js';
+import TranslationUnit from './TranslationUnit.js';
+import TranslationVariant from './TranslationVariant.js';
 import {
     formatPath,
     getLocaleFromPath,
@@ -39,6 +41,8 @@ export {
     ResourceArray,
     ResourcePlural,
     TranslationSet,
+    TranslationUnit,
+    TranslationVariant,
     ResourceXliff,
     formatPath,
     getLocaleFromPath,
