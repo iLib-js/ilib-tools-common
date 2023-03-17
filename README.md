@@ -21,6 +21,10 @@ limitations under the License.
 
 ## Release Notes
 
+### v1.5.0
+
+- Added getVariant method to the TranslationUnit class
+
 ### v1.4.0
 
 - Added TranslationUnit and TranslationVariant classes

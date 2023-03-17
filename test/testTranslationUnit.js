@@ -190,6 +190,83 @@ export const testTranslationUnit = {
         test.done();
     },
 
+    testTranslationUnitGetVariant: function(test) {
+        test.expect(9);
+
+        const tu = new TranslationUnit();
+        test.ok(tu);
+
+        let variants = tu.getVariants();
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 0);
+
+        tu.addVariants([
+            new TranslationVariant({
+                locale: "de-DE",
+                string: "Zeichenfolge"
+            }),
+            new TranslationVariant({
+                locale: "nl-NL",
+                string: "string"
+            })
+        ]);
+
+        let variant = tu.getVariant("nl-NL");
+        test.ok(variant);
+        test.equal(variant.locale, "nl-NL");
+        test.equal(variant.string, "string");
+
+        variant = tu.getVariant("de-DE");
+        test.ok(variant);
+        test.equal(variant.locale, "de-DE");
+        test.equal(variant.string, "Zeichenfolge");
+
+        test.done();
+    },
+
+    testTranslationUnitGetVariantNotThere: function(test) {
+        test.expect(4);
+
+        const tu = new TranslationUnit();
+        test.ok(tu);
+
+        let variants = tu.getVariants();
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 0);
+
+        tu.addVariants([
+            new TranslationVariant({
+                locale: "de-DE",
+                string: "Zeichenfolge"
+            }),
+            new TranslationVariant({
+                locale: "nl-NL",
+                string: "string"
+            })
+        ]);
+
+        const variant = tu.getVariant("ja-JP");
+        test.ok(!variant);
+
+        test.done();
+    },
+
+    testTranslationUnitGetVariantNoneThere: function(test) {
+        test.expect(4);
+
+        const tu = new TranslationUnit();
+        test.ok(tu);
+
+        let variants = tu.getVariants();
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 0);
+
+        const variant = tu.getVariant("ja-JP");
+        test.ok(!variant);
+
+        test.done();
+    },
+
     testTranslationUnitNoProperties: function(test) {
         test.expect(2);
 
