@@ -190,8 +190,8 @@ export const testTranslationUnit = {
         test.done();
     },
 
-    testTranslationUnitGetVariant: function(test) {
-        test.expect(9);
+    testTranslationUnitGetVariantsWithLocale: function(test) {
+        test.expect(13);
 
         const tu = new TranslationUnit();
         test.ok(tu);
@@ -211,21 +211,63 @@ export const testTranslationUnit = {
             })
         ]);
 
-        let variant = tu.getVariant("nl-NL");
-        test.ok(variant);
-        test.equal(variant.locale, "nl-NL");
-        test.equal(variant.string, "string");
+        variants = tu.getVariants("nl-NL");
+        test.ok(variants);
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 1);
+        test.equal(variants[0].locale, "nl-NL");
+        test.equal(variants[0].string, "string");
 
-        variant = tu.getVariant("de-DE");
-        test.ok(variant);
-        test.equal(variant.locale, "de-DE");
-        test.equal(variant.string, "Zeichenfolge");
+        variants = tu.getVariants("de-DE");
+        test.ok(variants);
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 1);
+        test.equal(variants[0].locale, "de-DE");
+        test.equal(variants[0].string, "Zeichenfolge");
 
         test.done();
     },
 
-    testTranslationUnitGetVariantNotThere: function(test) {
-        test.expect(4);
+    testTranslationUnitGetVariantsMultipleWithLocale: function(test) {
+        test.expect(10);
+
+        const tu = new TranslationUnit();
+        test.ok(tu);
+
+        let variants = tu.getVariants();
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 0);
+
+        tu.addVariants([
+            new TranslationVariant({
+                locale: "de-DE",
+                string: "Zeichenfolge"
+            }),
+            new TranslationVariant({
+                locale: "nl-NL",
+                string: "string"
+            }),
+            new TranslationVariant({
+                locale: "de-DE",
+                string: "String"
+            }),
+        ]);
+
+        variants = tu.getVariants("de-DE");
+        test.ok(variants);
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 2);
+        test.equal(variants[0].locale, "de-DE");
+        test.equal(variants[0].string, "Zeichenfolge");
+
+        test.equal(variants[1].locale, "de-DE");
+        test.equal(variants[1].string, "String");
+
+        test.done();
+    },
+
+    testTranslationUnitGetVariantsNotThere: function(test) {
+        test.expect(6);
 
         const tu = new TranslationUnit();
         test.ok(tu);
@@ -245,14 +287,16 @@ export const testTranslationUnit = {
             })
         ]);
 
-        const variant = tu.getVariant("ja-JP");
-        test.ok(!variant);
+        variants = tu.getVariants("ja-JP");
+        test.ok(variants);
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 0);
 
         test.done();
     },
 
-    testTranslationUnitGetVariantNoneThere: function(test) {
-        test.expect(4);
+    testTranslationUnitGetVariantsNoneThere: function(test) {
+        test.expect(6);
 
         const tu = new TranslationUnit();
         test.ok(tu);
@@ -261,8 +305,10 @@ export const testTranslationUnit = {
         test.ok(Array.isArray(variants));
         test.equal(variants.length, 0);
 
-        const variant = tu.getVariant("ja-JP");
-        test.ok(!variant);
+        const variant = tu.getVariants("ja-JP");
+        test.ok(variants);
+        test.ok(Array.isArray(variants));
+        test.equal(variants.length, 0);
 
         test.done();
     },

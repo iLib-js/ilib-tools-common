@@ -116,21 +116,17 @@ class TranslationUnit {
     }
 
     /**
-     * Return the variant for the given locale
-     * @param {String} locale the locale to find
-     * @returns {TranslationVariant} the variant for the locale, or undefined if
-     * it does not exist in this translation unit
-     */
-    getVariant(locale) {
-        return this.variantHash[locale];
-    }
-
-    /**
-     * Return the list of variants for this translation unit.
+     * Return the list of variants for this translation unit. If the locale
+     * parameter is specified, only return the variants for the given locale.
+     *
+     * @param {String|undefined} locale the locale to find
      * @returns {Array.<TranslationVariant>} the variants for
      * this translation unit
      */
-    getVariants() {
+    getVariants(locale) {
+        if (locale) {
+            return this.variants.filter(variant => (variant.locale === locale));
+        }
         return this.variants;
     }
 
@@ -143,7 +139,7 @@ class TranslationUnit {
      * @param {TranslationVariant} variant the variant to add
      */
     addVariant(variant) {
-        var key = variant.locale;
+        var key = variant.hashKey();
         if (!this.variantHash[key]) {
             this.variants.push(variant);
             this.variantHash[key] = variant;
