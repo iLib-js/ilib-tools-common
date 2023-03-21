@@ -17,7 +17,8 @@
  * limitations under the License.
  */
 
-import fs from 'node:fs';
+import fs from 'fs';
+import semver from 'semver';
 import {
     formatPath,
     getLocaleFromPath,
@@ -28,6 +29,17 @@ import {
     objectMap,
     hashKey
 } from "../src/utils.js";
+
+/**
+ * @private
+ */
+function rmr(pathName) {
+    if (semver.gte(process.version, 'v14.4.0')) {
+        fs.rmSync(pathName, {recursive: true, force: true});
+    } else {
+        fs.rmdirSync(pathName, {recursive: true});
+    }
+}
 
 export const testUtils = {
     testUtilsIsEmpty: function(test) {
@@ -622,11 +634,11 @@ export const testUtils = {
     testMakeDirs: function(test) {
         test.expect(2);
 
-        fs.rmSync("./testfiles/testdir", {recursive: true, force: true});
+        rmr("./testfiles/testdir");
         test.ok(!fs.existsSync("./testfiles/testdir"));
         makeDirs("./testfiles/testdir");
         test.ok(fs.existsSync("./testfiles/testdir"));
-        fs.rmSync("./testfiles/testdir", {recursive: true, force: true});
+        rmr("./testfiles/testdir");
 
         test.done();
     }

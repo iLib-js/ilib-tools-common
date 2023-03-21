@@ -17,8 +17,8 @@
  * limitations under the License.
  */
 
-import fs from 'node:fs';
-import path from 'node:path';
+import fs from 'fs';
+import path from 'path';
 import Locale from 'ilib-locale';
 
 import { isAlnum, isIdeo } from 'ilib-ctype';

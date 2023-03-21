@@ -116,11 +116,17 @@ class TranslationUnit {
     }
 
     /**
-     * Return the list of variants for this translation unit.
+     * Return the list of variants for this translation unit. If the locale
+     * parameter is specified, only return the variants for the given locale.
+     *
+     * @param {String|undefined} locale the locale to find
      * @returns {Array.<TranslationVariant>} the variants for
      * this translation unit
      */
-    getVariants() {
+    getVariants(locale) {
+        if (locale) {
+            return this.variants.filter(variant => (variant.locale === locale));
+        }
         return this.variants;
     }
 

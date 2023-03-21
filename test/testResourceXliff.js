@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import fs from "node:fs";
+import fs from "fs";
 
 import ResourceArray from "../src/ResourceArray.js";
 import ResourcePlural from "../src/ResourcePlural.js";
