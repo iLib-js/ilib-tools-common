@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import fs from 'node:fs';
+import fs from 'fs';
 import {
     formatPath,
     getLocaleFromPath,
@@ -622,11 +622,11 @@ export const testUtils = {
     testMakeDirs: function(test) {
         test.expect(2);
 
-        fs.rmSync("./testfiles/testdir", {recursive: true, force: true});
+        fs.rmdirSync("./testfiles/testdir", {recursive: true, force: true});
         test.ok(!fs.existsSync("./testfiles/testdir"));
         makeDirs("./testfiles/testdir");
         test.ok(fs.existsSync("./testfiles/testdir"));
-        fs.rmSync("./testfiles/testdir", {recursive: true, force: true});
+        fs.rmdirSync("./testfiles/testdir", {recursive: true, force: true});
 
         test.done();
     }
