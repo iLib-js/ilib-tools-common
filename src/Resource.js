@@ -462,6 +462,15 @@ class Resource {
     isDirty() {
         return this.dirty
     }
+
+    /**
+     * Clear the dirty flag. This is used for example when the Resource was
+     * written to disk and the modifications are already recorded, allowing
+     * new modifications later.
+     */
+    clearDirty() {
+        this.dirty = false;
+    }
 }
 
 export default Resource;

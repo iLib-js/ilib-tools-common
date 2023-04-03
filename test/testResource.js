@@ -993,5 +993,36 @@ export const testResource = {
 
         test.ok(rs.isDirty());
         test.done();
-    }
+    },
+
+    testResourceClearDirty: function(test) {
+        test.expect(4);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            pathName: "a/b/c.md"
+        });
+        test.ok(rs);
+
+        test.ok(!rs.isDirty())
+
+        rs.setSourceLocale("de-DE");
+
+        test.ok(rs.isDirty());
+        
+        rs.clearDirty();
+
+        test.ok(!rs.isDirty());
+
+        test.done();
+    },
+
 };
