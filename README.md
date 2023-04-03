@@ -21,6 +21,12 @@ limitations under the License.
 
 ## Release Notes
 
+### v1.6.0
+
+- Added isDirty() method to the Resource class so we can see whether or
+  not the resource has been modified since it was first created
+    - also added clearDirty() method
+
 ### v1.5.0
 
 - Added getVariant method to the TranslationUnit class

@@ -1017,7 +1017,7 @@ export const testResource = {
         rs.setSourceLocale("de-DE");
 
         test.ok(rs.isDirty());
-        
+
         rs.clearDirty();
 
         test.ok(!rs.isDirty());
