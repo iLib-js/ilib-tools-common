@@ -765,5 +765,110 @@ export const testResourceString = {
         test.ok(!rs.isInstance(dup));
 
         test.done();
+    },
+
+    testResourceStringSetSource: function(test) {
+        test.expect(3);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            source: "source string",
+            target: "target string"
+        });
+        test.ok(rs);
+
+        test.deepEqual(rs.getSource(), "source string");
+        rs.setSource("other source");
+        test.deepEqual(rs.getSource(), "other source");
+
+        test.done();
+    },
+
+    testResourceStringSetSourceIsDirty: function(test) {
+        test.expect(4);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            source: "source string",
+            target: "target string"
+        });
+        test.ok(rs);
+
+        test.deepEqual(rs.getSource(), "source string");
+        test.ok(!rs.isDirty());
+
+        rs.setSource("other source");
+        test.ok(rs.isDirty());
+
+        test.done();
+    },
+
+    testResourceStringSetTarget: function(test) {
+        test.expect(3);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            source: "source string",
+            target: "target string"
+        });
+        test.ok(rs);
+
+        test.deepEqual(rs.getTarget(), "target string");
+        rs.setTarget("other target");
+        test.deepEqual(rs.getTarget(), "other target");
+
+        test.done();
+    },
+
+    testResourceStringSetTargetIsDirty: function(test) {
+        test.expect(4);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            source: "source string",
+            target: "target string"
+        });
+        test.ok(rs);
+
+        test.deepEqual(rs.getTarget(), "target string");
+        test.ok(!rs.isDirty());
+
+        rs.setTarget("other target");
+        test.ok(rs.isDirty());
+
+        test.done();
     }
+
 };

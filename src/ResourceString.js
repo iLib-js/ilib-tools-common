@@ -31,16 +31,16 @@ const logger = log4js.getLogger("tools-common.ResourceString");
  */
 class ResourceString extends Resource {
     /**
-	 * Construct a new ResourceString instance. The props may contain any
-	 * of properties from the Resource constructor and additionally,
-	 * these properties:
-	 *
-	 * <ul>
-	 * <li>source {String} - the source string associated with this key
-	 * </ul>
-	 *
-	 * @constructor
-	 * @param {Object} props properties of the string, as defined above
+     * Construct a new ResourceString instance. The props may contain any
+     * of properties from the Resource constructor and additionally,
+     * these properties:
+     *
+     * <ul>
+     * <li>source {String} - the source string associated with this key
+     * </ul>
+     *
+     * @constructor
+     * @param {Object} props properties of the string, as defined above
      */
     constructor(props) {
         super(props);
@@ -65,6 +65,7 @@ class ResourceString extends Resource {
     setSource(str) {
         if (typeof(str) !== 'string') return;
         this.source = str;
+        this.dirty = true;
     }
 
     /**
@@ -75,6 +76,7 @@ class ResourceString extends Resource {
     setTarget(str) {
         if (typeof(str) !== 'string') return;
         this.target = str;
+        this.dirty = true;
     }
 
     /**

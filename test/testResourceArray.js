@@ -483,6 +483,30 @@ export const testResourceArray = {
         test.done();
     },
 
+    testResourceArrayAddSourceStringIsDirty: function(test) {
+        test.expect(4);
+
+        const ra = new ResourceArray({
+            project: "foo",
+            context: "blah",
+            sourceLocale: "de-DE",
+            key: "asdf",
+            source: ["This is a test", "This is also a test", "This is not"],
+            pathName: "a/b/c.java",
+            comment: "foobar foo",
+            state: "accepted"
+        });
+        test.ok(ra);
+
+        test.ok(!ra.isDirty());
+        ra.addSourceItem(3, "This is the third one")
+
+        test.equal(ra.getSourceItem(3), "This is the third one");
+        test.ok(ra.isDirty());
+
+        test.done();
+    },
+
     testResourceArrayAddTargetString: function(test) {
         test.expect(2);
 
@@ -503,6 +527,32 @@ export const testResourceArray = {
         ra.addTargetItem(3, "This is the third one")
 
         test.equal(ra.getTargetItem(3), "This is the third one");
+
+        test.done();
+    },
+
+    testResourceArrayAddTargetStringIsDirty: function(test) {
+        test.expect(4);
+
+        const ra = new ResourceArray({
+            project: "foo",
+            context: "blah",
+            sourceLocale: "de-DE",
+            key: "asdf",
+            source: ["This is a test", "This is also a test", "This is not"],
+            pathName: "a/b/c.java",
+            comment: "foobar foo",
+            state: "accepted",
+            target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
+            targetLocale: "de-DE"
+        });
+        test.ok(ra);
+
+        test.ok(!ra.isDirty());
+        ra.addTargetItem(3, "This is the third one")
+
+        test.equal(ra.getTargetItem(3), "This is the third one");
+        test.ok(ra.isDirty());
 
         test.done();
     },
@@ -1171,6 +1221,110 @@ export const testResourceArray = {
         test.ok(dup);
 
         test.ok(!rs.isInstance(dup));
+
+        test.done();
+    },
+
+    testResourceArraySetSource: function(test) {
+        test.expect(3);
+
+        const rs = new ResourceArray({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            source: ["a b c", "b", "c"],
+            target: ["a b c", "b", "c"]
+        });
+        test.ok(rs);
+
+        test.deepEqual(rs.getSource(), ["a b c", "b", "c"]);
+        rs.setSource(["x", "y", "z"]);
+        test.deepEqual(rs.getSource(), ["x", "y", "z"]);
+
+        test.done();
+    },
+
+    testResourceArraySetSourceIsDirty: function(test) {
+        test.expect(4);
+
+        const rs = new ResourceArray({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            source: ["a b c", "b", "c"],
+            target: ["a b c", "b", "c"]
+        });
+        test.ok(rs);
+
+        test.deepEqual(rs.getSource(), ["a b c", "b", "c"]);
+        test.ok(!rs.isDirty());
+
+        rs.setSource(["x", "y", "z"]);
+        test.ok(rs.isDirty());
+
+        test.done();
+    },
+
+    testResourceArraySetTarget: function(test) {
+        test.expect(3);
+
+        const rs = new ResourceArray({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            source: ["a b c", "b", "c"],
+            target: ["a b c", "b", "c"]
+        });
+        test.ok(rs);
+
+        test.deepEqual(rs.getTarget(), ["a b c", "b", "c"]);
+        rs.setTarget(["x", "y", "z"]);
+        test.deepEqual(rs.getTarget(), ["x", "y", "z"]);
+
+        test.done();
+    },
+
+    testResourceArraySetTargetIsDirty: function(test) {
+        test.expect(4);
+
+        const rs = new ResourceArray({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            source: ["a b c", "b", "c"],
+            target: ["a b c", "b", "c"]
+        });
+        test.ok(rs);
+
+        test.deepEqual(rs.getTarget(), ["a b c", "b", "c"]);
+        test.ok(!rs.isDirty());
+
+        rs.setTarget(["x", "y", "z"]);
+        test.ok(rs.isDirty());
 
         test.done();
     }

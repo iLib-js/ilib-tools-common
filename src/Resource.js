@@ -1,7 +1,7 @@
 /*
  * Resource.js - super class that represents a resource
  *
- * Copyright © 2022 JEDLSoft
+ * Copyright © 2022-2023 JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -96,6 +96,7 @@ class Resource {
 
         this.instances = [];
         this.pathName = this.pathName || "";
+        this.dirty = false;
     }
 
     /**
@@ -192,6 +193,7 @@ class Resource {
      */
     setSourceLocale(locale) {
         this.sourceLocale = locale || this.sourceLocale;
+        this.dirty = true;
     }
 
     /**
@@ -210,6 +212,7 @@ class Resource {
      */
     setTargetLocale(locale) {
         this.targetLocale = locale || this.targetLocale;
+        this.dirty = true;
     }
 
     /**
@@ -227,10 +230,11 @@ class Resource {
      * Set the project of this resource. This is a string that gives the
      * id of the project for this resource.
      *
-     * @param {Project} project the project to set for this resource
+     * @param {String} project the project name to set for this resource
      */
     setProject(project) {
-        this.project = project.getProjectId();
+        this.project = project;
+        this.dirty = true;
     }
 
     /**
@@ -242,6 +246,7 @@ class Resource {
      */
     setState(state) {
         this.state = validStates[state] ? state : this.state;
+        this.dirty = true;
     }
 
     /**
@@ -273,6 +278,7 @@ class Resource {
      */
     setComment(comment) {
         this.comment = comment;
+        this.dirty = true;
     }
 
     /**
@@ -416,6 +422,7 @@ class Resource {
             return false;
         }
         this.instances.push(resource);
+        this.dirty = true;
         return true;
     }
 
@@ -447,6 +454,13 @@ class Resource {
      */
     getInstances() {
         return this.instances;
+    }
+
+    /**
+     * Return true if this instance has been modified since its creation, and false otherwise.
+     */
+    isDirty() {
+        return this.dirty
     }
 }
 

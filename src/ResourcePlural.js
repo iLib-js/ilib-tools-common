@@ -94,6 +94,7 @@ class ResourcePlural extends Resource {
     setSource(plurals) {
         if (typeof(plurals) !== 'object') return;
         this.source = plurals;
+        this.dirty = true;
     }
 
     /**
@@ -148,6 +149,7 @@ class ResourcePlural extends Resource {
     setTarget(plurals) {
         if (typeof(plurals) !== 'object') return;
         this.target = plurals;
+        this.dirty = true;
     }
 
     /**
@@ -217,6 +219,7 @@ class ResourcePlural extends Resource {
             this.source = {};
         }
         this.source[pluralCategory] = str;
+        this.dirty = true;
     }
 
     /**
@@ -234,6 +237,7 @@ class ResourcePlural extends Resource {
             this.target = {};
         }
         this.target[pluralCategory] = str;
+        this.dirty = true;
     }
 
     /**

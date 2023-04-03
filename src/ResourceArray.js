@@ -108,6 +108,7 @@ class ResourceArray extends Resource {
     setSource(arr) {
         if (!arr || !Array.isArray(arr)) return;
         this.source = arr;
+        this.dirty = true;
     }
 
     /**
@@ -119,6 +120,7 @@ class ResourceArray extends Resource {
     setTarget(arr) {
         if (!arr || !Array.isArray(arr)) return;
         this.target = arr;
+        this.dirty = true;
     }
 
     /**
@@ -181,6 +183,7 @@ class ResourceArray extends Resource {
         }
 
         this.source[i] = str;
+        this.dirty = true;
     }
 
     /**
@@ -200,6 +203,7 @@ class ResourceArray extends Resource {
         }
 
         this.target[i] = str;
+        this.dirty = true;
     }
 
     /**

@@ -544,6 +544,37 @@ export const testResourcePlural = {
         test.done();
     },
 
+    testResourcePluralAddSourceIsDirty: function(test) {
+        test.expect(5);
+
+        const rp = new ResourcePlural({
+            project: "foo",
+            context: "blah",
+            sourceLocale: "de-DE",
+            key: "asdf",
+            source: {
+                "one": "This is singular",
+                "two": "This is double",
+                "few": "This is the few case",
+                "many": "This is the many case"
+            },
+            pathName: "a/b/c.java",
+            comment: "foobar foo",
+            state: "accepted"
+        });
+        test.ok(rp);
+
+        test.ok(!rp.getSourcePlural("zero"));
+        test.ok(!rp.isDirty());
+
+        rp.addSourcePlural("zero", "This is the zero one")
+
+        test.equal(rp.getSourcePlural("zero"), "This is the zero one");
+        test.ok(rp.isDirty());
+
+        test.done();
+    },
+
     testResourcePluralAddSourceReplace: function(test) {
         test.expect(3);
 
@@ -767,6 +798,44 @@ export const testResourcePlural = {
         rp.addTargetPlural("zero", "This is the zero one")
 
         test.equal(rp.getTargetPlural("zero"), "This is the zero one");
+
+        test.done();
+    },
+
+    testResourcePluralAddTargetIsDirty: function(test) {
+        test.expect(5);
+
+        const rp = new ResourcePlural({
+            project: "foo",
+            context: "blah",
+            sourceLocale: "de-DE",
+            key: "asdf",
+            source: {
+                "one": "This is singular",
+                "two": "This is double",
+                "few": "This is the few case",
+                "many": "This is the many case"
+            },
+            targetLocale: "de-DE",
+            target: {
+                "one": "Dies ist einzigartig",
+                "two": "Dies ist doppelt",
+                "few": "Dies ist der wenige Fall",
+                "many": "Dies ist der viele Fall"
+            },
+            pathName: "a/b/c.java",
+            comment: "foobar foo",
+            state: "accepted"
+        });
+        test.ok(rp);
+
+        test.ok(!rp.isDirty());
+        test.ok(!rp.getTargetPlural("zero"));
+
+        rp.addTargetPlural("zero", "This is the zero one")
+
+        test.equal(rp.getTargetPlural("zero"), "This is the zero one");
+        test.ok(rp.isDirty());
 
         test.done();
     },
@@ -1419,5 +1488,110 @@ export const testResourcePlural = {
         test.ok(!rs.isInstance(dup));
 
         test.done();
+    },
+
+    testResourcePluralSetSource: function(test) {
+        test.expect(3);
+
+        const rs = new ResourcePlural({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            source: { one: "singular", other: "plural" },
+            target: { one: "singular", other: "plural" }
+        });
+        test.ok(rs);
+
+        test.deepEqual(rs.getSource(), { one: "singular", other: "plural" });
+        rs.setSource({ one: "x", other: "y" });
+        test.deepEqual(rs.getSource(), { one: "x", other: "y" });
+
+        test.done();
+    },
+
+    testResourcePluralSetSourceIsDirty: function(test) {
+        test.expect(4);
+
+        const rs = new ResourcePlural({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            source: { one: "singular", other: "plural" },
+            target: { one: "singular", other: "plural" }
+        });
+        test.ok(rs);
+
+        test.deepEqual(rs.getSource(), { one: "singular", other: "plural" });
+        test.ok(!rs.isDirty());
+
+        rs.setSource({ one: "x", other: "y" });
+        test.ok(rs.isDirty());
+
+        test.done();
+    },
+
+    testResourcePluralSetTarget: function(test) {
+        test.expect(3);
+
+        const rs = new ResourcePlural({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            source: { one: "singular", other: "plural" },
+            target: { one: "singular", other: "plural" }
+        });
+        test.ok(rs);
+
+        test.deepEqual(rs.getTarget(), { one: "singular", other: "plural" });
+        rs.setTarget({ one: "x", other: "y" });
+        test.deepEqual(rs.getTarget(), { one: "x", other: "y" });
+
+        test.done();
+    },
+
+    testResourcePluralSetTargetIsDirty: function(test) {
+        test.expect(4);
+
+        const rs = new ResourcePlural({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            source: { one: "singular", other: "plural" },
+            target: { one: "singular", other: "plural" }
+        });
+        test.ok(rs);
+
+        test.deepEqual(rs.getTarget(), { one: "singular", other: "plural" });
+        test.ok(!rs.isDirty());
+
+        rs.setTarget({ one: "x", other: "y" });
+        test.ok(rs.isDirty());
+
+        test.done();
     }
+
 };
