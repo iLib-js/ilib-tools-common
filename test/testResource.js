@@ -1,7 +1,7 @@
 /*
  * testResource.js - test the base resource object
  *
- * Copyright © 202, JEDLSoft
+ * Copyright © 2022-2023, JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -734,6 +734,293 @@ export const testResource = {
 
         test.ok(instances);
         test.deepEqual(instances[2], dup);
+
+        test.done();
+    },
+
+    testResourceSetSourceLocale: function(test) {
+        test.expect(3);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            pathName: "a/b/c.md"
+        });
+        test.ok(rs);
+
+        test.equal(rs.getSourceLocale(), "en-US");
+
+        rs.setSourceLocale("de-DE");
+
+        test.equal(rs.getSourceLocale(), "de-DE");
+        test.done();
+    },
+
+    testResourceSetSourceLocaleIsDirty: function(test) {
+        test.expect(3);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            pathName: "a/b/c.md"
+        });
+        test.ok(rs);
+
+        test.ok(!rs.isDirty())
+
+        rs.setSourceLocale("de-DE");
+
+        test.ok(rs.isDirty());
+        test.done();
+    },
+
+    testResourceSetTargetLocale: function(test) {
+        test.expect(3);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            pathName: "a/b/c.md"
+        });
+        test.ok(rs);
+
+        test.equal(rs.getTargetLocale(), "ja-JP");
+
+        rs.setTargetLocale("de-DE");
+
+        test.equal(rs.getTargetLocale(), "de-DE");
+        test.done();
+    },
+
+    testResourceSetTargetLocaleIsDirty: function(test) {
+        test.expect(2);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            pathName: "a/b/c.md"
+        });
+        test.ok(rs);
+
+        test.ok(!rs.isDirty())
+
+        rs.setTargetLocale("de-DE");
+
+        test.ok(rs.isDirty());
+        test.done();
+    },
+
+    testResourceSetState: function(test) {
+        test.expect(3);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            pathName: "a/b/c.md",
+            state: "new"
+        });
+        test.ok(rs);
+
+        test.equal(rs.getState(), "new");
+
+        rs.setState("translated");
+
+        test.equal(rs.getState(), "translated");
+        test.done();
+    },
+
+    testResourceSetTargetLocaleIsDirty: function(test) {
+        test.expect(3);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            pathName: "a/b/c.md",
+            state: "new"
+        });
+        test.ok(rs);
+
+        test.ok(!rs.isDirty())
+
+        rs.setState("translated");
+
+        test.ok(rs.isDirty());
+        test.done();
+    },
+
+    testResourceSetProject: function(test) {
+        test.expect(3);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            pathName: "a/b/c.md",
+            state: "new"
+        });
+        test.ok(rs);
+
+        test.equal(rs.getProject(), "foo");
+
+        rs.setProject("asdf");
+
+        test.equal(rs.getProject(), "asdf");
+        test.done();
+    },
+
+    testResourceSetProjectIsDirty: function(test) {
+        test.expect(3);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            pathName: "a/b/c.md",
+            state: "new"
+        });
+        test.ok(rs);
+
+        test.ok(!rs.isDirty())
+
+        rs.setState("asdf");
+
+        test.ok(rs.isDirty());
+        test.done();
+    },
+
+    testResourceSetComment: function(test) {
+        test.expect(3);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            pathName: "a/b/c.md",
+            state: "new",
+            comment: "comment"
+        });
+        test.ok(rs);
+
+        test.equal(rs.getComment(), "comment");
+
+        rs.setComment("other");
+
+        test.equal(rs.getComment(), "other");
+        test.done();
+    },
+
+    testResourceSetCommentIsDirty: function(test) {
+        test.expect(3);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            pathName: "a/b/c.md",
+            state: "new"
+        });
+        test.ok(rs);
+
+        test.ok(!rs.isDirty())
+
+        rs.setComment("asdf");
+
+        test.ok(rs.isDirty());
+        test.done();
+    },
+
+    testResourceClearDirty: function(test) {
+        test.expect(4);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            pathName: "a/b/c.md"
+        });
+        test.ok(rs);
+
+        test.ok(!rs.isDirty())
+
+        rs.setSourceLocale("de-DE");
+
+        test.ok(rs.isDirty());
+
+        rs.clearDirty();
+
+        test.ok(!rs.isDirty());
 
         test.done();
     },

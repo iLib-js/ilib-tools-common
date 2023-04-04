@@ -1,7 +1,7 @@
 /*
  * ResourceArray.js - represents an array of strings in a resource file
  *
- * Copyright © 2022 JEDLSoft
+ * Copyright © 2022-2023 JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -108,6 +108,7 @@ class ResourceArray extends Resource {
     setSource(arr) {
         if (!arr || !Array.isArray(arr)) return;
         this.source = arr;
+        this.dirty = true;
     }
 
     /**
@@ -119,6 +120,7 @@ class ResourceArray extends Resource {
     setTarget(arr) {
         if (!arr || !Array.isArray(arr)) return;
         this.target = arr;
+        this.dirty = true;
     }
 
     /**
@@ -181,6 +183,7 @@ class ResourceArray extends Resource {
         }
 
         this.source[i] = str;
+        this.dirty = true;
     }
 
     /**
@@ -200,6 +203,7 @@ class ResourceArray extends Resource {
         }
 
         this.target[i] = str;
+        this.dirty = true;
     }
 
     /**
