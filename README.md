@@ -21,6 +21,11 @@ limitations under the License.
 
 ## Release Notes
 
+### v1.7.0
+
+- Added support for the dnt flag (do not translate) in Resources
+    - also for the "translate" flag of translation units
+
 ### v1.6.0
 
 - Added isDirty() method to the Resource class so we can see whether or

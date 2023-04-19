@@ -62,7 +62,7 @@ class Resource {
      * <li>autoKey {boolean} - true if the key was generated based on the source text
      * <li>state {String} - current state of the resource (ie. "new", "translated", or "accepted")
      * <li>dnt {boolean} - a flag that indicates whether or not this resource
-     * should be translated. This stands for "do not translate". 
+     * should be translated. This stands for "do not translate".
      * </ul>
      *
      * @constructor
