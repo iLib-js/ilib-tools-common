@@ -61,6 +61,8 @@ class Resource {
      * <li>pathName {String} - pathName to the file where the string was extracted from
      * <li>autoKey {boolean} - true if the key was generated based on the source text
      * <li>state {String} - current state of the resource (ie. "new", "translated", or "accepted")
+     * <li>dnt {boolean} - a flag that indicates whether or not this resource
+     * should be translated. This stands for "do not translate". 
      * </ul>
      *
      * @constructor
@@ -279,6 +281,28 @@ class Resource {
     setComment(comment) {
         this.comment = comment;
         this.dirty = true;
+    }
+
+    /**
+     * Get the "do not translate" flag for this resource.
+     *
+     * @returns {boolean} true means that the current resource should not
+     * be translated, and false means it will be translated.
+     */
+    getDNT() {
+        return typeof(this.dnt) === 'boolean' ? this.dnt : false;
+    }
+
+    /**
+     * Set the "do not translate" flag for this resource.
+     *
+     * @param {boolean} flag set the dnt flag to this value
+     */
+    setDNT(flag) {
+        if (typeof(flag) === 'boolean') {
+            this.dnt = flag;
+            this.dirty = true;
+        }
     }
 
     /**

@@ -89,7 +89,7 @@ export const testResource = {
         test.equal(rs.getId(), 4);
         test.ok(rs.formatted);
         test.equal(rs.getComment(), "c");
-        test.ok(rs.dnt);
+        test.ok(rs.getDNT());
         test.equal(rs.getDataType(), "d");
         test.ok(rs.localize);
         test.equal(rs.getFlavor(), "e");
@@ -990,6 +990,59 @@ export const testResource = {
         test.ok(!rs.isDirty())
 
         rs.setComment("asdf");
+
+        test.ok(rs.isDirty());
+        test.done();
+    },
+
+    testResourceSetDNT: function(test) {
+        test.expect(3);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            pathName: "a/b/c.md",
+            state: "new",
+            comment: "comment"
+        });
+        test.ok(rs);
+
+        test.ok(!rs.getDNT());
+
+        rs.setDNT(true);
+
+        test.ok(rs.getDNT());
+        test.done();
+    },
+
+    testResourceSetDNTIsDirty: function(test) {
+        test.expect(3);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            pathName: "a/b/c.md",
+            state: "new"
+        });
+        test.ok(rs);
+
+        test.ok(!rs.isDirty())
+
+        rs.setDNT(true);
 
         test.ok(rs.isDirty());
         test.done();

@@ -83,7 +83,7 @@ export const testTranslationUnit = {
     },
 
     testTranslationUnitRightFields: function(test) {
-        test.expect(13);
+        test.expect(14);
 
         const tu = new TranslationUnit({
             source: "a",
@@ -97,7 +97,8 @@ export const testTranslationUnit = {
             state: "translated",
             comment: "no comment",
             datatype: "javascript",
-            flavor: "chocolate"
+            flavor: "chocolate",
+            translate: true
         });
         test.ok(tu);
 
@@ -113,6 +114,7 @@ export const testTranslationUnit = {
         test.equal(tu.comment, "no comment");
         test.equal(tu.datatype, "javascript");
         test.equal(tu.flavor, "chocolate");
+        test.ok(tu.translate);
 
         test.done();
     },

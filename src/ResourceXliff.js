@@ -129,7 +129,8 @@ class ResourceXliff {
                     comment: res.comment,
                     resType: res.resType,
                     datatype: res.datatype,
-                    flavor: res.getFlavor ? res.getFlavor() : undefined
+                    flavor: res.getFlavor ? res.getFlavor() : undefined,
+                    translate: !res.getDNT()
                 });
                 units.push(tu);
                 break;
@@ -152,7 +153,8 @@ class ResourceXliff {
                     comment: res.comment,
                     resType: res.resType,
                     datatype: res.datatype,
-                    flavor: res.getFlavor ? res.getFlavor() : undefined
+                    flavor: res.getFlavor ? res.getFlavor() : undefined,
+                    translate: !res.getDNT()
                 });
 
                 for (let j = 0; j < sarr.length; j++) {
@@ -188,7 +190,8 @@ class ResourceXliff {
                     context: res.context,
                     resType: res.resType,
                     datatype: res.datatype,
-                    flavor: res.getFlavor ? res.getFlavor() : undefined
+                    flavor: res.getFlavor ? res.getFlavor() : undefined,
+                    translate: !res.getDNT()
                 });
 
                 const sp = res.getSource();
@@ -305,6 +308,10 @@ class ResourceXliff {
                 res.addTargetPlural(tu.quantity, tu.target);
             }
             break;
+        }
+
+        if (typeof(tu.translate) === "boolean") {
+            res.setDNT(!tu.translate);
         }
 
         return res;
