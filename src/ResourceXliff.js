@@ -248,7 +248,8 @@ class ResourceXliff {
                 resType: tu.resType,
                 datatype: tu.datatype,
                 state: tu.state,
-                flavor: tu.flavor
+                flavor: tu.flavor,
+                location: tu.location
             });
 
             if (tu.target) {
@@ -273,7 +274,8 @@ class ResourceXliff {
                 resType: tu.resType,
                 datatype: tu.datatype,
                 state: tu.state,
-                flavor: tu.flavor
+                flavor: tu.flavor,
+                location: tu.location
             });
 
             if (tu.target) {
@@ -298,7 +300,8 @@ class ResourceXliff {
                 resType: tu.resType,
                 datatype: tu.datatype,
                 state: tu.state,
-                flavor: tu.flavor
+                flavor: tu.flavor,
+                location: tu.location
             });
 
             if (tu.target) {

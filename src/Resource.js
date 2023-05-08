@@ -92,6 +92,7 @@ class Resource {
             this.localize = typeof(props.localize) === "boolean" ? props.localize : true; // some files have resources we do not want to localize/translate
             this.flavor = props.flavor;
             this.index = props.index;
+            this.location = props.location; // optional location of the transunits in the xml file
         }
 
         this.instances = [];
@@ -470,6 +471,18 @@ class Resource {
      */
     clearDirty() {
         this.dirty = false;
+    }
+
+    /**
+     * Return the location of the resource instance in the original file where it was read
+     * from. This is usually an object containing a line and a char property which gives the
+     * line number and character within that line where the representation of the resource
+     * instance starts.
+     *
+     * @returns {Object<{line, char}>} the location information
+     */
+    getLocation() {
+        return this.location;
     }
 }
 
