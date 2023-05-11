@@ -1,7 +1,7 @@
 /*
  * Xliff.js - convert an Xliff file into a set of resources and vice versa
  *
- * Copyright © 2022 JEDLSoft
+ * Copyright © 2022-2023 JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -248,7 +248,8 @@ class ResourceXliff {
                 resType: tu.resType,
                 datatype: tu.datatype,
                 state: tu.state,
-                flavor: tu.flavor
+                flavor: tu.flavor,
+                location: tu.location
             });
 
             if (tu.target) {
@@ -273,7 +274,8 @@ class ResourceXliff {
                 resType: tu.resType,
                 datatype: tu.datatype,
                 state: tu.state,
-                flavor: tu.flavor
+                flavor: tu.flavor,
+                location: tu.location
             });
 
             if (tu.target) {
@@ -298,7 +300,8 @@ class ResourceXliff {
                 resType: tu.resType,
                 datatype: tu.datatype,
                 state: tu.state,
-                flavor: tu.flavor
+                flavor: tu.flavor,
+                location: tu.location
             });
 
             if (tu.target) {
@@ -430,10 +433,28 @@ class ResourceXliff {
         return this.xliff.serialize(true);
     }
 
+    /**
+     * Return the number of lines in the xml representation of this file.
+     *
+     * @returns {Number} the number of lines in the xml
+     */
+    getLines() {
+        return this.xliff.getLines();
+    }
+
+    /**
+     * Return the number of resources in this resource xliff file.
+     * @returns {Number} the number of resources in this file
+     */
     size() {
         return this.ts.size();
     }
 
+    /**
+     * Get the version number of this file. Currently, it only supports
+     * xliff v1.2 and v2.0.
+     * @returns {String} the version number of the file
+     */
     getVersion() {
         return this.version;
     }

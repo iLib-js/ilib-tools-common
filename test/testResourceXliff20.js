@@ -1,7 +1,7 @@
 /*
  * testXliff20.js - test the Xliff 2.0 object.
  *
- * Copyright © 2019,2021 JEDLSoft
+ * Copyright © 2019,2021,2023 JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1252,6 +1252,70 @@ export const testResourceXliff20 = {
         test.equal(reslist[1].getTarget(), "bebe bebe");
         test.equal(reslist[1].getTargetLocale(), "de-DE");
 
+        test.done();
+    },
+
+    testXliff20ParseGetLines: function(test) {
+        test.expect(2);
+
+        var x = new ResourceXliff();
+        test.ok(x);
+
+        x.parse(
+                '<?xml version="1.0" encoding="utf-8"?>\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="de-DE" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <unit id="1" name="foobar" type="res:string">\n' +
+                '      <segment>\n' +
+                '        <source>Asdf asdf</source>\n' +
+                '        <target>foobarfoo</target>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
+                '  </file>\n' +
+                '  <file original="foo/bar/j.java" l:project="webapp">\n' +
+                '    <unit id="2" name="huzzah" type="res:string">\n' +
+                '      <segment>\n' +
+                '        <source>baby baby</source>\n' +
+                '        <target>bebe bebe</target>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
+                '  </file>\n' +
+                '</xliff>');
+
+
+        test.equal(x.getLines(), 19);
+        test.done();
+    },
+
+    testXliff20ParseSize: function(test) {
+        test.expect(2);
+
+        var x = new ResourceXliff();
+        test.ok(x);
+
+        x.parse(
+                '<?xml version="1.0" encoding="utf-8"?>\n' +
+                '<xliff version="2.0" srcLang="en-US" trgLang="de-DE" xmlns:l="http://ilib-js.com/loctool">\n' +
+                '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
+                '    <unit id="1" name="foobar" type="res:string">\n' +
+                '      <segment>\n' +
+                '        <source>Asdf asdf</source>\n' +
+                '        <target>foobarfoo</target>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
+                '  </file>\n' +
+                '  <file original="foo/bar/j.java" l:project="webapp">\n' +
+                '    <unit id="2" name="huzzah" type="res:string">\n' +
+                '      <segment>\n' +
+                '        <source>baby baby</source>\n' +
+                '        <target>bebe bebe</target>\n' +
+                '      </segment>\n' +
+                '    </unit>\n' +
+                '  </file>\n' +
+                '</xliff>');
+
+
+        test.equal(x.size(), 2);
         test.done();
     },
 

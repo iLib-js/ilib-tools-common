@@ -21,6 +21,13 @@ limitations under the License.
 
 ## Release Notes
 
+### v1.7.0
+
+- added getLines() method to tell how many lines there are in the xml file
+- added support for location information of the start of each resource
+  in the original file where the resource instances were read from
+    - supports line and character within the line
+
 ### v1.6.0
 
 - Added isDirty() method to the Resource class so we can see whether or

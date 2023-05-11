@@ -1,7 +1,7 @@
 /*
  * testXliff.js - test the Xliff object.
  *
- * Copyright © 2016-2017, 2019-2022 HealthTap, Inc. and JEDLSoft
+ * Copyright © 2016-2017, 2019-2023 HealthTap, Inc. and JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -1259,6 +1259,71 @@ export const testResourceXliff = {
         test.equal(reslist[1].getId(), "2");
         test.equal(reslist[1].getTarget(), "bebe bebe");
         test.equal(reslist[1].getTargetLocale(), "fr-FR");
+
+        test.done();
+    },
+
+    testResourceXliffParseGetLines: function(test) {
+        test.expect(2);
+
+        const x = new ResourceXliff();
+        test.ok(x);
+
+        x.parse(
+                '<?xml version="1.0" encoding="utf-8"?>\n' +
+                '<xliff version="1.2">\n' +
+                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="de-DE" product-name="androidapp">\n' +
+                '    <body>\n' +
+                '      <trans-unit id="1" resname="foobar" restype="string">\n' +
+                '        <source>Asdf asdf</source>\n' +
+                '        <target>foobarfoo</target>\n' +
+                '      </trans-unit>\n' +
+                '    </body>\n' +
+                '  </file>\n' +
+                '  <file original="foo/bar/j.java" source-language="en-US" target-language="fr-FR" product-name="webapp">\n' +
+                '    <body>\n' +
+                '      <trans-unit id="2" resname="huzzah" restype="string">\n' +
+                '        <source>baby baby</source>\n' +
+                '        <target>bebe bebe</target>\n' +
+                '      </trans-unit>\n' +
+                '    </body>\n' +
+                '  </file>\n' +
+                '</xliff>');
+
+        test.equal(x.getLines(), 19);
+
+        test.done();
+    },
+
+    testResourceXliffParseGetSize: function(test) {
+        test.expect(2);
+
+        const x = new ResourceXliff();
+        test.ok(x);
+
+        x.parse(
+                '<?xml version="1.0" encoding="utf-8"?>\n' +
+                '<xliff version="1.2">\n' +
+                '  <file original="foo/bar/asdf.java" source-language="en-US" target-language="de-DE" product-name="androidapp">\n' +
+                '    <body>\n' +
+                '      <trans-unit id="1" resname="foobar" restype="string">\n' +
+                '        <source>Asdf asdf</source>\n' +
+                '        <target>foobarfoo</target>\n' +
+                '      </trans-unit>\n' +
+                '    </body>\n' +
+                '  </file>\n' +
+                '  <file original="foo/bar/j.java" source-language="en-US" target-language="fr-FR" product-name="webapp">\n' +
+                '    <body>\n' +
+                '      <trans-unit id="2" resname="huzzah" restype="string">\n' +
+                '        <source>baby baby</source>\n' +
+                '        <target>bebe bebe</target>\n' +
+                '      </trans-unit>\n' +
+                '    </body>\n' +
+                '  </file>\n' +
+                '</xliff>');
+
+        // only 2 resources result from all the above
+        test.equal(x.size(), 2);
 
         test.done();
     },
