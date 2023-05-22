@@ -27,6 +27,7 @@ import TranslationUnit from './TranslationUnit.js';
 import TranslationVariant from './TranslationVariant.js';
 import {
     formatPath,
+    parsePath,
     getLocaleFromPath,
     cleanString,
     isEmpty,
