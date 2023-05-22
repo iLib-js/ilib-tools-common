@@ -21,6 +21,14 @@ limitations under the License.
 
 ## Release Notes
 
+### v1.8.0
+
+- added parsePath() utility function which takes a template and a path
+  and returns an object that maps each template parameter to a part of
+  that path
+    - getLocaleFromPath() is now re-implemented to use this
+      function to find the locale parts of a path
+
 ### v1.7.0
 
 - added getLines() method to tell how many lines there are in the xml file

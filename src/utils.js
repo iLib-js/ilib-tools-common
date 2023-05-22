@@ -175,20 +175,34 @@ export function formatPath(template, parameters) {
 
 const matchExprs = {
     "dir": {
-        regex: ".*?",
-        brackets: 0,
+        regex: "(.*)",
+        brackets: 1,
+        groups: {
+            dir: 1
+        }
     },
     "basename": {
-        regex: ".*?",
-        brackets: 0,
+        regex: "(.*?)",
+        brackets: 1,
+        groups: {
+            basename: 1
+        }
+    },
+    "extension": {
+        regex: "(.*)",
+        brackets: 1,
+        groups: {
+            extension: 1
+        }
     },
     "locale": {
-        regex: "([a-z][a-z][a-z]?)(-([A-Z][a-z][a-z][a-z]))?(-([A-Z][A-Z]|[0-9][0-9][0-9]))?",
-        brackets: 5,
+        regex: "(([a-z][a-z][a-z]?)(-([A-Z][a-z][a-z][a-z]))?(-([A-Z][A-Z]|[0-9][0-9][0-9]))?)",
+        brackets: 6,
         groups: {
-            language: 1,
-            script: 3,
-            region: 5
+            locale: 1,
+            language: 2,
+            script: 4,
+            region: 6
         }
     },
     "language": {
@@ -213,42 +227,42 @@ const matchExprs = {
         }
     },
     "localeDir": {
-        regex: "([a-z][a-z][a-z]?)(/([A-Z][a-z][a-z][a-z]))?(/([A-Z][A-Z]|[0-9][0-9][0-9]))?",
-        brackets: 5,
+        regex: "(([a-z][a-z][a-z]?)(/([A-Z][a-z][a-z][a-z]))?(/([A-Z][A-Z]|[0-9][0-9][0-9]))?)",
+        brackets: 6,
         groups: {
-            language: 1,
-            script: 3,
-            region: 5
+            localeDir: 1,
+            language: 2,
+            script: 4,
+            region: 6
         }
     },
     "localeUnder": {
-        regex: "([a-z][a-z][a-z]?)(_([A-Z][a-z][a-z][a-z]))?(_([A-Z][A-Z]|[0-9][0-9][0-9]))?",
-        brackets: 5,
+        regex: "(([a-z][a-z][a-z]?)(_([A-Z][a-z][a-z][a-z]))?(_([A-Z][A-Z]|[0-9][0-9][0-9]))?)",
+        brackets: 6,
         groups: {
-            language: 1,
-            script: 3,
-            region: 5
+            localeUnder: 1,
+            language: 2,
+            script: 4,
+            region: 6
         }
     },
     "localeLower": {
-        regex: "([a-z][a-z][a-z]?)(-([a-z][a-z][a-z][a-z]))?(-([a-z][a-z]|[0-9][0-9][0-9]))?",
-        brackets: 5,
+        regex: "(([a-z][a-z][a-z]?)(-([a-z][a-z][a-z][a-z]))?(-([a-z][a-z]|[0-9][0-9][0-9]))?)",
+        brackets: 6,
         groups: {
-            language: 1,
-            script: 3,
-            region: 5
+            localeUnder: 1,
+            language: 2,
+            script: 4,
+            region: 6
         }
     }
 };
 
 /**
- * Return a locale encoded in the path using template to parse that path.
- * See {#formatPath} for the full description of the syntax of the template.
- * @param {String} template template for the output file
- * @param {String} pathname path to the source file
- * @returns {String} the locale within the path, or undefined if no locale found
+ * Parse a path according to the given template, and return the parts
+ * 
  */
-export function getLocaleFromPath(template, pathname) {
+export function parsePath(template, pathname) {
     let regex = "";
     let matchGroups = {};
     let totalBrackets = 0;
@@ -270,10 +284,6 @@ export function getLocaleFromPath(template, pathname) {
             switch (keyword) {
                 case 'filename':
                     regex += path.basename(pathname);
-                    break;
-                case 'extension':
-                    base = path.basename(pathname);
-                    regex += base.substring(base.lastIndexOf('.')+1);
                     break;
                 default:
                     if (!matchExprs[keyword]) {
@@ -302,15 +312,33 @@ export function getLocaleFromPath(template, pathname) {
                 found = true;
             }
         }
-        if (found) {
-            // TODO: Remove script transformation once similar change is implemented in iLib/Locale class.
-            if (groups.script && groups.script.length) {
-                groups.script = groups.script.charAt(0).toUpperCase() + groups.script.slice(1).toLowerCase();
-            }
+        return groups;
+    }
 
-            const l = new Locale(groups.language, groups.region, undefined, groups.script);
-            return l.getSpec();
+    return {};
+}
+
+/**
+ * Return a locale encoded in the path using template to parse that path.
+ * See {#formatPath} for the full description of the syntax of the template.
+ * @param {String} template template for the output file
+ * @param {String} pathname path to the source file
+ * @returns {String} the locale within the path, or undefined if no locale found
+ */
+export function getLocaleFromPath(template, pathname) {
+    const groups = parsePath(template, pathname);
+
+    if (groups.locale || groups.language || groups.script || groups.region ) {
+        // TODO: Remove script transformation once similar change is implemented in iLib/Locale class.
+        if (groups.script && groups.script.length) {
+            groups.script = groups.script.charAt(0).toUpperCase() + groups.script.slice(1).toLowerCase();
         }
+
+        const l = groups.locale ?
+            new Locale(groups.locale) :
+            new Locale(groups.language, groups.region, undefined, groups.script);
+
+        return l.getSpec();
     }
 
     return "";
