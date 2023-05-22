@@ -259,8 +259,14 @@ const matchExprs = {
 };
 
 /**
- * Parse a path according to the given template, and return the parts
- * 
+ * Parse a path according to the given template, and return the parts.
+ * The parts can be any of the fields mentioned in the {@link formatPath}
+ * documentation. If any field is not parsed, the result is an empty object
+ *
+ * @param {String} template the ilib template for matching against the path
+ * @param {String} pathname the path name to match against the template
+ * @returns {Object} an object mapping the fields to their values in the
+ * the pathname
  */
 export function parsePath(template, pathname) {
     let regex = "";
