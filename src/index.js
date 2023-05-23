@@ -46,6 +46,7 @@ export {
     TranslationVariant,
     ResourceXliff,
     formatPath,
+    parsePath,
     getLocaleFromPath,
     cleanString,
     isEmpty,
