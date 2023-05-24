@@ -21,6 +21,7 @@ import fs from 'fs';
 import semver from 'semver';
 import {
     formatPath,
+    parsePath,
     getLocaleFromPath,
     cleanString,
     isEmpty,
@@ -291,6 +292,48 @@ export const testUtils = {
             sourcepath: "x/y/strings.json",
             locale: "zh-Hans-CN"
         }), "x/y/strings_zh-hans-cn.json");
+
+        test.done();
+    },
+
+    testParsePath: function(test) {
+        test.expect(1);
+
+        const actual = parsePath('[dir]/[basename]_[locale].[extension].foo', "x/y/strings_de-DE.json.foo");
+        const expected = {
+            dir: "x/y",
+            basename: "strings",
+            locale: "de-DE",
+            language: "de",
+            region: "DE",
+            extension: "json"
+        };
+        test.deepEqual(actual, expected);
+
+        test.done();
+    },
+
+    testParsePathPartialMatch: function(test) {
+        test.expect(1);
+
+        const actual = parsePath('[dir]/[basename]_en-US.[extension]', "x/y/strings_en-US.json");
+        const expected = {
+            dir: "x/y",
+            basename: "strings",
+            extension: "json"
+        };
+        test.deepEqual(actual, expected);
+
+        test.done();
+    },
+
+    testParsePathNoMatch: function(test) {
+        test.expect(1);
+
+        // missing the underscore
+        const actual = parsePath('[dir]/[basename]_en-US.[extension]', "x/y/en-US.json");
+        const expected = {};
+        test.deepEqual(actual, expected);
 
         test.done();
     },
