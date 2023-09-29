@@ -1,5 +1,5 @@
 /*
- * testTranslationVariant.js - test the translation variant object.
+ * TranslationVariant.test.js - test the translation variant object.
  *
  * Copyright © 2023 JEDLSoft
  *
@@ -19,37 +19,34 @@
 
 import TranslationVariant from "../src/TranslationVariant.js";
 
-export const testTranslationVariant = {
-     testTranslationVariantConstructorEmpty: function(test) {
-        test.expect(1);
+describe("testTranslationVariant", () => {
+     test("TranslationVariantConstructorEmpty", () => {
+        expect.assertions(1);
 
         const tv = new TranslationVariant();
-        test.ok(tv);
-        test.done();
-    },
+        expect(tv).toBeTruthy();
+    });
 
-     testTranslationVariantConstructor: function(test) {
-        test.expect(1);
-
-        const tv = new TranslationVariant({
-            locale: "de-DE",
-            string: "Zeichenfolge auf deutsch"
-        });
-        test.ok(tv);
-        test.done();
-    },
-
-     testTranslationVariantRightFields: function(test) {
-        test.expect(3);
+     test("TranslationVariantConstructor", () => {
+        expect.assertions(1);
 
         const tv = new TranslationVariant({
             locale: "de-DE",
             string: "Zeichenfolge auf deutsch"
         });
-        test.ok(tv);
+        expect(tv).toBeTruthy();
+    });
 
-        test.equal(tv.locale, "de-DE");
-        test.equal(tv.string, "Zeichenfolge auf deutsch");
-        test.done();
-    },
-};
+     test("TranslationVariantRightFields", () => {
+        expect.assertions(3);
+
+        const tv = new TranslationVariant({
+            locale: "de-DE",
+            string: "Zeichenfolge auf deutsch"
+        });
+        expect(tv).toBeTruthy();
+
+        expect(tv.locale).toBe("de-DE");
+        expect(tv.string).toBe("Zeichenfolge auf deutsch");
+    });
+});

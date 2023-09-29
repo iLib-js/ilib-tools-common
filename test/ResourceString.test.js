@@ -1,5 +1,5 @@
 /*
- * testResourceString.js - test the resource string object.
+ * ResourceString.test.js - test the resource string object.
  *
  * Copyright © 2022-2023 JEDLSoft
  *
@@ -19,27 +19,23 @@
 
 import ResourceString from "../src/ResourceString.js";
 
-export const testResourceString = {
-    testResourceStringConstructorEmpty: function(test) {
-        test.expect(1);
+describe("testResourceString", () => {
+    test("ResourceStringConstructorEmpty", () => {
+        expect.assertions(1);
 
         const rs = new ResourceString();
-        test.ok(rs);
+        expect(rs).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringConstructorNoProps: function(test) {
-        test.expect(1);
+    test("ResourceStringConstructorNoProps", () => {
+        expect.assertions(1);
 
         const rs = new ResourceString({});
-        test.ok(rs);
+        expect(rs).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringConstructor: function(test) {
-        test.expect(1);
+    test("ResourceStringConstructor", () => {
+        expect.assertions(1);
 
         const rs = new ResourceString({
             key: "asdf",
@@ -47,13 +43,11 @@ export const testResourceString = {
             sourceLocale: "de-DE",
             pathName: "a/b/c.java"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringConstructorWithContext: function(test) {
-        test.expect(1);
+    test("ResourceStringConstructorWithContext", () => {
+        expect.assertions(1);
 
         const rs = new ResourceString({
             key: "asdf",
@@ -62,13 +56,11 @@ export const testResourceString = {
             pathName: "a/b/c.java",
             context: "landscape"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringConstructorWithSourceAndTarget: function(test) {
-        test.expect(1);
+    test("ResourceStringConstructorWithSourceAndTarget", () => {
+        expect.assertions(1);
 
         const rs = new ResourceString({
             key: "asdf",
@@ -78,13 +70,11 @@ export const testResourceString = {
             target: "Dies ist einen Test.",
             targetLocale: "de-DE"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringConstructorRightContents: function(test) {
-        test.expect(7);
+    test("ResourceStringConstructorRightContents", () => {
+        expect.assertions(7);
 
         const rs = new ResourceString({
             key: "asdf",
@@ -92,20 +82,18 @@ export const testResourceString = {
             sourceLocale: "de-DE",
             pathName: "a/b/c.java"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.equal(rs.getKey(), "asdf");
-        test.equal(rs.getSource(), "This is a test");
-        test.equal(rs.getSourceLocale(), "de-DE");
-        test.equal(rs.pathName, "a/b/c.java");
-        test.ok(!rs.getTarget()); // source-only string
-        test.ok(!rs.getTargetLocale());
+        expect(rs.getKey()).toBe("asdf");
+        expect(rs.getSource()).toBe("This is a test");
+        expect(rs.getSourceLocale()).toBe("de-DE");
+        expect(rs.pathName).toBe("a/b/c.java");
+        expect(!rs.getTarget()).toBeTruthy(); // source-only string
+        expect(!rs.getTargetLocale()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringConstructorSourceTargetRightContents: function(test) {
-        test.expect(7);
+    test("ResourceStringConstructorSourceTargetRightContents", () => {
+        expect.assertions(7);
 
         const rs = new ResourceString({
             key: "asdf",
@@ -115,42 +103,38 @@ export const testResourceString = {
             target: "Dies ist einen Test.",
             targetLocale: "de-DE"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.equal(rs.getKey(), "asdf");
-        test.equal(rs.getSource(), "This is a test");
-        test.equal(rs.sourceLocale, "en-US");
-        test.equal(rs.pathName, "a/b/c.java");
-        test.equal(rs.getTarget(), "Dies ist einen Test.");
-        test.equal(rs.getTargetLocale(), "de-DE");
+        expect(rs.getKey()).toBe("asdf");
+        expect(rs.getSource()).toBe("This is a test");
+        expect(rs.sourceLocale).toBe("en-US");
+        expect(rs.pathName).toBe("a/b/c.java");
+        expect(rs.getTarget()).toBe("Dies ist einen Test.");
+        expect(rs.getTargetLocale()).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testResourceStringConstructorDefaults: function(test) {
-        test.expect(6);
+    test("ResourceStringConstructorDefaults", () => {
+        expect.assertions(6);
 
         const rs = new ResourceString({
             key: "asdf",
             source: "This is a test",
             pathName: "a/b/c.java"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
         // got the right one?
-        test.equal(rs.getKey(), "asdf");
+        expect(rs.getKey()).toBe("asdf");
 
         // now the defaults
-        test.equal(rs.sourceLocale, "en-US");
-        test.equal(rs.origin, "source");
-        test.equal(rs.datatype, "plaintext");
-        test.equal(rs.resType, "string");
+        expect(rs.sourceLocale).toBe("en-US");
+        expect(rs.origin).toBe("source");
+        expect(rs.datatype).toBe("plaintext");
+        expect(rs.resType).toBe("string");
+    });
 
-        test.done();
-    },
-
-    testResourceStringGetKey: function(test) {
-        test.expect(2);
+    test("ResourceStringGetKey", () => {
+        expect.assertions(2);
 
         const rs = new ResourceString({
             key: "foo",
@@ -158,14 +142,12 @@ export const testResourceString = {
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
-        test.ok(rs);
-        test.equal(rs.getKey(), "foo");
+        expect(rs).toBeTruthy();
+        expect(rs.getKey()).toBe("foo");
+    });
 
-        test.done();
-    },
-
-    testResourceStringAutoKey: function(test) {
-        test.expect(2);
+    test("ResourceStringAutoKey", () => {
+        expect.assertions(2);
 
         const rs = new ResourceString({
             key: "foo",
@@ -174,14 +156,12 @@ export const testResourceString = {
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
-        test.ok(rs);
-        test.ok(rs.getAutoKey());
+        expect(rs).toBeTruthy();
+        expect(rs.getAutoKey()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringNotAutoKey: function(test) {
-        test.expect(2);
+    test("ResourceStringNotAutoKey", () => {
+        expect.assertions(2);
 
         const rs = new ResourceString({
             key: "foo",
@@ -189,24 +169,20 @@ export const testResourceString = {
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
-        test.ok(rs);
-        test.ok(!rs.getAutoKey());
+        expect(rs).toBeTruthy();
+        expect(!rs.getAutoKey()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringGetKeyEmpty: function(test) {
-        test.expect(2);
+    test("ResourceStringGetKeyEmpty", () => {
+        expect.assertions(2);
 
         const rs = new ResourceString();
-        test.ok(rs);
-        test.ok(!rs.getKey());
+        expect(rs).toBeTruthy();
+        expect(!rs.getKey()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringGetContext: function(test) {
-        test.expect(2);
+    test("ResourceStringGetContext", () => {
+        expect.assertions(2);
 
         const rs = new ResourceString({
             key: "foo",
@@ -215,14 +191,12 @@ export const testResourceString = {
             sourceLocale: "de-DE",
             context: "landscape"
         });
-        test.ok(rs);
-        test.equal(rs.getContext(), "landscape");
+        expect(rs).toBeTruthy();
+        expect(rs.getContext()).toBe("landscape");
+    });
 
-        test.done();
-    },
-
-    testResourceStringGetContextEmpty: function(test) {
-        test.expect(2);
+    test("ResourceStringGetContextEmpty", () => {
+        expect.assertions(2);
 
         const rs = new ResourceString({
             key: "foo",
@@ -230,14 +204,12 @@ export const testResourceString = {
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
-        test.ok(rs);
-        test.ok(!rs.getContext());
+        expect(rs).toBeTruthy();
+        expect(!rs.getContext()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringGetSource: function(test) {
-        test.expect(2);
+    test("ResourceStringGetSource", () => {
+        expect.assertions(2);
 
         const rs = new ResourceString({
             key: "foo",
@@ -245,14 +217,12 @@ export const testResourceString = {
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
-        test.ok(rs);
-        test.equal(rs.getSource(), "source string");
+        expect(rs).toBeTruthy();
+        expect(rs.getSource()).toBe("source string");
+    });
 
-        test.done();
-    },
-
-    testResourceStringSize: function(test) {
-        test.expect(2);
+    test("ResourceStringSize", () => {
+        expect.assertions(2);
 
         const rs = new ResourceString({
             key: "foo",
@@ -261,24 +231,20 @@ export const testResourceString = {
             locale: "de-DE"
         });
 
-        test.ok(rs);
-        test.equal(rs.size(), 1); // should always be 1
+        expect(rs).toBeTruthy();
+        expect(rs.size()).toBe(1); // should always be 1
+    });
 
-        test.done();
-    },
-
-    testResourceStringGetSourceEmpty: function(test) {
-        test.expect(2);
+    test("ResourceStringGetSourceEmpty", () => {
+        expect.assertions(2);
 
         const rs = new ResourceString();
-        test.ok(rs);
-        test.ok(!rs.getSource());
+        expect(rs).toBeTruthy();
+        expect(!rs.getSource()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringClone: function(test) {
-        test.expect(10);
+    test("ResourceStringClone", () => {
+        expect.assertions(10);
 
         const rs = new ResourceString({
             project: "foo",
@@ -290,25 +256,23 @@ export const testResourceString = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
         const rs2 = rs.clone();
 
-        test.ok(rs2);
-        test.equal(rs2.project, rs.project);
-        test.equal(rs2.context, rs.context);
-        test.equal(rs2.sourceLocale, rs.sourceLocale);
-        test.equal(rs2.reskey, rs.reskey);
-        test.deepEqual(rs2.getSource(), rs.getSource());
-        test.equal(rs2.pathName, rs.pathName);
-        test.equal(rs2.comment, rs.comment);
-        test.equal(rs2.state, rs.state);
+        expect(rs2).toBeTruthy();
+        expect(rs2.project).toBe(rs.project);
+        expect(rs2.context).toBe(rs.context);
+        expect(rs2.sourceLocale).toBe(rs.sourceLocale);
+        expect(rs2.reskey).toBe(rs.reskey);
+        expect(rs2.getSource()).toStrictEqual(rs.getSource());
+        expect(rs2.pathName).toBe(rs.pathName);
+        expect(rs2.comment).toBe(rs.comment);
+        expect(rs2.state).toBe(rs.state);
+    });
 
-        test.done();
-    },
-
-    testResourceStringCloneWithOverrides: function(test) {
-        test.expect(13);
+    test("ResourceStringCloneWithOverrides", () => {
+        expect.assertions(13);
 
         const rs = new ResourceString({
             project: "foo",
@@ -322,7 +286,7 @@ export const testResourceString = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
         const rs2 = rs.clone({
             targetLocale: "fr-FR",
@@ -330,25 +294,23 @@ export const testResourceString = {
             state: "asdfasdf"
         });
 
-        test.ok(rs2);
-        test.equal(rs2.project, rs.project);
-        test.equal(rs2.context, rs.context);
-        test.equal(rs2.sourceLocale, rs.sourceLocale);
-        test.equal(rs2.reskey, rs.reskey);
-        test.deepEqual(rs2.getSource(), rs.getSource());
-        test.deepEqual(rs2.getTarget(), "Ceci est une teste.");
-        test.equal(rs2.pathName, rs.pathName);
-        test.equal(rs2.comment, rs.comment);
-        test.equal(rs2.state, "asdfasdf");
+        expect(rs2).toBeTruthy();
+        expect(rs2.project).toBe(rs.project);
+        expect(rs2.context).toBe(rs.context);
+        expect(rs2.sourceLocale).toBe(rs.sourceLocale);
+        expect(rs2.reskey).toBe(rs.reskey);
+        expect(rs2.getSource()).toStrictEqual(rs.getSource());
+        expect(rs2.getTarget()).toStrictEqual("Ceci est une teste.");
+        expect(rs2.pathName).toBe(rs.pathName);
+        expect(rs2.comment).toBe(rs.comment);
+        expect(rs2.state).toBe("asdfasdf");
 
-        test.ok(rs2.getTargetLocale() !== rs.getTargetLocale());
-        test.ok(rs2.getTarget() !== rs.getTarget());
+        expect(rs2.getTargetLocale() !== rs.getTargetLocale()).toBeTruthy();
+        expect(rs2.getTarget() !== rs.getTarget()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringEquals: function(test) {
-        test.expect(3);
+    test("ResourceStringEquals", () => {
+        expect.assertions(3);
 
         const ra1 = new ResourceString({
             project: "foo",
@@ -376,16 +338,14 @@ export const testResourceString = {
             state: "accepted"
         });
 
-        test.ok(ra1);
-        test.ok(ra2);
+        expect(ra1).toBeTruthy();
+        expect(ra2).toBeTruthy();
 
-        test.ok(ra1.equals(ra2));
+        expect(ra1.equals(ra2)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringEqualsNot: function(test) {
-        test.expect(3);
+    test("ResourceStringEqualsNot", () => {
+        expect.assertions(3);
 
         const ra1 = new ResourceString({
             project: "foo",
@@ -409,16 +369,14 @@ export const testResourceString = {
             state: "accepted"
         });
 
-        test.ok(ra1);
-        test.ok(ra2);
+        expect(ra1).toBeTruthy();
+        expect(ra2).toBeTruthy();
 
-        test.ok(!ra1.equals(ra2));
+        expect(!ra1.equals(ra2)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringEqualsNotTarget: function(test) {
-        test.expect(3);
+    test("ResourceStringEqualsNotTarget", () => {
+        expect.assertions(3);
 
         const ra1 = new ResourceString({
             project: "foo",
@@ -446,16 +404,14 @@ export const testResourceString = {
             state: "accepted"
         });
 
-        test.ok(ra1);
-        test.ok(ra2);
+        expect(ra1).toBeTruthy();
+        expect(ra2).toBeTruthy();
 
-        test.ok(!ra1.equals(ra2));
+        expect(!ra1.equals(ra2)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringEqualsDifferentFlavor: function(test) {
-        test.expect(3);
+    test("ResourceStringEqualsDifferentFlavor", () => {
+        expect.assertions(3);
 
         const ra1 = new ResourceString({
             project: "foo",
@@ -480,16 +436,14 @@ export const testResourceString = {
             state: "done"
         });
 
-        test.ok(ra1);
-        test.ok(ra2);
+        expect(ra1).toBeTruthy();
+        expect(ra2).toBeTruthy();
 
-        test.ok(!ra1.equals(ra2));
+        expect(!ra1.equals(ra2)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringEqualsIgnoreSomeFields: function(test) {
-        test.expect(3);
+    test("ResourceStringEqualsIgnoreSomeFields", () => {
+        expect.assertions(3);
 
         const ra1 = new ResourceString({
             project: "foo",
@@ -513,16 +467,14 @@ export const testResourceString = {
             state: "done"
         });
 
-        test.ok(ra1);
-        test.ok(ra2);
+        expect(ra1).toBeTruthy();
+        expect(ra2).toBeTruthy();
 
-        test.ok(ra1.equals(ra2));
+        expect(ra1.equals(ra2)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringEqualsContentDifferent: function(test) {
-        test.expect(3);
+    test("ResourceStringEqualsContentDifferent", () => {
+        expect.assertions(3);
 
         const ra1 = new ResourceString({
             project: "foo",
@@ -546,40 +498,32 @@ export const testResourceString = {
             state: "accepted"
         });
 
-        test.ok(ra1);
-        test.ok(ra2);
+        expect(ra1).toBeTruthy();
+        expect(ra2).toBeTruthy();
 
-        test.ok(!ra1.equals(ra2));
+        expect(!ra1.equals(ra2)).toBeTruthy();
+    });
 
-        test.done();
-    },
+    test("ResourceStringStaticHashKey", () => {
+        expect.assertions(1);
 
-    testResourceStringStaticHashKey: function(test) {
-        test.expect(1);
+        expect(ResourceString.hashKey("iosapp", "de-DE", "This is a test", "html", "chocolate")).toBe("rs_iosapp_de-DE_This is a test_html_chocolate_");
+    });
 
-        test.equal(ResourceString.hashKey("iosapp", "de-DE", "This is a test", "html", "chocolate"), "rs_iosapp_de-DE_This is a test_html_chocolate_");
+    test("ResourceStringStaticHashKeyWithContext", () => {
+        expect.assertions(1);
 
-        test.done();
-    },
+        expect(ResourceString.hashKey("iosapp", "de-DE", "This is a test", "html", "chocolate", "context")).toBe("rs_iosapp_de-DE_This is a test_html_chocolate_context");
+    });
 
-    testResourceStringStaticHashKeyWithContext: function(test) {
-        test.expect(1);
+    test("ResourceStringStaticHashKeyMissingParts", () => {
+        expect.assertions(1);
 
-        test.equal(ResourceString.hashKey("iosapp", "de-DE", "This is a test", "html", "chocolate", "context"), "rs_iosapp_de-DE_This is a test_html_chocolate_context");
+        expect(ResourceString.hashKey(undefined, "de-DE", undefined, undefined)).toBe("rs__de-DE____");
+    });
 
-        test.done();
-    },
-
-    testResourceStringStaticHashKeyMissingParts: function(test) {
-        test.expect(1);
-
-        test.equal(ResourceString.hashKey(undefined, "de-DE", undefined, undefined), "rs__de-DE____");
-
-        test.done();
-    },
-
-    testResourceStringHashKey: function(test) {
-        test.expect(2);
+    test("ResourceStringHashKey", () => {
+        expect.assertions(2);
 
         const rs = new ResourceString({
             project: "iosapp",
@@ -591,15 +535,13 @@ export const testResourceString = {
             pathName: "a/b/c.java",
             datatype: "html"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.equal(rs.hashKey(), "rs_iosapp_de-DE_This is a test_html__");
+        expect(rs.hashKey()).toBe("rs_iosapp_de-DE_This is a test_html__");
+    });
 
-        test.done();
-    },
-
-    testResourceStringHashKeyWithFlavor: function(test) {
-        test.expect(2);
+    test("ResourceStringHashKeyWithFlavor", () => {
+        expect.assertions(2);
 
         const rs = new ResourceString({
             project: "iosapp",
@@ -612,15 +554,13 @@ export const testResourceString = {
             datatype: "html",
             flavor: "chocolate"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.equal(rs.hashKey(), "rs_iosapp_de-DE_This is a test_html_chocolate_");
+        expect(rs.hashKey()).toBe("rs_iosapp_de-DE_This is a test_html_chocolate_");
+    });
 
-        test.done();
-    },
-
-    testResourceStringHashKeyWithFlavorAndContext: function(test) {
-        test.expect(2);
+    test("ResourceStringHashKeyWithFlavorAndContext", () => {
+        expect.assertions(2);
 
         const rs = new ResourceString({
             project: "iosapp",
@@ -634,15 +574,13 @@ export const testResourceString = {
             flavor: "chocolate",
             context: "context"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.equal(rs.hashKey(), "rs_iosapp_de-DE_This is a test_html_chocolate_context");
+        expect(rs.hashKey()).toBe("rs_iosapp_de-DE_This is a test_html_chocolate_context");
+    });
 
-        test.done();
-    },
-
-    testResourceStringSourceOnlyHashKey: function(test) {
-        test.expect(2);
+    test("ResourceStringSourceOnlyHashKey", () => {
+        expect.assertions(2);
 
         const rs = new ResourceString({
             project: "iosapp",
@@ -652,15 +590,13 @@ export const testResourceString = {
             pathName: "a/b/c.java",
             datatype: "html"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.equal(rs.hashKey(), "rs_iosapp_en-US_This is a test_html__");
+        expect(rs.hashKey()).toBe("rs_iosapp_en-US_This is a test_html__");
+    });
 
-        test.done();
-    },
-
-    testResourceStringIsInstanceSame: function(test) {
-        test.expect(3);
+    test("ResourceStringIsInstanceSame", () => {
+        expect.assertions(3);
 
         const rs = new ResourceString({
             context: "a",
@@ -674,7 +610,7 @@ export const testResourceString = {
             targetLocale: "ja-JP",
             source: "This is a test"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
         const dup = new ResourceString({
             context: "a",
@@ -688,15 +624,13 @@ export const testResourceString = {
             targetLocale: "ja-JP",
             source: "This is a test"
         });
-        test.ok(dup);
+        expect(dup).toBeTruthy();
 
-        test.ok(rs.isInstance(dup));
+        expect(rs.isInstance(dup)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringIsInstanceDifferingOnlyInWhitespace: function(test) {
-        test.expect(3);
+    test("ResourceStringIsInstanceDifferingOnlyInWhitespace", () => {
+        expect.assertions(3);
 
         const rs = new ResourceString({
             context: "a",
@@ -710,7 +644,7 @@ export const testResourceString = {
             targetLocale: "ja-JP",
             source: "This is a test "
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
         const dup = new ResourceString({
             context: "a",
@@ -724,15 +658,13 @@ export const testResourceString = {
             targetLocale: "ja-JP",
             source: "This \tis a   test    "
         });
-        test.ok(dup);
+        expect(dup).toBeTruthy();
 
-        test.ok(rs.isInstance(dup));
+        expect(rs.isInstance(dup)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringIsInstanceDifferingInSource: function(test) {
-        test.expect(3);
+    test("ResourceStringIsInstanceDifferingInSource", () => {
+        expect.assertions(3);
 
         const rs = new ResourceString({
             context: "a",
@@ -746,7 +678,7 @@ export const testResourceString = {
             targetLocale: "ja-JP",
             source: "This is a test"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
         const dup = new ResourceString({
             context: "a",
@@ -760,15 +692,13 @@ export const testResourceString = {
             targetLocale: "ja-JP",
             source: "This is a test."
         });
-        test.ok(dup);
+        expect(dup).toBeTruthy();
 
-        test.ok(!rs.isInstance(dup));
+        expect(!rs.isInstance(dup)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringSetSource: function(test) {
-        test.expect(3);
+    test("ResourceStringSetSource", () => {
+        expect.assertions(3);
 
         const rs = new ResourceString({
             context: "a",
@@ -783,17 +713,15 @@ export const testResourceString = {
             source: "source string",
             target: "target string"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.deepEqual(rs.getSource(), "source string");
+        expect(rs.getSource()).toStrictEqual("source string");
         rs.setSource("other source");
-        test.deepEqual(rs.getSource(), "other source");
+        expect(rs.getSource()).toStrictEqual("other source");
+    });
 
-        test.done();
-    },
-
-    testResourceStringSetSourceIsDirty: function(test) {
-        test.expect(4);
+    test("ResourceStringSetSourceIsDirty", () => {
+        expect.assertions(4);
 
         const rs = new ResourceString({
             context: "a",
@@ -808,19 +736,17 @@ export const testResourceString = {
             source: "source string",
             target: "target string"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.deepEqual(rs.getSource(), "source string");
-        test.ok(!rs.isDirty());
+        expect(rs.getSource()).toStrictEqual("source string");
+        expect(!rs.isDirty()).toBeTruthy();
 
         rs.setSource("other source");
-        test.ok(rs.isDirty());
+        expect(rs.isDirty()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringSetTarget: function(test) {
-        test.expect(3);
+    test("ResourceStringSetTarget", () => {
+        expect.assertions(3);
 
         const rs = new ResourceString({
             context: "a",
@@ -835,17 +761,15 @@ export const testResourceString = {
             source: "source string",
             target: "target string"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.deepEqual(rs.getTarget(), "target string");
+        expect(rs.getTarget()).toStrictEqual("target string");
         rs.setTarget("other target");
-        test.deepEqual(rs.getTarget(), "other target");
+        expect(rs.getTarget()).toStrictEqual("other target");
+    });
 
-        test.done();
-    },
-
-    testResourceStringSetTargetIsDirty: function(test) {
-        test.expect(4);
+    test("ResourceStringSetTargetIsDirty", () => {
+        expect.assertions(4);
 
         const rs = new ResourceString({
             context: "a",
@@ -860,15 +784,13 @@ export const testResourceString = {
             source: "source string",
             target: "target string"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.deepEqual(rs.getTarget(), "target string");
-        test.ok(!rs.isDirty());
+        expect(rs.getTarget()).toStrictEqual("target string");
+        expect(!rs.isDirty()).toBeTruthy();
 
         rs.setTarget("other target");
-        test.ok(rs.isDirty());
+        expect(rs.isDirty()).toBeTruthy();
+    });
 
-        test.done();
-    }
-
-};
+});

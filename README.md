@@ -21,6 +21,14 @@ limitations under the License.
 
 ## Release Notes
 
+### v1.8.1
+
+- update dependencies
+- fixed a bug where the ResourceXliff.getVersion() call was documented to
+  return a string, but it came out as a floating point number instead. Made
+  it return the string properly.
+- converted all unit tests to jest
+
 ### v1.8.0
 
 - added parsePath() utility function which takes a template and a path

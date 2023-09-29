@@ -91,7 +91,7 @@ class ResourceXliff {
             this.allowDups = options.allowDups;
             this.style =  options.style || "standard";
             if (typeof(options.version) !== 'undefined') {
-                this.version = Number.parseFloat(options.version);
+                this.version = options.version;
             }
         }
         this.sourceLocale = this.sourceLocale || "en-US";

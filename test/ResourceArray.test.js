@@ -1,5 +1,5 @@
 /*
- * testResourceArray.js - test the resource array object.
+ * ResourceArray.test.js - test the resource array object.
  *
  * Copyright © 2022-2023 JEDLSoft
  *
@@ -19,37 +19,31 @@
 
 import ResourceArray from "../src/ResourceArray.js";
 
-export const testResourceArray = {
-    testResourceArrayConstructorEmpty: function(test) {
-        test.expect(1);
+describe("testResourceArray", () => {
+    test("ResourceArrayConstructorEmpty", () => {
+        expect.assertions(1);
 
         const ra = new ResourceArray();
-        test.ok(ra);
+        expect(ra).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayConstructorNoProps: function(test) {
-        test.expect(1);
+    test("ResourceArrayConstructorNoProps", () => {
+        expect.assertions(1);
 
         const ra = new ResourceArray({});
-        test.ok(ra);
+        expect(ra).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayConstructorEmptyNoSize: function(test) {
-        test.expect(2);
+    test("ResourceArrayConstructorEmptyNoSize", () => {
+        expect.assertions(2);
 
         const ra = new ResourceArray();
-        test.ok(ra);
-        test.equal(ra.size(), 0);
+        expect(ra).toBeTruthy();
+        expect(ra.size()).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testResourceArrayConstructor: function(test) {
-        test.expect(1);
+    test("ResourceArrayConstructor", () => {
+        expect.assertions(1);
 
         const ra = new ResourceArray({
             key: "asdf",
@@ -57,13 +51,11 @@ export const testResourceArray = {
             sourceLocale: "de-DE",
             pathName: "a/b/c.java"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayConstructorRightContents: function(test) {
-        test.expect(5);
+    test("ResourceArrayConstructorRightContents", () => {
+        expect.assertions(5);
 
         const ra = new ResourceArray({
             key: "asdf",
@@ -71,18 +63,16 @@ export const testResourceArray = {
             sourceLocale: "de-DE",
             pathName: "a/b/c.java"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.equal(ra.getKey(), "asdf");
-        test.deepEqual(ra.getSource(), ["This is a test", "This is also a test", "This is not"]);
-        test.equal(ra.getSourceLocale(), "de-DE");
-        test.equal(ra.pathName, "a/b/c.java");
+        expect(ra.getKey()).toBe("asdf");
+        expect(ra.getSource()).toStrictEqual(["This is a test", "This is also a test", "This is not"]);
+        expect(ra.getSourceLocale()).toBe("de-DE");
+        expect(ra.pathName).toBe("a/b/c.java");
+    });
 
-        test.done();
-    },
-
-    testResourceArrayConstructorFull: function(test) {
-        test.expect(1);
+    test("ResourceArrayConstructorFull", () => {
+        expect.assertions(1);
 
         const ra = new ResourceArray({
             key: "asdf",
@@ -92,13 +82,11 @@ export const testResourceArray = {
             targetLocale: "de-DE",
             pathName: "a/b/c.java"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayConstructorFullRightContents: function(test) {
-        test.expect(7);
+    test("ResourceArrayConstructorFullRightContents", () => {
+        expect.assertions(7);
 
         const ra = new ResourceArray({
             key: "asdf",
@@ -108,20 +96,18 @@ export const testResourceArray = {
             targetLocale: "de-DE",
             pathName: "a/b/c.java"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.equal(ra.getKey(), "asdf");
-        test.deepEqual(ra.getSource(), ["This is a test", "This is also a test", "This is not"]);
-        test.equal(ra.getSourceLocale(), "en-US");
-        test.deepEqual(ra.getTarget(), ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."]);
-        test.equal(ra.getTargetLocale(), "de-DE");
-        test.equal(ra.pathName, "a/b/c.java");
+        expect(ra.getKey()).toBe("asdf");
+        expect(ra.getSource()).toStrictEqual(["This is a test", "This is also a test", "This is not"]);
+        expect(ra.getSourceLocale()).toBe("en-US");
+        expect(ra.getTarget()).toStrictEqual(["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."]);
+        expect(ra.getTargetLocale()).toBe("de-DE");
+        expect(ra.pathName).toBe("a/b/c.java");
+    });
 
-        test.done();
-    },
-
-    testResourceArrayConstructorBackwardsCompatible: function(test) {
-        test.expect(7);
+    test("ResourceArrayConstructorBackwardsCompatible", () => {
+        expect.assertions(7);
 
         const ra = new ResourceArray({
             key: "asdf",
@@ -131,45 +117,41 @@ export const testResourceArray = {
             targetLocale: "de-DE",
             pathName: "a/b/c.java"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.equal(ra.getKey(), "asdf");
-        test.deepEqual(ra.getSourceArray(), ["This is a test", "This is also a test", "This is not"]);
-        test.equal(ra.getSourceLocale(), "en-US");
-        test.deepEqual(ra.getTargetArray(), ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."]);
-        test.equal(ra.getTargetLocale(), "de-DE");
-        test.equal(ra.pathName, "a/b/c.java");
+        expect(ra.getKey()).toBe("asdf");
+        expect(ra.getSourceArray()).toStrictEqual(["This is a test", "This is also a test", "This is not"]);
+        expect(ra.getSourceLocale()).toBe("en-US");
+        expect(ra.getTargetArray()).toStrictEqual(["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."]);
+        expect(ra.getTargetLocale()).toBe("de-DE");
+        expect(ra.pathName).toBe("a/b/c.java");
+    });
 
-        test.done();
-    },
-
-    testResourceArrayConstructorDefaults: function(test) {
-        test.expect(8);
+    test("ResourceArrayConstructorDefaults", () => {
+        expect.assertions(8);
 
         const ra = new ResourceArray({
             key: "asdf",
             source: ["This is a test", "This is also a test", "This is not"],
             pathName: "a/b/c.java"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
         // got the right one?
-        test.equal(ra.getKey(), "asdf");
+        expect(ra.getKey()).toBe("asdf");
 
         // now the defaults
-        test.equal(ra.getSourceLocale(), "en-US");
-        test.equal(ra.origin, "source");
-        test.equal(ra.datatype, "x-android-resource");
-        test.equal(ra.resType, "array");
+        expect(ra.getSourceLocale()).toBe("en-US");
+        expect(ra.origin).toBe("source");
+        expect(ra.datatype).toBe("x-android-resource");
+        expect(ra.resType).toBe("array");
 
-        test.ok(!ra.getTargetLocale());
-        test.ok(!ra.target);
+        expect(!ra.getTargetLocale()).toBeTruthy();
+        expect(!ra.target).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayConstructorRightSize: function(test) {
-        test.expect(2);
+    test("ResourceArrayConstructorRightSize", () => {
+        expect.assertions(2);
 
         const ra = new ResourceArray({
             key: "asdf",
@@ -177,15 +159,13 @@ export const testResourceArray = {
             sourceLocale: "de-DE",
             pathName: "a/b/c.java"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.equal(ra.size(), 3);
+        expect(ra.size()).toBe(3);
+    });
 
-        test.done();
-    },
-
-    testResourceArrayGetKey: function(test) {
-        test.expect(2);
+    test("ResourceArrayGetKey", () => {
+        expect.assertions(2);
 
         const ra = new ResourceArray({
             key: "foo",
@@ -193,24 +173,20 @@ export const testResourceArray = {
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
-        test.ok(ra);
-        test.equal(ra.getKey(), "foo");
+        expect(ra).toBeTruthy();
+        expect(ra.getKey()).toBe("foo");
+    });
 
-        test.done();
-    },
-
-    testResourceArrayGetKeyEmpty: function(test) {
-        test.expect(2);
+    test("ResourceArrayGetKeyEmpty", () => {
+        expect.assertions(2);
 
         const ra = new ResourceArray();
-        test.ok(ra);
-        test.ok(!ra.getKey());
+        expect(ra).toBeTruthy();
+        expect(!ra.getKey()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceStringGetContext: function(test) {
-        test.expect(2);
+    test("ResourceStringGetContext", () => {
+        expect.assertions(2);
 
         const ra = new ResourceArray({
             key: "foo",
@@ -219,14 +195,12 @@ export const testResourceArray = {
             sourceLocale: "de-DE",
             context: "landscape"
         });
-        test.ok(ra);
-        test.equal(ra.getContext(), "landscape");
+        expect(ra).toBeTruthy();
+        expect(ra.getContext()).toBe("landscape");
+    });
 
-        test.done();
-    },
-
-    testResourceStringGetContextEmpty: function(test) {
-        test.expect(2);
+    test("ResourceStringGetContextEmpty", () => {
+        expect.assertions(2);
 
         const ra = new ResourceArray({
             key: "foo",
@@ -234,14 +208,12 @@ export const testResourceArray = {
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
-        test.ok(ra);
-        test.ok(!ra.getContext());
+        expect(ra).toBeTruthy();
+        expect(!ra.getContext()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayGetSource: function(test) {
-        test.expect(2);
+    test("ResourceArrayGetSource", () => {
+        expect.assertions(2);
 
         const ra = new ResourceArray({
             key: "foo",
@@ -249,34 +221,28 @@ export const testResourceArray = {
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
-        test.ok(ra);
-        test.deepEqual(ra.getSource(), ["This is a test", "This is also a test", "This is not"]);
+        expect(ra).toBeTruthy();
+        expect(ra.getSource()).toStrictEqual(["This is a test", "This is also a test", "This is not"]);
+    });
 
-        test.done();
-    },
-
-    testResourceArrayGetItemArrayEmpty: function(test) {
-        test.expect(2);
+    test("ResourceArrayGetItemArrayEmpty", () => {
+        expect.assertions(2);
 
         const ra = new ResourceArray();
-        test.ok(ra);
-        test.deepEqual(ra.getSource(), []);
+        expect(ra).toBeTruthy();
+        expect(ra.getSource()).toStrictEqual([]);
+    });
 
-        test.done();
-    },
-
-    testResourceArrayGetTargetArrayEmpty: function(test) {
-        test.expect(2);
+    test("ResourceArrayGetTargetArrayEmpty", () => {
+        expect.assertions(2);
 
         const ra = new ResourceArray();
-        test.ok(ra);
-        test.ok(!ra.getTarget());
+        expect(ra).toBeTruthy();
+        expect(!ra.getTarget()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayGetItem: function(test) {
-        test.expect(4);
+    test("ResourceArrayGetItem", () => {
+        expect.assertions(4);
 
         const ra = new ResourceArray({
             key: "foo",
@@ -284,16 +250,14 @@ export const testResourceArray = {
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
-        test.ok(ra);
-        test.equal(ra.getSourceItem(0), "This is a test");
-        test.equal(ra.getSourceItem(1), "This is also a test");
-        test.equal(ra.getSourceItem(2), "This is not");
+        expect(ra).toBeTruthy();
+        expect(ra.getSourceItem(0)).toBe("This is a test");
+        expect(ra.getSourceItem(1)).toBe("This is also a test");
+        expect(ra.getSourceItem(2)).toBe("This is not");
+    });
 
-        test.done();
-    },
-
-    testResourceArrayGetTarget: function(test) {
-        test.expect(4);
+    test("ResourceArrayGetTarget", () => {
+        expect.assertions(4);
 
         const ra = new ResourceArray({
             key: "foo",
@@ -303,16 +267,14 @@ export const testResourceArray = {
             target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE"
         });
-        test.ok(ra);
-        test.equal(ra.getTargetItem(0), "Dies ist einen Test.");
-        test.equal(ra.getTargetItem(1), "Dies ist auch einen Test.");
-        test.equal(ra.getTargetItem(2), "Dies ist nicht.");
+        expect(ra).toBeTruthy();
+        expect(ra.getTargetItem(0)).toBe("Dies ist einen Test.");
+        expect(ra.getTargetItem(1)).toBe("Dies ist auch einen Test.");
+        expect(ra.getTargetItem(2)).toBe("Dies ist nicht.");
+    });
 
-        test.done();
-    },
-
-    testResourceArrayGetItemNegativeIndex: function(test) {
-        test.expect(2);
+    test("ResourceArrayGetItemNegativeIndex", () => {
+        expect.assertions(2);
 
         const ra = new ResourceArray({
             key: "foo",
@@ -320,14 +282,12 @@ export const testResourceArray = {
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
-        test.ok(ra);
-        test.ok(!ra.getSourceItem(-1));
+        expect(ra).toBeTruthy();
+        expect(!ra.getSourceItem(-1)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayGetTargetNegativeIndex: function(test) {
-        test.expect(2);
+    test("ResourceArrayGetTargetNegativeIndex", () => {
+        expect.assertions(2);
 
         const ra = new ResourceArray({
             key: "foo",
@@ -337,14 +297,12 @@ export const testResourceArray = {
             target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE"
         });
-        test.ok(ra);
-        test.ok(!ra.getTargetItem(-1));
+        expect(ra).toBeTruthy();
+        expect(!ra.getTargetItem(-1)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayGetItemIndexTooBig: function(test) {
-        test.expect(2);
+    test("ResourceArrayGetItemIndexTooBig", () => {
+        expect.assertions(2);
 
         const ra = new ResourceArray({
             key: "foo",
@@ -352,14 +310,12 @@ export const testResourceArray = {
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
-        test.ok(ra);
-        test.ok(!ra.getSourceItem(6));
+        expect(ra).toBeTruthy();
+        expect(!ra.getSourceItem(6)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayGetTargetIndexTooBig: function(test) {
-        test.expect(2);
+    test("ResourceArrayGetTargetIndexTooBig", () => {
+        expect.assertions(2);
 
         const ra = new ResourceArray({
             key: "foo",
@@ -369,14 +325,12 @@ export const testResourceArray = {
             pathName: "a/b/c.txt",
             sourceLocale: "en-US"
         });
-        test.ok(ra);
-        test.ok(!ra.getTargetItem(6));
+        expect(ra).toBeTruthy();
+        expect(!ra.getTargetItem(6)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayGetIndexNotWhole: function(test) {
-        test.expect(2);
+    test("ResourceArrayGetIndexNotWhole", () => {
+        expect.assertions(2);
 
         const ra = new ResourceArray({
             key: "foo",
@@ -384,14 +338,12 @@ export const testResourceArray = {
             pathName: "a/b/c.txt",
             sourceLocale: "de-DE"
         });
-        test.ok(ra);
-        test.ok(!ra.getSourceItem(2.6));
+        expect(ra).toBeTruthy();
+        expect(!ra.getSourceItem(2.6)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayClone: function(test) {
-        test.expect(12);
+    test("ResourceArrayClone", () => {
+        expect.assertions(12);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -405,27 +357,25 @@ export const testResourceArray = {
             target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
         const ra2 = ra.clone();
 
-        test.ok(ra2);
-        test.equal(ra2.project, ra.project);
-        test.equal(ra2.context, ra.context);
-        test.equal(ra2.getSourceLocale(), ra.getSourceLocale());
-        test.equal(ra2.reskey, ra.reskey);
-        test.deepEqual(ra2.source, ra.source);
-        test.equal(ra2.pathName, ra.pathName);
-        test.equal(ra2.comment, ra.comment);
-        test.equal(ra2.state, ra.state);
-        test.equal(ra2.getTargetLocale(), ra.getTargetLocale());
-        test.deepEqual(ra2.target, ra.target);
+        expect(ra2).toBeTruthy();
+        expect(ra2.project).toBe(ra.project);
+        expect(ra2.context).toBe(ra.context);
+        expect(ra2.getSourceLocale()).toBe(ra.getSourceLocale());
+        expect(ra2.reskey).toBe(ra.reskey);
+        expect(ra2.source).toStrictEqual(ra.source);
+        expect(ra2.pathName).toBe(ra.pathName);
+        expect(ra2.comment).toBe(ra.comment);
+        expect(ra2.state).toBe(ra.state);
+        expect(ra2.getTargetLocale()).toBe(ra.getTargetLocale());
+        expect(ra2.target).toStrictEqual(ra.target);
+    });
 
-        test.done();
-    },
-
-    testResourceArrayCloneWithOverrides: function(test) {
-        test.expect(12);
+    test("ResourceArrayCloneWithOverrides", () => {
+        expect.assertions(12);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -437,7 +387,7 @@ export const testResourceArray = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
         const ra2 = ra.clone({
             sourceLocale: "fr-FR",
@@ -446,23 +396,21 @@ export const testResourceArray = {
             targetLocale: "de-DE"
         });
 
-        test.ok(ra2);
-        test.equal(ra2.project, ra.project);
-        test.equal(ra2.context, ra.context);
-        test.equal(ra2.getSourceLocale(), "fr-FR");
-        test.equal(ra2.reskey, ra.reskey);
-        test.deepEqual(ra2.array, ra.array);
-        test.equal(ra2.pathName, ra.pathName);
-        test.equal(ra2.comment, ra.comment);
-        test.equal(ra2.state, "asdfasdf");
-        test.equal(ra2.getTargetLocale(), "de-DE");
-        test.deepEqual(ra2.target, ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."]);
+        expect(ra2).toBeTruthy();
+        expect(ra2.project).toBe(ra.project);
+        expect(ra2.context).toBe(ra.context);
+        expect(ra2.getSourceLocale()).toBe("fr-FR");
+        expect(ra2.reskey).toBe(ra.reskey);
+        expect(ra2.array).toStrictEqual(ra.array);
+        expect(ra2.pathName).toBe(ra.pathName);
+        expect(ra2.comment).toBe(ra.comment);
+        expect(ra2.state).toBe("asdfasdf");
+        expect(ra2.getTargetLocale()).toBe("de-DE");
+        expect(ra2.target).toStrictEqual(["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."]);
+    });
 
-        test.done();
-    },
-
-    testResourceArrayAddSourceString: function(test) {
-        test.expect(2);
+    test("ResourceArrayAddSourceString", () => {
+        expect.assertions(2);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -474,17 +422,15 @@ export const testResourceArray = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
         ra.addSourceItem(3, "This is the third one")
 
-        test.equal(ra.getSourceItem(3), "This is the third one");
+        expect(ra.getSourceItem(3)).toBe("This is the third one");
+    });
 
-        test.done();
-    },
-
-    testResourceArrayAddSourceStringIsDirty: function(test) {
-        test.expect(4);
+    test("ResourceArrayAddSourceStringIsDirty", () => {
+        expect.assertions(4);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -496,19 +442,17 @@ export const testResourceArray = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.ok(!ra.isDirty());
+        expect(!ra.isDirty()).toBeTruthy();
         ra.addSourceItem(3, "This is the third one")
 
-        test.equal(ra.getSourceItem(3), "This is the third one");
-        test.ok(ra.isDirty());
+        expect(ra.getSourceItem(3)).toBe("This is the third one");
+        expect(ra.isDirty()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayAddTargetString: function(test) {
-        test.expect(2);
+    test("ResourceArrayAddTargetString", () => {
+        expect.assertions(2);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -522,17 +466,15 @@ export const testResourceArray = {
             target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
         ra.addTargetItem(3, "This is the third one")
 
-        test.equal(ra.getTargetItem(3), "This is the third one");
+        expect(ra.getTargetItem(3)).toBe("This is the third one");
+    });
 
-        test.done();
-    },
-
-    testResourceArrayAddTargetStringIsDirty: function(test) {
-        test.expect(4);
+    test("ResourceArrayAddTargetStringIsDirty", () => {
+        expect.assertions(4);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -546,19 +488,17 @@ export const testResourceArray = {
             target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.ok(!ra.isDirty());
+        expect(!ra.isDirty()).toBeTruthy();
         ra.addTargetItem(3, "This is the third one")
 
-        test.equal(ra.getTargetItem(3), "This is the third one");
-        test.ok(ra.isDirty());
+        expect(ra.getTargetItem(3)).toBe("This is the third one");
+        expect(ra.isDirty()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayAddStringReplace: function(test) {
-        test.expect(3);
+    test("ResourceArrayAddStringReplace", () => {
+        expect.assertions(3);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -570,19 +510,17 @@ export const testResourceArray = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.equal(ra.getSourceItem(2), "This is not");
+        expect(ra.getSourceItem(2)).toBe("This is not");
 
         ra.addSourceItem(2, "This isn't a test")
 
-        test.equal(ra.getSourceItem(2), "This isn't a test");
+        expect(ra.getSourceItem(2)).toBe("This isn't a test");
+    });
 
-        test.done();
-    },
-
-    testResourceArrayAddTargetReplace: function(test) {
-        test.expect(3);
+    test("ResourceArrayAddTargetReplace", () => {
+        expect.assertions(3);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -596,19 +534,17 @@ export const testResourceArray = {
             target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.equal(ra.getTargetItem(2), "Dies ist nicht.");
+        expect(ra.getTargetItem(2)).toBe("Dies ist nicht.");
 
         ra.addTargetItem(2, "Dies ist nicht einen Test.")
 
-        test.equal(ra.getTargetItem(2), "Dies ist nicht einen Test.");
+        expect(ra.getTargetItem(2)).toBe("Dies ist nicht einen Test.");
+    });
 
-        test.done();
-    },
-
-    testResourceArrayAddStringSize: function(test) {
-        test.expect(3);
+    test("ResourceArrayAddStringSize", () => {
+        expect.assertions(3);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -620,19 +556,17 @@ export const testResourceArray = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.equal(ra.size(), 3);
+        expect(ra.size()).toBe(3);
 
         ra.addSourceItem(3, "This is the third one")
 
-        test.equal(ra.size(), 4);
+        expect(ra.size()).toBe(4);
+    });
 
-        test.done();
-    },
-
-    testResourceArrayAddTargetSize: function(test) {
-        test.expect(3);
+    test("ResourceArrayAddTargetSize", () => {
+        expect.assertions(3);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -646,19 +580,17 @@ export const testResourceArray = {
             target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.equal(ra.size(), 3);
+        expect(ra.size()).toBe(3);
 
         ra.addTargetItem(3, "This is the third one")
 
-        test.equal(ra.size(), 4);
+        expect(ra.size()).toBe(4);
+    });
 
-        test.done();
-    },
-
-    testResourceArrayAddStringUndefined: function(test) {
-        test.expect(3);
+    test("ResourceArrayAddStringUndefined", () => {
+        expect.assertions(3);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -670,19 +602,17 @@ export const testResourceArray = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.equal(ra.getSourceItem(1), "This is also a test");
+        expect(ra.getSourceItem(1)).toBe("This is also a test");
 
         ra.addSourceItem(1, undefined)
 
-        test.equal(ra.getSourceItem(1), "This is also a test");
+        expect(ra.getSourceItem(1)).toBe("This is also a test");
+    });
 
-        test.done();
-    },
-
-    testResourceArrayAddTargetUndefined: function(test) {
-        test.expect(3);
+    test("ResourceArrayAddTargetUndefined", () => {
+        expect.assertions(3);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -696,19 +626,17 @@ export const testResourceArray = {
             target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.equal(ra.getTargetItem(1), "Dies ist auch einen Test.");
+        expect(ra.getTargetItem(1)).toBe("Dies ist auch einen Test.");
 
         ra.addTargetItem(1, undefined)
 
-        test.equal(ra.getTargetItem(1), "Dies ist auch einen Test.");
+        expect(ra.getTargetItem(1)).toBe("Dies ist auch einen Test.");
+    });
 
-        test.done();
-    },
-
-    testResourceArrayAddStringNoIndex: function(test) {
-        test.expect(3);
+    test("ResourceArrayAddStringNoIndex", () => {
+        expect.assertions(3);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -720,19 +648,17 @@ export const testResourceArray = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.equal(ra.size(), 3);
+        expect(ra.size()).toBe(3);
 
         ra.addSourceItem(undefined, "foobar")
 
-        test.equal(ra.size(), 3);
+        expect(ra.size()).toBe(3);
+    });
 
-        test.done();
-    },
-
-    testResourceArrayAddTargetNoIndex: function(test) {
-        test.expect(3);
+    test("ResourceArrayAddTargetNoIndex", () => {
+        expect.assertions(3);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -746,19 +672,17 @@ export const testResourceArray = {
             target: ["Dies ist einen Test.", "Dies ist auch einen Test.", "Dies ist nicht."],
             targetLocale: "de-DE"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.equal(ra.size(), 3);
+        expect(ra.size()).toBe(3);
 
         ra.addTargetItem(undefined, "foobar")
 
-        test.equal(ra.size(), 3);
+        expect(ra.size()).toBe(3);
+    });
 
-        test.done();
-    },
-
-    testResourceArrayAddStringEmpty: function(test) {
-        test.expect(3);
+    test("ResourceArrayAddStringEmpty", () => {
+        expect.assertions(3);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -769,19 +693,17 @@ export const testResourceArray = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.equal(ra.size(), 0);
+        expect(ra.size()).toBe(0);
 
         ra.addSourceItem(0, "foobar")
 
-        test.equal(ra.size(), 1);
+        expect(ra.size()).toBe(1);
+    });
 
-        test.done();
-    },
-
-    testResourceArrayAddStringEmptyRightContents: function(test) {
-        test.expect(3);
+    test("ResourceArrayAddStringEmptyRightContents", () => {
+        expect.assertions(3);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -792,19 +714,17 @@ export const testResourceArray = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.ok(!ra.getSourceItem(0));
+        expect(!ra.getSourceItem(0)).toBeTruthy();
 
         ra.addSourceItem(0, "foobar")
 
-        test.equal(ra.getSourceItem(0), "foobar");
+        expect(ra.getSourceItem(0)).toBe("foobar");
+    });
 
-        test.done();
-    },
-
-    testResourceArrayAddTargetEmptyRightContents: function(test) {
-        test.expect(3);
+    test("ResourceArrayAddTargetEmptyRightContents", () => {
+        expect.assertions(3);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -815,19 +735,17 @@ export const testResourceArray = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.ok(!ra.getTargetItem(0));
+        expect(!ra.getTargetItem(0)).toBeTruthy();
 
         ra.addTargetItem(0, "foobar")
 
-        test.equal(ra.getTargetItem(0), "foobar");
+        expect(ra.getTargetItem(0)).toBe("foobar");
+    });
 
-        test.done();
-    },
-
-    testResourceArrayAddStringMultiple: function(test) {
-        test.expect(6);
+    test("ResourceArrayAddStringMultiple", () => {
+        expect.assertions(6);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -839,22 +757,20 @@ export const testResourceArray = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
         ra.addSourceItem(3, "This is the third one")
         ra.addSourceItem(4, "This is the fourth one")
 
-        test.equal(ra.getSourceItem(0), "This is a test");
-        test.equal(ra.getSourceItem(1), "This is also a test");
-        test.equal(ra.getSourceItem(2), "This is not");
-        test.equal(ra.getSourceItem(3), "This is the third one");
-        test.equal(ra.getSourceItem(4), "This is the fourth one");
+        expect(ra.getSourceItem(0)).toBe("This is a test");
+        expect(ra.getSourceItem(1)).toBe("This is also a test");
+        expect(ra.getSourceItem(2)).toBe("This is not");
+        expect(ra.getSourceItem(3)).toBe("This is the third one");
+        expect(ra.getSourceItem(4)).toBe("This is the fourth one");
+    });
 
-        test.done();
-    },
-
-    testResourceArrayEqualsSourceOnly: function(test) {
-        test.expect(3);
+    test("ResourceArrayEqualsSourceOnly", () => {
+        expect.assertions(3);
 
         const ra1 = new ResourceArray({
             project: "foo",
@@ -878,16 +794,14 @@ export const testResourceArray = {
             state: "accepted"
         });
 
-        test.ok(ra1);
-        test.ok(ra2);
+        expect(ra1).toBeTruthy();
+        expect(ra2).toBeTruthy();
 
-        test.ok(ra1.equals(ra2));
+        expect(ra1.equals(ra2)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayEqualsFull: function(test) {
-        test.expect(3);
+    test("ResourceArrayEqualsFull", () => {
+        expect.assertions(3);
 
         const ra1 = new ResourceArray({
             project: "foo",
@@ -915,16 +829,14 @@ export const testResourceArray = {
             state: "accepted"
         });
 
-        test.ok(ra1);
-        test.ok(ra2);
+        expect(ra1).toBeTruthy();
+        expect(ra2).toBeTruthy();
 
-        test.ok(ra1.equals(ra2));
+        expect(ra1.equals(ra2)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayEqualsSourceOnlyNot: function(test) {
-        test.expect(3);
+    test("ResourceArrayEqualsSourceOnlyNot", () => {
+        expect.assertions(3);
 
         const ra1 = new ResourceArray({
             project: "foo",
@@ -948,16 +860,14 @@ export const testResourceArray = {
             state: "accepted"
         });
 
-        test.ok(ra1);
-        test.ok(ra2);
+        expect(ra1).toBeTruthy();
+        expect(ra2).toBeTruthy();
 
-        test.ok(!ra1.equals(ra2));
+        expect(!ra1.equals(ra2)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayEqualsFullNot: function(test) {
-        test.expect(3);
+    test("ResourceArrayEqualsFullNot", () => {
+        expect.assertions(3);
 
         const ra1 = new ResourceArray({
             project: "foo",
@@ -985,16 +895,14 @@ export const testResourceArray = {
             state: "accepted"
         });
 
-        test.ok(ra1);
-        test.ok(ra2);
+        expect(ra1).toBeTruthy();
+        expect(ra2).toBeTruthy();
 
-        test.ok(!ra1.equals(ra2));
+        expect(!ra1.equals(ra2)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayEqualsIgnoreSomeFields: function(test) {
-        test.expect(3);
+    test("ResourceArrayEqualsIgnoreSomeFields", () => {
+        expect.assertions(3);
 
         const ra1 = new ResourceArray({
             project: "foo",
@@ -1018,16 +926,14 @@ export const testResourceArray = {
             state: "done"
         });
 
-        test.ok(ra1);
-        test.ok(ra2);
+        expect(ra1).toBeTruthy();
+        expect(ra2).toBeTruthy();
 
-        test.ok(ra1.equals(ra2));
+        expect(ra1.equals(ra2)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayEqualsContentDifferent: function(test) {
-        test.expect(3);
+    test("ResourceArrayEqualsContentDifferent", () => {
+        expect.assertions(3);
 
         const ra1 = new ResourceArray({
             project: "foo",
@@ -1051,32 +957,26 @@ export const testResourceArray = {
             state: "accepted"
         });
 
-        test.ok(ra1);
-        test.ok(ra2);
+        expect(ra1).toBeTruthy();
+        expect(ra2).toBeTruthy();
 
-        test.ok(!ra1.equals(ra2));
+        expect(!ra1.equals(ra2)).toBeTruthy();
+    });
 
-        test.done();
-    },
+    test("ResourceArrayStaticHashKey", () => {
+        expect.assertions(1);
 
-    testResourceArrayStaticHashKey: function(test) {
-        test.expect(1);
+        expect(ResourceArray.hashKey("androidapp", "foo", "de-DE", "This is a test")).toBe("ra_androidapp_foo_de-DE_This is a test");
+    });
 
-        test.equal(ResourceArray.hashKey("androidapp", "foo", "de-DE", "This is a test"), "ra_androidapp_foo_de-DE_This is a test");
+    test("ResourceArrayStaticHashKeyMissingParts", () => {
+        expect.assertions(1);
 
-        test.done();
-    },
+        expect(ResourceArray.hashKey(undefined, undefined, "de-DE", undefined)).toBe("ra___de-DE_");
+    });
 
-    testResourceArrayStaticHashKeyMissingParts: function(test) {
-        test.expect(1);
-
-        test.equal(ResourceArray.hashKey(undefined, undefined, "de-DE", undefined), "ra___de-DE_");
-
-        test.done();
-    },
-
-    testResourceArrayHashKeySourceOnly: function(test) {
-        test.expect(2);
+    test("ResourceArrayHashKeySourceOnly", () => {
+        expect.assertions(2);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -1088,15 +988,14 @@ export const testResourceArray = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.equal(ra.hashKey(), "ra_foo_blah_en-US_asdf");
-        test.done();
+        expect(ra.hashKey()).toBe("ra_foo_blah_en-US_asdf");
 
-    },
+    });
 
-    testResourceArrayHashKeySourceOnly: function(test) {
-        test.expect(2);
+    test("ResourceArrayHashKeySourceOnly", () => {
+        expect.assertions(2);
 
         const ra = new ResourceArray({
             project: "foo",
@@ -1110,15 +1009,13 @@ export const testResourceArray = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(ra);
+        expect(ra).toBeTruthy();
 
-        test.equal(ra.hashKey(), "ra_foo_blah_de-DE_asdf");
+        expect(ra.hashKey()).toBe("ra_foo_blah_de-DE_asdf");
+    });
 
-        test.done();
-    },
-
-    testResourceArrayIsInstanceSame: function(test) {
-        test.expect(3);
+    test("ResourceArrayIsInstanceSame", () => {
+        expect.assertions(3);
 
         const rs = new ResourceArray({
             context: "a",
@@ -1132,7 +1029,7 @@ export const testResourceArray = {
             targetLocale: "ja-JP",
             source: ["a", "b", "c"]
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
         const dup = new ResourceArray({
             context: "a",
@@ -1146,15 +1043,13 @@ export const testResourceArray = {
             targetLocale: "ja-JP",
             source: ["a", "b", "c"]
         });
-        test.ok(dup);
+        expect(dup).toBeTruthy();
 
-        test.ok(rs.isInstance(dup));
+        expect(rs.isInstance(dup)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayIsInstanceDifferingOnlyInWhitespace: function(test) {
-        test.expect(3);
+    test("ResourceArrayIsInstanceDifferingOnlyInWhitespace", () => {
+        expect.assertions(3);
 
         const rs = new ResourceArray({
             context: "a",
@@ -1168,7 +1063,7 @@ export const testResourceArray = {
             targetLocale: "ja-JP",
             source: ["a b c", "b", "c"]
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
         const dup = new ResourceArray({
             context: "a",
@@ -1182,15 +1077,13 @@ export const testResourceArray = {
             targetLocale: "ja-JP",
             source: [" a   b\t\tc  \t", " b", "c "]
         });
-        test.ok(dup);
+        expect(dup).toBeTruthy();
 
-        test.ok(rs.isInstance(dup));
+        expect(rs.isInstance(dup)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArrayIsInstanceDifferingInSource: function(test) {
-        test.expect(3);
+    test("ResourceArrayIsInstanceDifferingInSource", () => {
+        expect.assertions(3);
 
         const rs = new ResourceArray({
             context: "a",
@@ -1204,7 +1097,7 @@ export const testResourceArray = {
             targetLocale: "ja-JP",
             source: ["a", "b", "c"]
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
         const dup = new ResourceArray({
             context: "a",
@@ -1218,15 +1111,13 @@ export const testResourceArray = {
             targetLocale: "ja-JP",
             source: ["a", "b", "cd"]
         });
-        test.ok(dup);
+        expect(dup).toBeTruthy();
 
-        test.ok(!rs.isInstance(dup));
+        expect(!rs.isInstance(dup)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArraySetSource: function(test) {
-        test.expect(3);
+    test("ResourceArraySetSource", () => {
+        expect.assertions(3);
 
         const rs = new ResourceArray({
             context: "a",
@@ -1241,17 +1132,15 @@ export const testResourceArray = {
             source: ["a b c", "b", "c"],
             target: ["a b c", "b", "c"]
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.deepEqual(rs.getSource(), ["a b c", "b", "c"]);
+        expect(rs.getSource()).toStrictEqual(["a b c", "b", "c"]);
         rs.setSource(["x", "y", "z"]);
-        test.deepEqual(rs.getSource(), ["x", "y", "z"]);
+        expect(rs.getSource()).toStrictEqual(["x", "y", "z"]);
+    });
 
-        test.done();
-    },
-
-    testResourceArraySetSourceIsDirty: function(test) {
-        test.expect(4);
+    test("ResourceArraySetSourceIsDirty", () => {
+        expect.assertions(4);
 
         const rs = new ResourceArray({
             context: "a",
@@ -1266,19 +1155,17 @@ export const testResourceArray = {
             source: ["a b c", "b", "c"],
             target: ["a b c", "b", "c"]
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.deepEqual(rs.getSource(), ["a b c", "b", "c"]);
-        test.ok(!rs.isDirty());
+        expect(rs.getSource()).toStrictEqual(["a b c", "b", "c"]);
+        expect(!rs.isDirty()).toBeTruthy();
 
         rs.setSource(["x", "y", "z"]);
-        test.ok(rs.isDirty());
+        expect(rs.isDirty()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourceArraySetTarget: function(test) {
-        test.expect(3);
+    test("ResourceArraySetTarget", () => {
+        expect.assertions(3);
 
         const rs = new ResourceArray({
             context: "a",
@@ -1293,17 +1180,15 @@ export const testResourceArray = {
             source: ["a b c", "b", "c"],
             target: ["a b c", "b", "c"]
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.deepEqual(rs.getTarget(), ["a b c", "b", "c"]);
+        expect(rs.getTarget()).toStrictEqual(["a b c", "b", "c"]);
         rs.setTarget(["x", "y", "z"]);
-        test.deepEqual(rs.getTarget(), ["x", "y", "z"]);
+        expect(rs.getTarget()).toStrictEqual(["x", "y", "z"]);
+    });
 
-        test.done();
-    },
-
-    testResourceArraySetTargetIsDirty: function(test) {
-        test.expect(4);
+    test("ResourceArraySetTargetIsDirty", () => {
+        expect.assertions(4);
 
         const rs = new ResourceArray({
             context: "a",
@@ -1318,14 +1203,12 @@ export const testResourceArray = {
             source: ["a b c", "b", "c"],
             target: ["a b c", "b", "c"]
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.deepEqual(rs.getTarget(), ["a b c", "b", "c"]);
-        test.ok(!rs.isDirty());
+        expect(rs.getTarget()).toStrictEqual(["a b c", "b", "c"]);
+        expect(!rs.isDirty()).toBeTruthy();
 
         rs.setTarget(["x", "y", "z"]);
-        test.ok(rs.isDirty());
-
-        test.done();
-    }
-};
+        expect(rs.isDirty()).toBeTruthy();
+    });
+});
