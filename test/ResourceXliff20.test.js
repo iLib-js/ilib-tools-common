@@ -1,5 +1,5 @@
 /*
- * testXliff20.js - test the Xliff 2.0 object.
+ * Xliff20.test.js - test the Xliff 2.0 object.
  *
  * Copyright © 2019,2021,2023 JEDLSoft
  *
@@ -37,58 +37,52 @@ function diff(a, b) {
     }
 }
 
-export const testResourceXliff20 = {
-    testXliff20Constructor: function(test) {
-        test.expect(1);
+describe("testResourceXliff20", () => {
+    test("Xliff20Constructor", () => {
+        expect.assertions(1);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testXliff20ConstructorIsEmpty: function(test) {
-        test.expect(2);
+    test("Xliff20ConstructorIsEmpty", () => {
+        expect.assertions(2);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
 
-        test.equal(x.size(), 0);
-        test.done();
-    },
+        expect(x.size()).toBe(0);
+    });
 
-    testXliff20ConstructorRightVersion: function(test) {
-        test.expect(2);
+    test("Xliff20ConstructorRightVersion", () => {
+        expect.assertions(2);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
 
-        test.equal(x.getVersion(), "2.0");
-        test.done();
-    },
+        expect(x.getVersion()).toBe("2.0");
+    });
 
-    testXliff20ConstructorNumericVersion12: function(test) {
-        test.expect(2);
+    test("Xliff20ConstructorNumericVersion12", () => {
+        expect.assertions(2);
 
-        var x = new ResourceXliff({version: 1.2});
-        test.ok(x);
+        var x = new ResourceXliff({version: "1.2"});
+        expect(x).toBeTruthy();
 
-        test.equal(x.getVersion(), "1.2");
-        test.done();
-    },
+        expect(x.getVersion()).toBe("1.2");
+    });
 
-    testXliff20ConstructorNumericVersion20: function(test) {
-        test.expect(2);
+    test("Xliff20ConstructorNumericVersion20", () => {
+        expect.assertions(2);
 
-        var x = new ResourceXliff({version: 2.0});
-        test.ok(x);
+        var x = new ResourceXliff({version: "2.0"});
+        expect(x).toBeTruthy();
 
-        test.equal(x.getVersion(), "2.0");
-        test.done();
-    },
+        expect(x.getVersion()).toBe("2.0");
+    });
 
-    testXliff20ConstructorFull: function(test) {
-        test.expect(8);
+    test("Xliff20ConstructorFull", () => {
+        expect.assertions(8);
 
         var x = new ResourceXliff({
             version: "2.0",
@@ -99,73 +93,65 @@ export const testResourceXliff20 = {
             copyright: "Copyright 2016, My Company, Inc. All rights reserved.",
             path: "a/b/c.xliff"
         });
-        test.ok(x);
+        expect(x).toBeTruthy();
 
-        test.equal(x.getVersion(), "2.0");
+        expect(x.getVersion()).toBe("2.0");
 
-        test.equal(x["tool-id"], "loctool");
-        test.equal(x["tool-name"], "Localization Tool"),
-        test.equal(x["tool-version"], "1.2.34"),
-        test.equal(x["tool-company"], "My Company, Inc."),
-        test.equal(x.copyright, "Copyright 2016, My Company, Inc. All rights reserved."),
-        test.equal(x.path, "a/b/c.xliff");
+        expect(x["tool-id"]).toBe("loctool");
+        expect(x["tool-name"]).toBe("Localization Tool");
+        expect(x["tool-version"]).toBe("1.2.34"),
+        expect(x["tool-company"]).toBe("My Company, Inc.");
+        expect(x.copyright).toBe("Copyright 2016, My Company, Inc. All rights reserved.");
+        expect(x.path).toBe("a/b/c.xliff");
+    });
 
-        test.done();
-    },
-
-    testXliff20GetPath: function(test) {
-        test.expect(2);
+    test("Xliff20GetPath", () => {
+        expect.assertions(2);
 
         var x = new ResourceXliff({
             version: "2.0",
             path: "foo/bar/x.xliff"
         });
-        test.ok(x);
+        expect(x).toBeTruthy();
 
-        test.equal(x.getPath(), "foo/bar/x.xliff");
-
-        test.done();
-    },
+        expect(x.getPath()).toBe("foo/bar/x.xliff");
+    });
 
 
-    testXliff20SetPath: function(test) {
-        test.expect(3);
+    test("Xliff20SetPath", () => {
+        expect.assertions(3);
 
         var x = new ResourceXliff({
             version: "2.0",
             path: "foo/bar/x.xliff"
         });
-        test.ok(x);
+        expect(x).toBeTruthy();
 
-        test.equal(x.getPath(), "foo/bar/x.xliff");
-
-        x.setPath("asdf/asdf/y.xliff");
-
-        test.equal(x.getPath(), "asdf/asdf/y.xliff");
-
-        test.done();
-    },
-
-    testXliff20SetPathInitiallyEmpty: function(test) {
-        test.expect(3);
-
-        var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
-
-        test.ok(!x.getPath());
+        expect(x.getPath()).toBe("foo/bar/x.xliff");
 
         x.setPath("asdf/asdf/y.xliff");
 
-        test.equal(x.getPath(), "asdf/asdf/y.xliff");
+        expect(x.getPath()).toBe("asdf/asdf/y.xliff");
+    });
 
-        test.done();
-    },
-
-    testXliff20AddResource: function(test) {
-        test.expect(11);
+    test("Xliff20SetPathInitiallyEmpty", () => {
+        expect.assertions(3);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
+
+        expect(!x.getPath()).toBeTruthy();
+
+        x.setPath("asdf/asdf/y.xliff");
+
+        expect(x.getPath()).toBe("asdf/asdf/y.xliff");
+    });
+
+    test("Xliff20AddResource", () => {
+        expect.assertions(11);
+
+        var x = new ResourceXliff({version: "2.0"});
+        expect(x).toBeTruthy();
 
         var res = new ResourceString({
             source: "Asdf asdf",
@@ -185,26 +171,24 @@ export const testResourceXliff20 = {
             reskey: "foobar"
         });
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 1);
-        test.equal(reslist[0].getSource(), "Asdf asdf");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getState(), "new");
-        test.equal(reslist[0].getContext(), "asdf");
-        test.equal(reslist[0].getComment(), "this is a comment");
-        test.equal(reslist[0].getProject(), "webapp");
+        expect(reslist.length).toBe(1);
+        expect(reslist[0].getSource()).toBe("Asdf asdf");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getState()).toBe("new");
+        expect(reslist[0].getContext()).toBe("asdf");
+        expect(reslist[0].getComment()).toBe("this is a comment");
+        expect(reslist[0].getProject()).toBe("webapp");
+    });
 
-        test.done();
-    },
-
-    testXliff20Size: function(test) {
-        test.expect(3);
+    test("Xliff20Size", () => {
+        expect.assertions(3);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         var res = new ResourceString({
             source: "Asdf asdf",
@@ -218,20 +202,18 @@ export const testResourceXliff20 = {
             project: "webapp"
         });
 
-        test.equal(x.size(), 0);
+        expect(x.size()).toBe(0);
 
         x.addResource(res);
 
-        test.equal(x.size(), 1);
+        expect(x.size()).toBe(1);
+    });
 
-        test.done();
-    },
-
-    testXliff20AddMultipleResources: function(test) {
-        test.expect(8);
+    test("Xliff20AddMultipleResources", () => {
+        expect.assertions(8);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         var res = new ResourceString({
             source: "Asdf asdf",
@@ -257,24 +239,22 @@ export const testResourceXliff20 = {
             reskey: "foobar"
         });
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 1);
-        test.equal(reslist[0].getSource(), "Asdf asdf");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "webapp");
+        expect(reslist.length).toBe(1);
+        expect(reslist[0].getSource()).toBe("Asdf asdf");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getProject()).toBe("webapp");
+    });
 
-        test.done();
-    },
-
-    testXliff20AddMultipleResourcesRightSize: function(test) {
-        test.expect(3);
+    test("Xliff20AddMultipleResourcesRightSize", () => {
+        expect.assertions(3);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
-        test.equal(x.size(), 0);
+        expect(x).toBeTruthy();
+        expect(x.size()).toBe(0);
 
         var res = new ResourceString({
             source: "Asdf asdf",
@@ -296,16 +276,14 @@ export const testResourceXliff20 = {
 
         x.addResource(res);
 
-        test.equal(x.size(), 2);
+        expect(x.size()).toBe(2);
+    });
 
-        test.done();
-    },
-
-    testXliff20AddMultipleResourcesAddInstance: function(test) {
-        test.expect(17);
+    test("Xliff20AddMultipleResourcesAddInstance", () => {
+        expect.assertions(17);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         var res = new ResourceString({
             source: "Asdf asdf",
@@ -334,37 +312,35 @@ export const testResourceXliff20 = {
             reskey: "foobar"
         });
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 1);
-        test.equal(reslist[0].getSource(), "Asdf asdf");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "webapp");
-        test.ok(!reslist[0].getComment());
+        expect(reslist.length).toBe(1);
+        expect(reslist[0].getSource()).toBe("Asdf asdf");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getProject()).toBe("webapp");
+        expect(!reslist[0].getComment()).toBeTruthy();
 
         const inst = reslist[0].getInstances();
-        test.ok(inst);
+        expect(inst).toBeTruthy();
 
-        test.equal(inst.length, 1);
-        test.equal(inst[0].getSource(), "Asdf asdf");
-        test.equal(inst[0].getSourceLocale(), "en-US");
-        test.equal(inst[0].getKey(), "foobar");
-        test.equal(inst[0].getPath(), "foo/bar/asdf.java");
-        test.equal(inst[0].getProject(), "webapp");
-        test.equal(inst[0].getComment(), "blah blah blah");
+        expect(inst.length).toBe(1);
+        expect(inst[0].getSource()).toBe("Asdf asdf");
+        expect(inst[0].getSourceLocale()).toBe("en-US");
+        expect(inst[0].getKey()).toBe("foobar");
+        expect(inst[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(inst[0].getProject()).toBe("webapp");
+        expect(inst[0].getComment()).toBe("blah blah blah");
+    });
 
-        test.done();
-    },
-
-    testXliff20AddMultipleResourcesOverwriteRightSize: function(test) {
-        test.expect(4);
+    test("Xliff20AddMultipleResourcesOverwriteRightSize", () => {
+        expect.assertions(4);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
 
-        test.equal(x.size(), 0);
+        expect(x.size()).toBe(0);
 
         var res = new ResourceString({
             source: "Asdf asdf",
@@ -376,7 +352,7 @@ export const testResourceXliff20 = {
 
         x.addResource(res);
 
-        test.equal(x.size(), 1);
+        expect(x.size()).toBe(1);
 
         // this one has the same source, locale, key, and file
         // so it should overwrite the one above
@@ -391,16 +367,14 @@ export const testResourceXliff20 = {
 
         x.addResource(res);
 
-        test.equal(x.size(), 1);
+        expect(x.size()).toBe(1);
+    });
 
-        test.done();
-    },
-
-    testXliff20AddMultipleResourcesNoOverwrite: function(test) {
-        test.expect(13);
+    test("Xliff20AddMultipleResourcesNoOverwrite", () => {
+        expect.assertions(13);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         var res = new ResourceString({
             source: "Asdf asdf",
@@ -429,33 +403,31 @@ export const testResourceXliff20 = {
             reskey: "foobar"
         });
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 2);
+        expect(reslist.length).toBe(2);
 
-        test.equal(reslist[0].getSource(), "Asdf asdf");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.ok(!reslist[0].getComment());
+        expect(reslist[0].getSource()).toBe("Asdf asdf");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(!reslist[0].getComment()).toBeTruthy();
 
-        test.equal(reslist[1].getSource(), "Asdf asdf");
-        test.equal(reslist[1].getSourceLocale(), "fr-FR");
-        test.equal(reslist[1].getKey(), "foobar");
-        test.equal(reslist[1].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[1].getComment(), "blah blah blah");
+        expect(reslist[1].getSource()).toBe("Asdf asdf");
+        expect(reslist[1].getSourceLocale()).toBe("fr-FR");
+        expect(reslist[1].getKey()).toBe("foobar");
+        expect(reslist[1].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[1].getComment()).toBe("blah blah blah");
+    });
 
-        test.done();
-    },
-
-    testXliff20AddResourceDontAddSourceLocaleAsTarget: function(test) {
-        test.expect(2);
+    test("Xliff20AddResourceDontAddSourceLocaleAsTarget", () => {
+        expect.assertions(2);
 
         var x = new ResourceXliff({
             version: "2.0",
             sourceLocale: "en-US"
         });
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         var res = new ResourceString({
             source: "Asdf asdf",
@@ -480,16 +452,14 @@ export const testResourceXliff20 = {
 
         x.addResource(res);
 
-        test.equal(x.size(), 1);
+        expect(x.size()).toBe(1);
+    });
 
-        test.done();
-    },
-
-    testXliff20GetResourcesMultiple: function(test) {
-        test.expect(11);
+    test("Xliff20GetResourcesMultiple", () => {
+        expect.assertions(11);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         var res = new ResourceString({
             source: "Asdf asdf",
@@ -517,28 +487,26 @@ export const testResourceXliff20 = {
             sourceLocale: "en-US"
         });
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 2);
+        expect(reslist.length).toBe(2);
 
-        test.equal(reslist[0].getSource(), "Asdf asdf");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
+        expect(reslist[0].getSource()).toBe("Asdf asdf");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
 
-        test.equal(reslist[1].getSource(), "baby baby");
-        test.equal(reslist[1].getSourceLocale(), "en-US");
-        test.equal(reslist[1].getKey(), "huzzah");
-        test.equal(reslist[1].getPath(), "foo/bar/j.java");
+        expect(reslist[1].getSource()).toBe("baby baby");
+        expect(reslist[1].getSourceLocale()).toBe("en-US");
+        expect(reslist[1].getKey()).toBe("huzzah");
+        expect(reslist[1].getPath()).toBe("foo/bar/j.java");
+    });
 
-        test.done();
-    },
-
-    testXliff20GetTextWithExplicitIds: function(test) {
-        test.expect(2);
+    test("Xliff20GetTextWithExplicitIds", () => {
+        expect.assertions(2);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         let res = new ResourceString({
             source: "Asdf asdf",
@@ -589,16 +557,14 @@ export const testResourceXliff20 = {
                 '  </file>\n' +
                 '</xliff>';
         diff(actual, expected);
-        test.equal(actual, expected);
+        expect(actual).toBe(expected);
+    });
 
-        test.done();
-    },
-
-    testXliff20GetTextWithSourceAndTarget: function(test) {
-        test.expect(2);
+    test("Xliff20GetTextWithSourceAndTarget", () => {
+        expect.assertions(2);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         var res = new ResourceString({
             source: "Asdf asdf",
@@ -652,16 +618,14 @@ export const testResourceXliff20 = {
                 '</xliff>';
 
         diff(x.getText(), expected);
-        test.equal(x.getText(), expected);
+        expect(x.getText()).toBe(expected);
+    });
 
-        test.done();
-    },
-
-    testXliff20GetTextWithSourceAndTargetAndComment: function(test) {
-        test.expect(2);
+    test("Xliff20GetTextWithSourceAndTargetAndComment", () => {
+        expect.assertions(2);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         var res = new ResourceString({
             source: "Asdf asdf",
@@ -723,13 +687,11 @@ export const testResourceXliff20 = {
         var actual = x.getText();
 
         diff(actual, expected);
-        test.equal(actual, expected);
+        expect(actual).toBe(expected);
+    });
 
-        test.done();
-    },
-
-    testXliff20GetTextWithHeader: function(test) {
-        test.expect(2);
+    test("Xliff20GetTextWithHeader", () => {
+        expect.assertions(2);
 
         var x = new ResourceXliff({
             version: "2.0",
@@ -740,7 +702,7 @@ export const testResourceXliff20 = {
             copyright: "Copyright 2016, My Company, Inc. All rights reserved.",
             path: "a/b/c.xliff"
         });
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         const res = new ResourceString({
             source: "Asdf asdf",
@@ -775,15 +737,14 @@ export const testResourceXliff20 = {
                 '</xliff>';
 
         diff(actual, expected);
-        test.equal(actual, expected);
-        test.done();
-    },
+        expect(actual).toBe(expected);
+    });
 
-    testXliff20GetTextWithPlurals: function(test) {
-        test.expect(2);
+    test("Xliff20GetTextWithPlurals", () => {
+        expect.assertions(2);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         const res = new ResourcePlural({
             source: {
@@ -836,16 +797,14 @@ export const testResourceXliff20 = {
                 '  </file>\n' +
                 '</xliff>';
         diff(actual, expected);
-        test.equal(actual, expected);
+        expect(actual).toBe(expected);
+    });
 
-        test.done();
-    },
-
-    testXliff20GetTextWithPluralsToLangWithMorePluralsThanEnglish: function(test) {
-        test.expect(2);
+    test("Xliff20GetTextWithPluralsToLangWithMorePluralsThanEnglish", () => {
+        expect.assertions(2);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         const res = new ResourcePlural({
             source: {
@@ -908,16 +867,14 @@ export const testResourceXliff20 = {
                 '  </file>\n' +
                 '</xliff>';
         diff(actual, expected);
-        test.equal(actual, expected);
+        expect(actual).toBe(expected);
+    });
 
-        test.done();
-    },
-
-    testXliff20GetTextWithArrays: function(test) {
-        test.expect(2);
+    test("Xliff20GetTextWithArrays", () => {
+        expect.assertions(2);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         const res = new ResourceArray({
             sourceArray: ["Zero", "One", "Two"],
@@ -960,15 +917,14 @@ export const testResourceXliff20 = {
                 '  </file>\n' +
                 '</xliff>';
         diff(actual, expected)
-        test.equal(actual, expected);
-        test.done();
-    },
+        expect(actual).toBe(expected);
+    });
 
-    testXliff20GetTextWithXMLEscaping: function(test) {
-        test.expect(2);
+    test("Xliff20GetTextWithXMLEscaping", () => {
+        expect.assertions(2);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         var res = new ResourceString({
             source: "Asdf <b>asdf</b>",
@@ -1023,15 +979,14 @@ export const testResourceXliff20 = {
                 '</xliff>';
 
         diff(actual, expected);
-        test.equal(actual, expected);
-        test.done();
-    },
+        expect(actual).toBe(expected);
+    });
 
-    testXliff20GetTextWithXMLEscapingWithQuotes: function(test) {
-        test.expect(2);
+    test("Xliff20GetTextWithXMLEscapingWithQuotes", () => {
+        expect.assertions(2);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         var res = new ResourceString({
             source: "Here are \"double\" and 'single' quotes.",
@@ -1046,8 +1001,7 @@ export const testResourceXliff20 = {
 
         x.addResource(res);
 
-        test.equal(x.getText(),
-                '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(x.getText()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
                 '<xliff version="2.0" srcLang="en-US" trgLang="nl-NL" xmlns:l="http://ilib-js.com/loctool">\n' +
                 '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
                 '    <group id="group_1" name="plaintext">\n' +
@@ -1060,15 +1014,13 @@ export const testResourceXliff20 = {
                 '    </group>\n' +
                 '  </file>\n' +
                 '</xliff>');
+    });
 
-        test.done();
-    },
-
-    testXliff20GetTextWithEscapeCharsInResname: function(test) {
-        test.expect(2);
+    test("Xliff20GetTextWithEscapeCharsInResname", () => {
+        expect.assertions(2);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         var res = new ResourceString({
             source: "Here are \\ndouble\\n quotes.",
@@ -1083,8 +1035,7 @@ export const testResourceXliff20 = {
 
         x.addResource(res);
 
-        test.equal(x.getText(),
-                '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(x.getText()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
                 '<xliff version="2.0" srcLang="en-US" trgLang="nl-NL" xmlns:l="http://ilib-js.com/loctool">\n' +
                 '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
                 '    <group id="group_1" name="plaintext">\n' +
@@ -1097,15 +1048,13 @@ export const testResourceXliff20 = {
                 '    </group>\n' +
                 '  </file>\n' +
                 '</xliff>');
+    });
 
-        test.done();
-    },
-
-    testXliff20GetTextWithComments: function(test) {
-        test.expect(2);
+    test("Xliff20GetTextWithComments", () => {
+        expect.assertions(2);
 
         var x = new ResourceXliff({version: "2.0"});
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         const res = new ResourceString({
             source: "Asdf asdf",
@@ -1121,8 +1070,7 @@ export const testResourceXliff20 = {
 
         x.addResource(res);
 
-        test.equal(x.getText(),
-                '<?xml version="1.0" encoding="utf-8"?>\n' +
+        expect(x.getText()).toBe('<?xml version="1.0" encoding="utf-8"?>\n' +
                 '<xliff version="2.0" srcLang="en-US" trgLang="nl-NL" xmlns:l="http://ilib-js.com/loctool">\n' +
                 '  <file original="foo/bar/asdf.java" l:project="androidapp">\n' +
                 '    <group id="group_1" name="plaintext">\n' +
@@ -1138,15 +1086,13 @@ export const testResourceXliff20 = {
                 '    </group>\n' +
                 '  </file>\n' +
                 '</xliff>');
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseWithSourceOnly: function(test) {
-        test.expect(21);
+    test("Xliff20ParseWithSourceOnly", () => {
+        expect.assertions(21);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -1170,38 +1116,36 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 2);
+        expect(reslist.length).toBe(2);
 
-        test.equal(reslist[0].getSource(), "Asdf asdf");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.ok(!reslist[0].getTarget());
-        test.equal(reslist[0].getTargetLocale(), "de-DE");
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "androidapp");
-        test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].getId(), "1");
+        expect(reslist[0].getSource()).toBe("Asdf asdf");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(!reslist[0].getTarget()).toBeTruthy();
+        expect(reslist[0].getTargetLocale()).toBe("de-DE");
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getProject()).toBe("androidapp");
+        expect(reslist[0].resType).toBe("string");
+        expect(reslist[0].getId()).toBe("1");
 
-        test.equal(reslist[1].getSource(), "baby baby");
-        test.equal(reslist[1].getSourceLocale(), "en-US");
-        test.ok(!reslist[1].getTarget());
-        test.equal(reslist[1].getTargetLocale(), "de-DE");
-        test.equal(reslist[1].getKey(), "huzzah");
-        test.equal(reslist[1].getPath(), "foo/bar/j.java");
-        test.equal(reslist[1].getProject(), "webapp");
-        test.equal(reslist[1].resType, "string");
-        test.equal(reslist[1].getId(), "2");
+        expect(reslist[1].getSource()).toBe("baby baby");
+        expect(reslist[1].getSourceLocale()).toBe("en-US");
+        expect(!reslist[1].getTarget()).toBeTruthy();
+        expect(reslist[1].getTargetLocale()).toBe("de-DE");
+        expect(reslist[1].getKey()).toBe("huzzah");
+        expect(reslist[1].getPath()).toBe("foo/bar/j.java");
+        expect(reslist[1].getProject()).toBe("webapp");
+        expect(reslist[1].resType).toBe("string");
+        expect(reslist[1].getId()).toBe("2");
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseWithSourceAndTarget: function(test) {
-        test.expect(21);
+    test("Xliff20ParseWithSourceAndTarget", () => {
+        expect.assertions(21);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -1228,38 +1172,36 @@ export const testResourceXliff20 = {
         var reslist = x.getResources();
         // console.log("x is now " + JSON.stringify(x, undefined, 4));
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 2);
+        expect(reslist.length).toBe(2);
 
-        test.equal(reslist[0].getSource(), "Asdf asdf");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "androidapp");
-        test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].getId(), "1");
-        test.equal(reslist[0].getTarget(), "foobarfoo");
-        test.equal(reslist[0].getTargetLocale(), "de-DE");
+        expect(reslist[0].getSource()).toBe("Asdf asdf");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getProject()).toBe("androidapp");
+        expect(reslist[0].resType).toBe("string");
+        expect(reslist[0].getId()).toBe("1");
+        expect(reslist[0].getTarget()).toBe("foobarfoo");
+        expect(reslist[0].getTargetLocale()).toBe("de-DE");
 
-        test.equal(reslist[1].getSource(), "baby baby");
-        test.equal(reslist[1].getSourceLocale(), "en-US");
-        test.equal(reslist[1].getKey(), "huzzah");
-        test.equal(reslist[1].getPath(), "foo/bar/j.java");
-        test.equal(reslist[1].getProject(), "webapp");
-        test.equal(reslist[1].resType, "string");
-        test.equal(reslist[1].getId(), "2");
-        test.equal(reslist[1].getTarget(), "bebe bebe");
-        test.equal(reslist[1].getTargetLocale(), "de-DE");
+        expect(reslist[1].getSource()).toBe("baby baby");
+        expect(reslist[1].getSourceLocale()).toBe("en-US");
+        expect(reslist[1].getKey()).toBe("huzzah");
+        expect(reslist[1].getPath()).toBe("foo/bar/j.java");
+        expect(reslist[1].getProject()).toBe("webapp");
+        expect(reslist[1].resType).toBe("string");
+        expect(reslist[1].getId()).toBe("2");
+        expect(reslist[1].getTarget()).toBe("bebe bebe");
+        expect(reslist[1].getTargetLocale()).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseGetLines: function(test) {
-        test.expect(2);
+    test("Xliff20ParseGetLines", () => {
+        expect.assertions(2);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -1283,15 +1225,14 @@ export const testResourceXliff20 = {
                 '</xliff>');
 
 
-        test.equal(x.getLines(), 19);
-        test.done();
-    },
+        expect(x.getLines()).toBe(19);
+    });
 
-    testXliff20ParseSize: function(test) {
-        test.expect(2);
+    test("Xliff20ParseSize", () => {
+        expect.assertions(2);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -1315,15 +1256,14 @@ export const testResourceXliff20 = {
                 '</xliff>');
 
 
-        test.equal(x.size(), 2);
-        test.done();
-    },
+        expect(x.size()).toBe(2);
+    });
 
-    testXliff20ParseWithXMLUnescaping: function(test) {
-        test.expect(19);
+    test("Xliff20ParseWithXMLUnescaping", () => {
+        expect.assertions(19);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -1346,36 +1286,34 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 2);
+        expect(reslist.length).toBe(2);
 
-        test.equal(reslist[0].getSource(), "Asdf <b>asdf</b>");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "androidapp");
-        test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].getId(), "1");
-        test.ok(!reslist[0].getTarget());
+        expect(reslist[0].getSource()).toBe("Asdf <b>asdf</b>");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getProject()).toBe("androidapp");
+        expect(reslist[0].resType).toBe("string");
+        expect(reslist[0].getId()).toBe("1");
+        expect(!reslist[0].getTarget()).toBeTruthy();
 
-        test.equal(reslist[1].getSource(), "baby &lt;b&gt;baby&lt;/b&gt;");
-        test.equal(reslist[1].getSourceLocale(), "en-US");
-        test.equal(reslist[1].getKey(), "huzzah");
-        test.equal(reslist[1].getPath(), "foo/bar/j.java");
-        test.equal(reslist[1].getProject(), "webapp");
-        test.equal(reslist[1].resType, "string");
-        test.equal(reslist[1].getId(), "2");
-        test.ok(!reslist[1].getTarget());
+        expect(reslist[1].getSource()).toBe("baby &lt;b&gt;baby&lt;/b&gt;");
+        expect(reslist[1].getSourceLocale()).toBe("en-US");
+        expect(reslist[1].getKey()).toBe("huzzah");
+        expect(reslist[1].getPath()).toBe("foo/bar/j.java");
+        expect(reslist[1].getProject()).toBe("webapp");
+        expect(reslist[1].resType).toBe("string");
+        expect(reslist[1].getId()).toBe("2");
+        expect(!reslist[1].getTarget()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseWithEscapedNewLines: function(test) {
-        test.expect(17);
+    test("Xliff20ParseWithEscapedNewLines", () => {
+        expect.assertions(17);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -1399,34 +1337,32 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 2);
+        expect(reslist.length).toBe(2);
 
-        test.equal(reslist[0].getSource(), "a\\nb");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "androidapp");
-        test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].getId(), "1");
+        expect(reslist[0].getSource()).toBe("a\\nb");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getProject()).toBe("androidapp");
+        expect(reslist[0].resType).toBe("string");
+        expect(reslist[0].getId()).toBe("1");
 
-        test.equal(reslist[1].getSource(), "e\\nh");
-        test.equal(reslist[1].getSourceLocale(), "en-US");
-        test.equal(reslist[1].getKey(), "huzzah");
-        test.equal(reslist[1].getPath(), "foo/bar/j.java");
-        test.equal(reslist[1].getProject(), "webapp");
-        test.equal(reslist[1].resType, "string");
-        test.equal(reslist[1].getId(), "2");
+        expect(reslist[1].getSource()).toBe("e\\nh");
+        expect(reslist[1].getSourceLocale()).toBe("en-US");
+        expect(reslist[1].getKey()).toBe("huzzah");
+        expect(reslist[1].getPath()).toBe("foo/bar/j.java");
+        expect(reslist[1].getProject()).toBe("webapp");
+        expect(reslist[1].resType).toBe("string");
+        expect(reslist[1].getId()).toBe("2");
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseWithEscapedNewLinesInResname: function(test) {
-        test.expect(17);
+    test("Xliff20ParseWithEscapedNewLinesInResname", () => {
+        expect.assertions(17);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -1450,34 +1386,32 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 2);
+        expect(reslist.length).toBe(2);
 
-        test.equal(reslist[0].getSource(), "a\\nb");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar\\nbar\\t");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "androidapp");
-        test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].getId(), "1");
+        expect(reslist[0].getSource()).toBe("a\\nb");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("foobar\\nbar\\t");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getProject()).toBe("androidapp");
+        expect(reslist[0].resType).toBe("string");
+        expect(reslist[0].getId()).toBe("1");
 
-        test.equal(reslist[1].getSource(), "e\\nh");
-        test.equal(reslist[1].getSourceLocale(), "en-US");
-        test.equal(reslist[1].getKey(), "huzzah\\n\\na plague on both your houses");
-        test.equal(reslist[1].getPath(), "foo/bar/j.java");
-        test.equal(reslist[1].getProject(), "webapp");
-        test.equal(reslist[1].resType, "string");
-        test.equal(reslist[1].getId(), "2");
+        expect(reslist[1].getSource()).toBe("e\\nh");
+        expect(reslist[1].getSourceLocale()).toBe("en-US");
+        expect(reslist[1].getKey()).toBe("huzzah\\n\\na plague on both your houses");
+        expect(reslist[1].getPath()).toBe("foo/bar/j.java");
+        expect(reslist[1].getProject()).toBe("webapp");
+        expect(reslist[1].resType).toBe("string");
+        expect(reslist[1].getId()).toBe("2");
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseWithPlurals: function(test) {
-        test.expect(10);
+    test("Xliff20ParseWithPlurals", () => {
+        expect.assertions(10);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -1502,29 +1436,27 @@ export const testResourceXliff20 = {
 
         // console.log("after get resources x is " + JSON.stringify(x, undefined, 4));
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 1);
+        expect(reslist.length).toBe(1);
 
-        test.deepEqual(reslist[0].getSourcePlurals(), {
+        expect(reslist[0].getSourcePlurals()).toStrictEqual({
             one: "There is 1 object.",
             other: "There are {n} objects."
         });
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "androidapp");
-        test.equal(reslist[0].resType, "plural");
-        test.equal(reslist[0].getId(), "1");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getProject()).toBe("androidapp");
+        expect(reslist[0].resType).toBe("plural");
+        expect(reslist[0].getId()).toBe("1");
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseWithPluralsTranslated: function(test) {
-        test.expect(13);
+    test("Xliff20ParseWithPluralsTranslated", () => {
+        expect.assertions(13);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -1551,36 +1483,34 @@ export const testResourceXliff20 = {
 
         // console.log("after get resources x is " + JSON.stringify(x, undefined, 4));
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 1);
+        expect(reslist.length).toBe(1);
 
-        test.deepEqual(reslist[0].getSourcePlurals(), {
+        expect(reslist[0].getSourcePlurals()).toStrictEqual({
             one: "There is 1 object.",
             other: "There are {n} objects."
         });
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "androidapp");
-        test.equal(reslist[0].resType, "plural");
-        test.equal(reslist[0].getId(), "1");
-        test.equal(reslist[0].getOrigin(), "source");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getProject()).toBe("androidapp");
+        expect(reslist[0].resType).toBe("plural");
+        expect(reslist[0].getId()).toBe("1");
+        expect(reslist[0].getOrigin()).toBe("source");
 
-        test.deepEqual(reslist[0].getTargetPlurals(), {
+        expect(reslist[0].getTargetPlurals()).toStrictEqual({
             one: "Hay 1 objeto.",
             other: "Hay {n} objetos."
         });
-        test.equal(reslist[0].getTargetLocale(), "es-US");
+        expect(reslist[0].getTargetLocale()).toBe("es-US");
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseWithArrays: function(test) {
-        test.expect(10);
+    test("Xliff20ParseWithArrays", () => {
+        expect.assertions(10);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -1606,26 +1536,24 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 1);
+        expect(reslist.length).toBe(1);
 
-        test.deepEqual(reslist[0].getSourceArray(), ["Zero", "One", "Two"]);
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "androidapp");
-        test.equal(reslist[0].resType, "array");
-        test.ok(!reslist[0].getTargetArray());
+        expect(reslist[0].getSourceArray()).toStrictEqual(["Zero", "One", "Two"]);
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getProject()).toBe("androidapp");
+        expect(reslist[0].resType).toBe("array");
+        expect(!reslist[0].getTargetArray()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseWithArraysTranslated: function(test) {
-        test.expect(12);
+    test("Xliff20ParseWithArraysTranslated", () => {
+        expect.assertions(12);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -1654,28 +1582,26 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 1);
+        expect(reslist.length).toBe(1);
 
-        test.deepEqual(reslist[0].getSourceArray(), ["Zero", "One", "Two"]);
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "androidapp");
-        test.equal(reslist[0].resType, "array");
-        test.equal(reslist[0].getOrigin(), "source");
-        test.deepEqual(reslist[0].getTargetArray(), ["Zero", "Eins", "Zwei"]);
-        test.equal(reslist[0].getTargetLocale(), "de-DE");
+        expect(reslist[0].getSourceArray()).toStrictEqual(["Zero", "One", "Two"]);
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getProject()).toBe("androidapp");
+        expect(reslist[0].resType).toBe("array");
+        expect(reslist[0].getOrigin()).toBe("source");
+        expect(reslist[0].getTargetArray()).toStrictEqual(["Zero", "Eins", "Zwei"]);
+        expect(reslist[0].getTargetLocale()).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseWithArraysAndTranslations: function(test) {
-        test.expect(20);
+    test("Xliff20ParseWithArraysAndTranslations", () => {
+        expect.assertions(20);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -1710,42 +1636,40 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 1);
+        expect(reslist.length).toBe(1);
 
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getTargetLocale(), "es-US");
-        test.equal(reslist[0].getKey(), "huzzah");
-        test.equal(reslist[0].getPath(), "res/values/arrays.xml");
-        test.equal(reslist[0].getProject(), "androidapp");
-        test.equal(reslist[0].resType, "array");
-        test.equal(reslist[0].getOrigin(), "source");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getTargetLocale()).toBe("es-US");
+        expect(reslist[0].getKey()).toBe("huzzah");
+        expect(reslist[0].getPath()).toBe("res/values/arrays.xml");
+        expect(reslist[0].getProject()).toBe("androidapp");
+        expect(reslist[0].resType).toBe("array");
+        expect(reslist[0].getOrigin()).toBe("source");
 
         var items = reslist[0].getSourceArray();
 
-        test.equal(items.length, 4);
-        test.equal(items[0], "This is element 0");
-        test.equal(items[1], "This is element 1");
-        test.equal(items[2], "This is element 2");
-        test.equal(items[3], "This is element 3");
+        expect(items.length).toBe(4);
+        expect(items[0]).toBe("This is element 0");
+        expect(items[1]).toBe("This is element 1");
+        expect(items[2]).toBe("This is element 2");
+        expect(items[3]).toBe("This is element 3");
 
         items = reslist[0].getTargetArray();
 
-        test.equal(items.length, 4);
-        test.equal(items[0], "Este es 0");
-        test.equal(items[1], "Este es 1");
-        test.equal(items[2], "Este es 2");
-        test.equal(items[3], "Este es 3");
+        expect(items.length).toBe(4);
+        expect(items[0]).toBe("Este es 0");
+        expect(items[1]).toBe("Este es 1");
+        expect(items[2]).toBe("Este es 2");
+        expect(items[3]).toBe("Este es 3");
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseWithArraysAndTranslationsPartial: function(test) {
-        test.expect(20);
+    test("Xliff20ParseWithArraysAndTranslationsPartial", () => {
+        expect.assertions(20);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -1762,42 +1686,40 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 1);
+        expect(reslist.length).toBe(1);
 
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getTargetLocale(), "es-US");
-        test.equal(reslist[0].getKey(), "huzzah");
-        test.equal(reslist[0].getPath(), "res/values/arrays.xml");
-        test.equal(reslist[0].getProject(), "androidapp");
-        test.equal(reslist[0].resType, "array");
-        test.equal(reslist[0].getOrigin(), "source");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getTargetLocale()).toBe("es-US");
+        expect(reslist[0].getKey()).toBe("huzzah");
+        expect(reslist[0].getPath()).toBe("res/values/arrays.xml");
+        expect(reslist[0].getProject()).toBe("androidapp");
+        expect(reslist[0].resType).toBe("array");
+        expect(reslist[0].getOrigin()).toBe("source");
 
         var items = reslist[0].getSourceArray();
 
-        test.equal(items.length, 4);
-        test.equal(items[0], null);
-        test.equal(items[1], null);
-        test.equal(items[2], null);
-        test.equal(items[3], "This is element 3");
+        expect(items.length).toBe(4);
+        expect(items[0]).toBeUndefined();
+        expect(items[1]).toBeUndefined();
+        expect(items[2]).toBeUndefined();
+        expect(items[3]).toBe("This is element 3");
 
         items = reslist[0].getTargetArray();
 
-        test.equal(items.length, 4);
-        test.equal(items[0], null);
-        test.equal(items[1], null);
-        test.equal(items[2], null);
-        test.equal(items[3], "Este es 3");
+        expect(items.length).toBe(4);
+        expect(items[0]).toBeUndefined();
+        expect(items[1]).toBeUndefined();
+        expect(items[2]).toBeUndefined();
+        expect(items[3]).toBe("Este es 3");
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseWithComments: function(test) {
-        test.expect(18);
+    test("Xliff20ParseWithComments", () => {
+        expect.assertions(18);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -1826,34 +1748,32 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist[0].getSource(), "Asdf asdf");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "androidapp");
-        test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].getComment(), "A very nice string");
-        test.equal(reslist[0].getId(), "1");
+        expect(reslist[0].getSource()).toBe("Asdf asdf");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getProject()).toBe("androidapp");
+        expect(reslist[0].resType).toBe("string");
+        expect(reslist[0].getComment()).toBe("A very nice string");
+        expect(reslist[0].getId()).toBe("1");
 
-        test.equal(reslist[1].getSource(), "baby baby");
-        test.equal(reslist[1].getSourceLocale(), "en-US");
-        test.equal(reslist[1].getKey(), "huzzah");
-        test.equal(reslist[1].getPath(), "foo/bar/j.java");
-        test.equal(reslist[1].getProject(), "webapp");
-        test.equal(reslist[1].resType, "string");
-        test.equal(reslist[1].getComment(), "Totally awesome.");
-        test.equal(reslist[1].getId(), "2");
+        expect(reslist[1].getSource()).toBe("baby baby");
+        expect(reslist[1].getSourceLocale()).toBe("en-US");
+        expect(reslist[1].getKey()).toBe("huzzah");
+        expect(reslist[1].getPath()).toBe("foo/bar/j.java");
+        expect(reslist[1].getProject()).toBe("webapp");
+        expect(reslist[1].resType).toBe("string");
+        expect(reslist[1].getComment()).toBe("Totally awesome.");
+        expect(reslist[1].getId()).toBe("2");
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseWithContext: function(test) {
-        test.expect(19);
+    test("Xliff20ParseWithContext", () => {
+        expect.assertions(19);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -1876,36 +1796,34 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 2);
+        expect(reslist.length).toBe(2);
 
-        test.equal(reslist[0].getSource(), "Asdf asdf");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "androidapp");
-        test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].getId(), "1");
-        test.equal(reslist[0].getContext(), "na na na");
+        expect(reslist[0].getSource()).toBe("Asdf asdf");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getProject()).toBe("androidapp");
+        expect(reslist[0].resType).toBe("string");
+        expect(reslist[0].getId()).toBe("1");
+        expect(reslist[0].getContext()).toBe("na na na");
 
-        test.equal(reslist[1].getSource(), "baby baby");
-        test.equal(reslist[1].getSourceLocale(), "en-US");
-        test.equal(reslist[1].getKey(), "huzzah");
-        test.equal(reslist[1].getPath(), "foo/bar/j.java");
-        test.equal(reslist[1].getProject(), "webapp");
-        test.equal(reslist[1].resType, "string");
-        test.equal(reslist[1].getId(), "2");
-        test.equal(reslist[1].getContext(), "asdf");
+        expect(reslist[1].getSource()).toBe("baby baby");
+        expect(reslist[1].getSourceLocale()).toBe("en-US");
+        expect(reslist[1].getKey()).toBe("huzzah");
+        expect(reslist[1].getPath()).toBe("foo/bar/j.java");
+        expect(reslist[1].getProject()).toBe("webapp");
+        expect(reslist[1].resType).toBe("string");
+        expect(reslist[1].getId()).toBe("2");
+        expect(reslist[1].getContext()).toBe("asdf");
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseRealFile: function(test) {
-        test.expect(3);
+    test("Xliff20ParseRealFile", () => {
+        expect.assertions(3);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         var str = fs.readFileSync("test/testfiles/test4.xliff", "utf-8");
 
@@ -1913,18 +1831,16 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 4);
+        expect(reslist.length).toBe(4);
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseEmptySource: function(test) {
-        test.expect(12);
+    test("Xliff20ParseEmptySource", () => {
+        expect.assertions(12);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -1949,29 +1865,27 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 1);
+        expect(reslist.length).toBe(1);
 
-        test.equal(reslist[0].getSource(), "baby baby");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "huzzah");
-        test.equal(reslist[0].getPath(), "foo/bar/j.java");
-        test.equal(reslist[0].getProject(), "webapp");
-        test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].getId(), "2");
+        expect(reslist[0].getSource()).toBe("baby baby");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("huzzah");
+        expect(reslist[0].getPath()).toBe("foo/bar/j.java");
+        expect(reslist[0].getProject()).toBe("webapp");
+        expect(reslist[0].resType).toBe("string");
+        expect(reslist[0].getId()).toBe("2");
 
-        test.equal(reslist[0].getTarget(), "bebe bebe");
-        test.equal(reslist[0].getTargetLocale(), "de-DE");
+        expect(reslist[0].getTarget()).toBe("bebe bebe");
+        expect(reslist[0].getTargetLocale()).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseEmptyTarget: function(test) {
-        test.expect(23);
+    test("Xliff20ParseEmptyTarget", () => {
+        expect.assertions(23);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -1995,40 +1909,38 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 2);
+        expect(reslist.length).toBe(2);
 
-        test.equal(reslist[0].getSource(), "Asdf asdf");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.ok(!reslist[0].getTarget());
-        test.equal(reslist[0].getTargetLocale(), "fr-FR");
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "androidapp");
-        test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].getId(), "1");
-        test.equal(reslist[0].getOrigin(), "source");
+        expect(reslist[0].getSource()).toBe("Asdf asdf");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(!reslist[0].getTarget()).toBeTruthy();
+        expect(reslist[0].getTargetLocale()).toBe("fr-FR");
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getProject()).toBe("androidapp");
+        expect(reslist[0].resType).toBe("string");
+        expect(reslist[0].getId()).toBe("1");
+        expect(reslist[0].getOrigin()).toBe("source");
 
-        test.equal(reslist[1].getSource(), "baby baby");
-        test.equal(reslist[1].getSourceLocale(), "en-US");
-        test.ok(!reslist[0].getTarget());
-        test.equal(reslist[0].getTargetLocale(), "fr-FR");
-        test.equal(reslist[1].getKey(), "huzzah");
-        test.equal(reslist[1].getPath(), "foo/bar/j.java");
-        test.equal(reslist[1].getProject(), "webapp");
-        test.equal(reslist[1].resType, "string");
-        test.equal(reslist[1].getId(), "2");
-        test.equal(reslist[1].getOrigin(), "source");
+        expect(reslist[1].getSource()).toBe("baby baby");
+        expect(reslist[1].getSourceLocale()).toBe("en-US");
+        expect(!reslist[0].getTarget()).toBeTruthy();
+        expect(reslist[0].getTargetLocale()).toBe("fr-FR");
+        expect(reslist[1].getKey()).toBe("huzzah");
+        expect(reslist[1].getPath()).toBe("foo/bar/j.java");
+        expect(reslist[1].getProject()).toBe("webapp");
+        expect(reslist[1].resType).toBe("string");
+        expect(reslist[1].getId()).toBe("2");
+        expect(reslist[1].getOrigin()).toBe("source");
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseEmptyTargetNoTargetLocale: function(test) {
-        test.expect(23);
+    test("Xliff20ParseEmptyTargetNoTargetLocale", () => {
+        expect.assertions(23);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -2052,40 +1964,38 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 2);
+        expect(reslist.length).toBe(2);
 
-        test.equal(reslist[0].getSource(), "Asdf asdf");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.ok(!reslist[0].getTarget());
-        test.ok(!reslist[0].getTargetLocale());
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "androidapp");
-        test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].getId(), "1");
-        test.equal(reslist[0].getOrigin(), "source");
+        expect(reslist[0].getSource()).toBe("Asdf asdf");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(!reslist[0].getTarget()).toBeTruthy();
+        expect(!reslist[0].getTargetLocale()).toBeTruthy();
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getProject()).toBe("androidapp");
+        expect(reslist[0].resType).toBe("string");
+        expect(reslist[0].getId()).toBe("1");
+        expect(reslist[0].getOrigin()).toBe("source");
 
-        test.equal(reslist[1].getSource(), "baby baby");
-        test.equal(reslist[1].getSourceLocale(), "en-US");
-        test.ok(!reslist[0].getTarget());
-        test.ok(!reslist[0].getTargetLocale());
-        test.equal(reslist[1].getKey(), "huzzah");
-        test.equal(reslist[1].getPath(), "foo/bar/j.java");
-        test.equal(reslist[1].getProject(), "webapp");
-        test.equal(reslist[1].resType, "string");
-        test.equal(reslist[1].getId(), "2");
-        test.equal(reslist[1].getOrigin(), "source");
+        expect(reslist[1].getSource()).toBe("baby baby");
+        expect(reslist[1].getSourceLocale()).toBe("en-US");
+        expect(!reslist[0].getTarget()).toBeTruthy();
+        expect(!reslist[0].getTargetLocale()).toBeTruthy();
+        expect(reslist[1].getKey()).toBe("huzzah");
+        expect(reslist[1].getPath()).toBe("foo/bar/j.java");
+        expect(reslist[1].getProject()).toBe("webapp");
+        expect(reslist[1].resType).toBe("string");
+        expect(reslist[1].getId()).toBe("2");
+        expect(reslist[1].getOrigin()).toBe("source");
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseWithMultipleSegments: function(test) {
-        test.expect(12);
+    test("Xliff20ParseWithMultipleSegments", () => {
+        expect.assertions(12);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -2110,29 +2020,27 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 1);
+        expect(reslist.length).toBe(1);
 
-        test.equal(reslist[0].getSource(), "seg1 seg2 seg3");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "huzzah");
-        test.equal(reslist[0].getPath(), "foo/bar/j.java");
-        test.equal(reslist[0].getProject(), "webapp");
-        test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].getId(), "2");
+        expect(reslist[0].getSource()).toBe("seg1 seg2 seg3");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("huzzah");
+        expect(reslist[0].getPath()).toBe("foo/bar/j.java");
+        expect(reslist[0].getProject()).toBe("webapp");
+        expect(reslist[0].resType).toBe("string");
+        expect(reslist[0].getId()).toBe("2");
 
-        test.equal(reslist[0].getTarget(), "This is segment 1. This is segment 2. This is segment 3.");
-        test.equal(reslist[0].getTargetLocale(), "fr-FR");
+        expect(reslist[0].getTarget()).toBe("This is segment 1. This is segment 2. This is segment 3.");
+        expect(reslist[0].getTargetLocale()).toBe("fr-FR");
+    });
 
-        test.done();
-    },
-
-    testXliff20ParsePreserveSourceWhitespace: function(test) {
-        test.expect(9);
+    test("Xliff20ParsePreserveSourceWhitespace", () => {
+        expect.assertions(9);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -2149,25 +2057,23 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 1);
+        expect(reslist.length).toBe(1);
 
-        test.equal(reslist[0].getSource(), "      Add Another");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "      Add Another");
-        test.equal(reslist[0].getPath(), "UI/AddAnotherButtonView.m");
-        test.equal(reslist[0].getProject(), "iosapp");
-        test.equal(reslist[0].resType, "string");
+        expect(reslist[0].getSource()).toBe("      Add Another");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("      Add Another");
+        expect(reslist[0].getPath()).toBe("UI/AddAnotherButtonView.m");
+        expect(reslist[0].getProject()).toBe("iosapp");
+        expect(reslist[0].resType).toBe("string");
+    });
 
-        test.done();
-    },
-
-    testXliff20ParsePreserveTargetWhitespace: function(test) {
-        test.expect(9);
+    test("Xliff20ParsePreserveTargetWhitespace", () => {
+        expect.assertions(9);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -2184,28 +2090,26 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 1);
+        expect(reslist.length).toBe(1);
 
-        test.equal(reslist[0].getTarget(), " Añadir    Otro  ");
-        test.equal(reslist[0].getTargetLocale(), "es-US");
-        test.equal(reslist[0].getKey(), "      Add Another");
-        test.equal(reslist[0].getPath(), "UI/AddAnotherButtonView.m");
-        test.equal(reslist[0].getProject(), "iosapp");
-        test.equal(reslist[0].resType, "string");
+        expect(reslist[0].getTarget()).toBe(" Añadir    Otro  ");
+        expect(reslist[0].getTargetLocale()).toBe("es-US");
+        expect(reslist[0].getKey()).toBe("      Add Another");
+        expect(reslist[0].getPath()).toBe("UI/AddAnotherButtonView.m");
+        expect(reslist[0].getProject()).toBe("iosapp");
+        expect(reslist[0].resType).toBe("string");
+    });
 
-        test.done();
-    },
-
-    testXliff20AddResourcesWithInstances: function(test) {
-        test.expect(9);
+    test("Xliff20AddResourcesWithInstances", () => {
+        expect.assertions(9);
 
         var x = new ResourceXliff({
             version: "2.0",
             allowDups: true
         });
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         var res = new ResourceString({
             source: "Asdf asdf",
@@ -2231,27 +2135,25 @@ export const testResourceXliff20 = {
             reskey: "foobar"
         });
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 1);
-        test.equal(reslist[0].getSource(), "Asdf asdf");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "webapp");
-        test.ok(!reslist[0].getComment());
+        expect(reslist.length).toBe(1);
+        expect(reslist[0].getSource()).toBe("Asdf asdf");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getProject()).toBe("webapp");
+        expect(!reslist[0].getComment()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testXliff20AddMultipleResourcesAddInstances: function(test) {
-        test.expect(17);
+    test("Xliff20AddMultipleResourcesAddInstances", () => {
+        expect.assertions(17);
 
         var x = new ResourceXliff({
             version: "2.0",
             allowDups: true
         });
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         var res = new ResourceString({
             source: "Asdf asdf",
@@ -2280,38 +2182,36 @@ export const testResourceXliff20 = {
             reskey: "foobar"
         });
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 1);
-        test.equal(reslist[0].getSource(), "Asdf asdf");
-        test.equal(reslist[0].getSourceLocale(), "en-US");
-        test.equal(reslist[0].getKey(), "foobar");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "webapp");
-        test.ok(!reslist[0].getComment());
+        expect(reslist.length).toBe(1);
+        expect(reslist[0].getSource()).toBe("Asdf asdf");
+        expect(reslist[0].getSourceLocale()).toBe("en-US");
+        expect(reslist[0].getKey()).toBe("foobar");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getProject()).toBe("webapp");
+        expect(!reslist[0].getComment()).toBeTruthy();
 
         var instances = reslist[0].getInstances();
-        test.ok(instances);
-        test.equal(instances.length, 1);
+        expect(instances).toBeTruthy();
+        expect(instances.length).toBe(1);
 
-        test.equal(instances[0].getSource(), "Asdf asdf");
-        test.equal(instances[0].getSourceLocale(), "en-US");
-        test.equal(instances[0].getKey(), "foobar");
-        test.equal(instances[0].getPath(), "foo/bar/asdf.java");
-        test.equal(instances[0].getProject(), "webapp");
-        test.equal(instances[0].getComment(), "blah blah blah");
+        expect(instances[0].getSource()).toBe("Asdf asdf");
+        expect(instances[0].getSourceLocale()).toBe("en-US");
+        expect(instances[0].getKey()).toBe("foobar");
+        expect(instances[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(instances[0].getProject()).toBe("webapp");
+        expect(instances[0].getComment()).toBe("blah blah blah");
+    });
 
-        test.done();
-    },
-
-    testXliff20GetTextWithResourcesWithInstancesWithNoTarget: function(test) {
-        test.expect(2);
+    test("Xliff20GetTextWithResourcesWithInstancesWithNoTarget", () => {
+        expect.assertions(2);
 
         var x = new ResourceXliff({
             version: "2.0",
             allowDups: true
         });
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         var res = new ResourceString({
             source: "Asdf asdf",
@@ -2361,19 +2261,17 @@ export const testResourceXliff20 = {
         var actual = x.getText();
         diff(actual, expected);
 
-        test.equal(actual, expected);
+        expect(actual).toBe(expected);
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseCreateInstances: function(test) {
-        test.expect(21);
+    test("Xliff20ParseCreateInstances", () => {
+        expect.assertions(21);
 
         var x = new ResourceXliff({
             version: "2.0",
             allowDups: true
         });
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
             '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -2402,40 +2300,38 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist.length, 1);
+        expect(reslist.length).toBe(1);
 
-        test.equal(reslist[0].getTarget(), "ababab");
-        test.equal(reslist[0].getTargetLocale(), "fr-FR");
-        test.equal(reslist[0].getKey(), "asdf");
-        test.equal(reslist[0].getPath(), "/a/b/asdf.js");
-        test.equal(reslist[0].getProject(), "iosapp");
-        test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].context, "asdfasdf");
-        test.equal(reslist[0].comment, "this is a comment");
+        expect(reslist[0].getTarget()).toBe("ababab");
+        expect(reslist[0].getTargetLocale()).toBe("fr-FR");
+        expect(reslist[0].getKey()).toBe("asdf");
+        expect(reslist[0].getPath()).toBe("/a/b/asdf.js");
+        expect(reslist[0].getProject()).toBe("iosapp");
+        expect(reslist[0].resType).toBe("string");
+        expect(reslist[0].context).toBe("asdfasdf");
+        expect(reslist[0].comment).toBe("this is a comment");
 
         var instances = reslist[0].getInstances();
-        test.ok(instances);
-        test.equal(instances.length, 1);
+        expect(instances).toBeTruthy();
+        expect(instances.length).toBe(1);
 
-        test.equal(instances[0].getTarget(), "ababab");
-        test.equal(instances[0].getTargetLocale(), "fr-FR");
-        test.equal(instances[0].getKey(), "asdf");
-        test.equal(instances[0].getPath(), "/a/b/asdf.js");
-        test.equal(instances[0].getProject(), "iosapp");
-        test.equal(instances[0].resType, "string");
-        test.equal(instances[0].context, "asdfasdf");
-        test.equal(instances[0].comment, "this is a different comment");
+        expect(instances[0].getTarget()).toBe("ababab");
+        expect(instances[0].getTargetLocale()).toBe("fr-FR");
+        expect(instances[0].getKey()).toBe("asdf");
+        expect(instances[0].getPath()).toBe("/a/b/asdf.js");
+        expect(instances[0].getProject()).toBe("iosapp");
+        expect(instances[0].resType).toBe("string");
+        expect(instances[0].context).toBe("asdfasdf");
+        expect(instances[0].comment).toBe("this is a different comment");
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseLGStyleXliff: function(test) {
-        test.expect(24);
+    test("Xliff20ParseLGStyleXliff", () => {
+        expect.assertions(24);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         x.parse(
                 '<?xml version="1.0" encoding="utf-8"?>\n' +
@@ -2460,86 +2356,82 @@ export const testResourceXliff20 = {
 
         var reslist = x.getResources();
 
-        test.ok(reslist);
+        expect(reslist).toBeTruthy();
 
-        test.equal(reslist[0].getSource(), "Closed Caption Settings");
-        test.equal(reslist[0].getSourceLocale(), "en-KR");
-        test.equal(reslist[0].getTarget(), "자막 설정");
-        test.equal(reslist[0].getTargetLocale(), "ko-KR");
-        test.equal(reslist[0].getKey(), "Closed Caption Settings");
-        test.equal(reslist[0].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[0].getProject(), "foo/bar/asdf.java");
-        test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].datatype, "javascript");
-        test.ok(!reslist[0].getComment());
-        test.equal(reslist[0].getId(), "1");
+        expect(reslist[0].getSource()).toBe("Closed Caption Settings");
+        expect(reslist[0].getSourceLocale()).toBe("en-KR");
+        expect(reslist[0].getTarget()).toBe("자막 설정");
+        expect(reslist[0].getTargetLocale()).toBe("ko-KR");
+        expect(reslist[0].getKey()).toBe("Closed Caption Settings");
+        expect(reslist[0].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].getProject()).toBe("foo/bar/asdf.java");
+        expect(reslist[0].resType).toBe("string");
+        expect(reslist[0].datatype).toBe("javascript");
+        expect(!reslist[0].getComment()).toBeTruthy();
+        expect(reslist[0].getId()).toBe("1");
 
-        test.equal(reslist[1].getSource(), "Low");
-        test.equal(reslist[1].getSourceLocale(), "en-KR");
-        test.equal(reslist[1].getTarget(), "낮음");
-        test.equal(reslist[1].getTargetLocale(), "ko-KR");
-        test.equal(reslist[1].getKey(), "Low");
-        test.equal(reslist[1].getPath(), "foo/bar/asdf.java");
-        test.equal(reslist[1].getProject(), "foo/bar/asdf.java");
-        test.equal(reslist[1].resType, "string");
-        test.equal(reslist[1].datatype, "javascript");
-        test.ok(!reslist[1].getComment());
-        test.equal(reslist[1].getId(), "2");
+        expect(reslist[1].getSource()).toBe("Low");
+        expect(reslist[1].getSourceLocale()).toBe("en-KR");
+        expect(reslist[1].getTarget()).toBe("낮음");
+        expect(reslist[1].getTargetLocale()).toBe("ko-KR");
+        expect(reslist[1].getKey()).toBe("Low");
+        expect(reslist[1].getPath()).toBe("foo/bar/asdf.java");
+        expect(reslist[1].getProject()).toBe("foo/bar/asdf.java");
+        expect(reslist[1].resType).toBe("string");
+        expect(reslist[1].datatype).toBe("javascript");
+        expect(!reslist[1].getComment()).toBeTruthy();
+        expect(reslist[1].getId()).toBe("2");
+    });
 
-        test.done();
-    },
-
-    testXliff20ParseRealLGFile: function(test) {
-        test.expect(37);
+    test("Xliff20ParseRealLGFile", () => {
+        expect.assertions(37);
 
         var x = new ResourceXliff();
-        test.ok(x);
+        expect(x).toBeTruthy();
 
         var str = fs.readFileSync("test/testfiles/test5.xliff", "utf-8");
 
         x.parse(str);
 
         var reslist = x.getResources();
-        test.ok(reslist);
-        test.equal(reslist.length, 7);
+        expect(reslist).toBeTruthy();
+        expect(reslist.length).toBe(7);
 
-        test.equal(reslist[0].getSource(), "Closed Caption Settings");
-        test.equal(reslist[0].getSourceLocale(), "en-KR");
-        test.equal(reslist[0].getTarget(), "자막 설정");
-        test.equal(reslist[0].getTargetLocale(), "ko-KR");
-        test.equal(reslist[0].getKey(), "Closed Caption Settings");
-        test.equal(reslist[0].getPath(), "settings");
-        test.equal(reslist[0].getProject(), "settings");
-        test.equal(reslist[0].resType, "string");
-        test.equal(reslist[0].datatype, "javascript");
-        test.ok(!reslist[0].getComment());
-        test.equal(reslist[0].getId(), "settings_1");
+        expect(reslist[0].getSource()).toBe("Closed Caption Settings");
+        expect(reslist[0].getSourceLocale()).toBe("en-KR");
+        expect(reslist[0].getTarget()).toBe("자막 설정");
+        expect(reslist[0].getTargetLocale()).toBe("ko-KR");
+        expect(reslist[0].getKey()).toBe("Closed Caption Settings");
+        expect(reslist[0].getPath()).toBe("settings");
+        expect(reslist[0].getProject()).toBe("settings");
+        expect(reslist[0].resType).toBe("string");
+        expect(reslist[0].datatype).toBe("javascript");
+        expect(!reslist[0].getComment()).toBeTruthy();
+        expect(reslist[0].getId()).toBe("settings_1");
 
-        test.equal(reslist[3].getSource(), "Low");
-        test.equal(reslist[3].getSourceLocale(), "en-KR");
-        test.equal(reslist[3].getTarget(), "낮음");
-        test.equal(reslist[3].getTargetLocale(), "ko-KR");
-        test.equal(reslist[3].getKey(), "pictureControlLow_Male");
-        test.equal(reslist[3].getPath(), "settings");
-        test.equal(reslist[3].getProject(), "settings");
-        test.equal(reslist[3].resType, "string");
-        test.equal(reslist[3].datatype, "javascript");
-        test.ok(!reslist[3].getComment());
-        test.equal(reslist[3].getId(), "settings_1524");
+        expect(reslist[3].getSource()).toBe("Low");
+        expect(reslist[3].getSourceLocale()).toBe("en-KR");
+        expect(reslist[3].getTarget()).toBe("낮음");
+        expect(reslist[3].getTargetLocale()).toBe("ko-KR");
+        expect(reslist[3].getKey()).toBe("pictureControlLow_Male");
+        expect(reslist[3].getPath()).toBe("settings");
+        expect(reslist[3].getProject()).toBe("settings");
+        expect(reslist[3].resType).toBe("string");
+        expect(reslist[3].datatype).toBe("javascript");
+        expect(!reslist[3].getComment()).toBeTruthy();
+        expect(reslist[3].getId()).toBe("settings_1524");
 
-        test.equal(reslist[6].getSource(), "SEARCH");
-        test.equal(reslist[6].getSourceLocale(), "en-KR");
-        test.equal(reslist[6].getTarget(), "검색");
-        test.equal(reslist[6].getTargetLocale(), "ko-KR");
-        test.equal(reslist[6].getKey(), "SEARCH");
-        test.equal(reslist[6].getPath(), "settings");
-        test.equal(reslist[6].getProject(), "settings");
-        test.equal(reslist[6].resType, "string");
-        test.equal(reslist[6].datatype, "x-qml");
-        test.ok(reslist[6].getComment());
-        test.equal(reslist[6].getComment(), "copy strings from voice app");
-        test.equal(reslist[6].getId(), "settings_22");
-
-        test.done();
-    }
-};
+        expect(reslist[6].getSource()).toBe("SEARCH");
+        expect(reslist[6].getSourceLocale()).toBe("en-KR");
+        expect(reslist[6].getTarget()).toBe("검색");
+        expect(reslist[6].getTargetLocale()).toBe("ko-KR");
+        expect(reslist[6].getKey()).toBe("SEARCH");
+        expect(reslist[6].getPath()).toBe("settings");
+        expect(reslist[6].getProject()).toBe("settings");
+        expect(reslist[6].resType).toBe("string");
+        expect(reslist[6].datatype).toBe("x-qml");
+        expect(reslist[6].getComment()).toBeTruthy();
+        expect(reslist[6].getComment()).toBe("copy strings from voice app");
+        expect(reslist[6].getId()).toBe("settings_22");
+    });
+});

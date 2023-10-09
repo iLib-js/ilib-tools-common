@@ -1,5 +1,5 @@
 /*
- * testTranslationUnit.js - test the translation unit object.
+ * TranslationUnit.test.js - test the translation unit object.
  *
  * Copyright © 2023 JEDLSoft
  *
@@ -20,17 +20,16 @@
 import TranslationUnit from "../src/TranslationUnit.js";
 import TranslationVariant from "../src/TranslationVariant.js";
 
-export const testTranslationUnit = {
-     testTranslationUnitConstructor: function(test) {
-        test.expect(1);
+describe("testTranslationUnit", () => {
+     test("TranslationUnitConstructor", () => {
+        expect.assertions(1);
 
         const tu = new TranslationUnit();
-        test.ok(tu);
-        test.done();
-    },
+        expect(tu).toBeTruthy();
+    });
 
-    testTranslationUnitConstructorWithFields: function(test) {
-        test.expect(1);
+    test("TranslationUnitConstructorWithFields", () => {
+        expect.assertions(1);
 
         const tu = new TranslationUnit({
             source: "a",
@@ -46,14 +45,13 @@ export const testTranslationUnit = {
             datatype: "javascript",
             flavor: "chocolate"
         });
-        test.ok(tu);
-        test.done();
-    },
+        expect(tu).toBeTruthy();
+    });
 
-    testTranslationUnitConstructorWithMissingRequiredFields: function(test) {
-        test.expect(1);
+    test("TranslationUnitConstructorWithMissingRequiredFields", () => {
+        expect.assertions(1);
 
-        test.throws(() => {
+        expect(() => {
             const tu = new TranslationUnit({
                 source: "a",
                 target: "b",
@@ -64,12 +62,11 @@ export const testTranslationUnit = {
                 datatype: "javascript",
                 flavor: "chocolate"
             });
-        });
-        test.done();
-    },
+        }).toThrow();
+    });
 
-    testTranslationUnitConstructorWithMissingOptionalFields: function(test) {
-        test.expect(1);
+    test("TranslationUnitConstructorWithMissingOptionalFields", () => {
+        expect.assertions(1);
 
         const tu = new TranslationUnit({
             source: "a",
@@ -78,12 +75,11 @@ export const testTranslationUnit = {
             file: "a/b/c.js",
             project: "bigproject"
         });
-        test.ok(tu);
-        test.done();
-    },
+        expect(tu).toBeTruthy();
+    });
 
-    testTranslationUnitRightFields: function(test) {
-        test.expect(13);
+    test("TranslationUnitRightFields", () => {
+        expect.assertions(13);
 
         const tu = new TranslationUnit({
             source: "a",
@@ -99,33 +95,31 @@ export const testTranslationUnit = {
             datatype: "javascript",
             flavor: "chocolate"
         });
-        test.ok(tu);
+        expect(tu).toBeTruthy();
 
-        test.equal(tu.source, "a");
-        test.equal(tu.sourceLocale, "en-US");
-        test.equal(tu.key, "key");
-        test.equal(tu.file, "a/b/c.js");
-        test.equal(tu.project, "bigproject");
-        test.equal(tu.target, "b");
-        test.equal(tu.targetLocale, "de-DE");
-        test.equal(tu.resType, "string");
-        test.equal(tu.state, "translated");
-        test.equal(tu.comment, "no comment");
-        test.equal(tu.datatype, "javascript");
-        test.equal(tu.flavor, "chocolate");
+        expect(tu.source).toBe("a");
+        expect(tu.sourceLocale).toBe("en-US");
+        expect(tu.key).toBe("key");
+        expect(tu.file).toBe("a/b/c.js");
+        expect(tu.project).toBe("bigproject");
+        expect(tu.target).toBe("b");
+        expect(tu.targetLocale).toBe("de-DE");
+        expect(tu.resType).toBe("string");
+        expect(tu.state).toBe("translated");
+        expect(tu.comment).toBe("no comment");
+        expect(tu.datatype).toBe("javascript");
+        expect(tu.flavor).toBe("chocolate");
+    });
 
-        test.done();
-    },
-
-    testTranslationUnitAddVariant: function(test) {
-        test.expect(5);
+    test("TranslationUnitAddVariant", () => {
+        expect.assertions(5);
 
         const tu = new TranslationUnit();
-        test.ok(tu);
+        expect(tu).toBeTruthy();
 
         let variants = tu.getVariants();
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 0);
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(0);
 
         tu.addVariant(new TranslationVariant({
             locale: "de-DE",
@@ -133,17 +127,15 @@ export const testTranslationUnit = {
         }));
 
         variants = tu.getVariants();
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 1);
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(1);
+    });
 
-        test.done();
-    },
-
-    testTranslationUnitAddVariantRightOne: function(test) {
-        test.expect(5);
+    test("TranslationUnitAddVariantRightOne", () => {
+        expect.assertions(5);
 
         const tu = new TranslationUnit();
-        test.ok(tu);
+        expect(tu).toBeTruthy();
 
         let variants;
 
@@ -153,24 +145,22 @@ export const testTranslationUnit = {
         }));
 
         variants = tu.getVariants();
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 1);
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(1);
 
-        test.equal(variants[0].locale, "de-DE");
-        test.equal(variants[0].string, "Zeichenfolge");
+        expect(variants[0].locale).toBe("de-DE");
+        expect(variants[0].string).toBe("Zeichenfolge");
+    });
 
-        test.done();
-    },
-
-    testTranslationUnitAddVariants: function(test) {
-        test.expect(5);
+    test("TranslationUnitAddVariants", () => {
+        expect.assertions(5);
 
         const tu = new TranslationUnit();
-        test.ok(tu);
+        expect(tu).toBeTruthy();
 
         let variants = tu.getVariants();
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 0);
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(0);
 
         tu.addVariants([
             new TranslationVariant({
@@ -184,21 +174,19 @@ export const testTranslationUnit = {
         ]);
 
         variants = tu.getVariants();
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 2);
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(2);
+    });
 
-        test.done();
-    },
-
-    testTranslationUnitGetVariantsWithLocale: function(test) {
-        test.expect(13);
+    test("TranslationUnitGetVariantsWithLocale", () => {
+        expect.assertions(13);
 
         const tu = new TranslationUnit();
-        test.ok(tu);
+        expect(tu).toBeTruthy();
 
         let variants = tu.getVariants();
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 0);
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(0);
 
         tu.addVariants([
             new TranslationVariant({
@@ -212,31 +200,29 @@ export const testTranslationUnit = {
         ]);
 
         variants = tu.getVariants("nl-NL");
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 1);
-        test.equal(variants[0].locale, "nl-NL");
-        test.equal(variants[0].string, "string");
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(1);
+        expect(variants[0].locale).toBe("nl-NL");
+        expect(variants[0].string).toBe("string");
 
         variants = tu.getVariants("de-DE");
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 1);
-        test.equal(variants[0].locale, "de-DE");
-        test.equal(variants[0].string, "Zeichenfolge");
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(1);
+        expect(variants[0].locale).toBe("de-DE");
+        expect(variants[0].string).toBe("Zeichenfolge");
+    });
 
-        test.done();
-    },
-
-    testTranslationUnitGetVariantsMultipleWithLocale: function(test) {
-        test.expect(10);
+    test("TranslationUnitGetVariantsMultipleWithLocale", () => {
+        expect.assertions(10);
 
         const tu = new TranslationUnit();
-        test.ok(tu);
+        expect(tu).toBeTruthy();
 
         let variants = tu.getVariants();
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 0);
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(0);
 
         tu.addVariants([
             new TranslationVariant({
@@ -254,27 +240,25 @@ export const testTranslationUnit = {
         ]);
 
         variants = tu.getVariants("de-DE");
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 2);
-        test.equal(variants[0].locale, "de-DE");
-        test.equal(variants[0].string, "Zeichenfolge");
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(2);
+        expect(variants[0].locale).toBe("de-DE");
+        expect(variants[0].string).toBe("Zeichenfolge");
 
-        test.equal(variants[1].locale, "de-DE");
-        test.equal(variants[1].string, "String");
+        expect(variants[1].locale).toBe("de-DE");
+        expect(variants[1].string).toBe("String");
+    });
 
-        test.done();
-    },
-
-    testTranslationUnitGetVariantsNotThere: function(test) {
-        test.expect(6);
+    test("TranslationUnitGetVariantsNotThere", () => {
+        expect.assertions(6);
 
         const tu = new TranslationUnit();
-        test.ok(tu);
+        expect(tu).toBeTruthy();
 
         let variants = tu.getVariants();
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 0);
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(0);
 
         tu.addVariants([
             new TranslationVariant({
@@ -288,68 +272,60 @@ export const testTranslationUnit = {
         ]);
 
         variants = tu.getVariants("ja-JP");
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 0);
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testTranslationUnitGetVariantsNoneThere: function(test) {
-        test.expect(6);
+    test("TranslationUnitGetVariantsNoneThere", () => {
+        expect.assertions(6);
 
         const tu = new TranslationUnit();
-        test.ok(tu);
+        expect(tu).toBeTruthy();
 
         let variants = tu.getVariants();
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 0);
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(0);
 
         const variant = tu.getVariants("ja-JP");
-        test.ok(variants);
-        test.ok(Array.isArray(variants));
-        test.equal(variants.length, 0);
+        expect(variants).toBeTruthy();
+        expect(Array.isArray(variants)).toBeTruthy();
+        expect(variants.length).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testTranslationUnitNoProperties: function(test) {
-        test.expect(2);
+    test("TranslationUnitNoProperties", () => {
+        expect.assertions(2);
 
         const tu = new TranslationUnit();
-        test.ok(tu);
+        expect(tu).toBeTruthy();
 
-        test.deepEqual(tu.getProperties(), {});
+        expect(tu.getProperties()).toStrictEqual({});
+    });
 
-        test.done();
-    },
-
-    testTranslationUnitAddProperties: function(test) {
-        test.expect(3);
+    test("TranslationUnitAddProperties", () => {
+        expect.assertions(3);
 
         const tu = new TranslationUnit();
-        test.ok(tu);
+        expect(tu).toBeTruthy();
 
-        test.deepEqual(tu.getProperties(), {});
+        expect(tu.getProperties()).toStrictEqual({});
         tu.addProperties({
             foo: "bar",
             asdf: "asdf"
         });
-        test.deepEqual(tu.getProperties(), {
+        expect(tu.getProperties()).toStrictEqual({
             foo: "bar",
             asdf: "asdf"
         });
+    });
 
-        test.done();
-    },
-
-    testTranslationUnitAddPropertiesAdditive: function(test) {
-        test.expect(3);
+    test("TranslationUnitAddPropertiesAdditive", () => {
+        expect.assertions(3);
 
         const tu = new TranslationUnit();
-        test.ok(tu);
+        expect(tu).toBeTruthy();
 
-        test.deepEqual(tu.getProperties(), {});
+        expect(tu.getProperties()).toStrictEqual({});
         tu.addProperties({
             foo: "bar",
             asdf: "asdf"
@@ -358,18 +334,16 @@ export const testTranslationUnit = {
             x: "y",
             m: "n"
         });
-        test.deepEqual(tu.getProperties(), {
+        expect(tu.getProperties()).toStrictEqual({
             foo: "bar",
             asdf: "asdf",
             x: "y",
             m: "n"
         });
+    });
 
-        test.done();
-    },
-
-    testTranslationUnitHashKey: function(test) {
-        test.expect(2);
+    test("TranslationUnitHashKey", () => {
+        expect.assertions(2);
 
         const tu = new TranslationUnit({
             source: "a",
@@ -385,8 +359,7 @@ export const testTranslationUnit = {
             datatype: "javascript",
             flavor: "chocolate"
         });
-        test.ok(tu);
-        test.equal(tu.hashKey(), "r6355537_en-US_javascript");
-        test.done();
-    }
-};
+        expect(tu).toBeTruthy();
+        expect(tu.hashKey()).toBe("r6355537_en-US_javascript");
+    });
+});

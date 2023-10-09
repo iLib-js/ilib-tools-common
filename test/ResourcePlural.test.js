@@ -1,5 +1,5 @@
 /*
- * testResourcePlural.js - test the resource plural object.
+ * ResourcePlural.test.js - test the resource plural object.
  *
  * Copyright © 2022-2023 JEDLSoft
  *
@@ -19,27 +19,23 @@
 
 import ResourcePlural from "../src/ResourcePlural.js";
 
-export const testResourcePlural = {
-    testResourcePluralConstructorEmpty: function(test) {
-        test.expect(1);
+describe("testResourcePlural", () => {
+    test("ResourcePluralConstructorEmpty", () => {
+        expect.assertions(1);
 
         const rp = new ResourcePlural();
-        test.ok(rp);
+        expect(rp).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourcePluralConstructorNoProps: function(test) {
-        test.expect(1);
+    test("ResourcePluralConstructorNoProps", () => {
+        expect.assertions(1);
 
         const rp = new ResourcePlural({});
-        test.ok(rp);
+        expect(rp).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourcePluralConstructor: function(test) {
-        test.expect(1);
+    test("ResourcePluralConstructor", () => {
+        expect.assertions(1);
 
         const rp = new ResourcePlural({
             key: "asdf",
@@ -52,13 +48,11 @@ export const testResourcePlural = {
                 "many": "This is the many case"
             }
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourcePluralConstructorRightContents: function(test) {
-        test.expect(5);
+    test("ResourcePluralConstructorRightContents", () => {
+        expect.assertions(5);
 
         const rp = new ResourcePlural({
             key: "asdf",
@@ -71,23 +65,21 @@ export const testResourcePlural = {
                 "many": "This is the many case"
             }
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.equal(rp.getKey(), "asdf");
-        test.deepEqual(rp.getSource(), {
+        expect(rp.getKey()).toBe("asdf");
+        expect(rp.getSource()).toStrictEqual({
             "one": "This is singular",
             "two": "This is double",
             "few": "This is the few case",
             "many": "This is the many case"
         });
-        test.equal(rp.getSourceLocale(), "en-US");
-        test.equal(rp.pathName, "a/b/c.java");
+        expect(rp.getSourceLocale()).toBe("en-US");
+        expect(rp.pathName).toBe("a/b/c.java");
+    });
 
-        test.done();
-    },
-
-    testResourcePluralConstructorFull: function(test) {
-        test.expect(1);
+    test("ResourcePluralConstructorFull", () => {
+        expect.assertions(1);
 
         const rp = new ResourcePlural({
             key: "asdf",
@@ -107,13 +99,11 @@ export const testResourcePlural = {
                 "many": "Dies ist der viele Fall"
             }
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourcePluralConstructorRightContentsFull: function(test) {
-        test.expect(7);
+    test("ResourcePluralConstructorRightContentsFull", () => {
+        expect.assertions(7);
 
         const rp = new ResourcePlural({
             key: "asdf",
@@ -133,30 +123,28 @@ export const testResourcePlural = {
                 "many": "Dies ist der viele Fall"
             }
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.equal(rp.getKey(), "asdf");
-        test.deepEqual(rp.getSource(), {
+        expect(rp.getKey()).toBe("asdf");
+        expect(rp.getSource()).toStrictEqual({
             "one": "This is singular",
             "two": "This is double",
             "few": "This is the few case",
             "many": "This is the many case"
         });
-        test.equal(rp.getSourceLocale(), "en-US");
-        test.equal(rp.pathName, "a/b/c.java");
-        test.equal(rp.getTargetLocale(), "de-DE");
-        test.deepEqual(rp.getTarget(), {
+        expect(rp.getSourceLocale()).toBe("en-US");
+        expect(rp.pathName).toBe("a/b/c.java");
+        expect(rp.getTargetLocale()).toBe("de-DE");
+        expect(rp.getTarget()).toStrictEqual({
             "one": "Dies ist einzigartig",
             "two": "Dies ist doppelt",
             "few": "Dies ist der wenige Fall",
             "many": "Dies ist der viele Fall"
         });
+    });
 
-        test.done();
-    },
-
-    testResourcePluralConstructorBackwardsCompatible: function(test) {
-        test.expect(7);
+    test("ResourcePluralConstructorBackwardsCompatible", () => {
+        expect.assertions(7);
 
         const rp = new ResourcePlural({
             key: "asdf",
@@ -176,30 +164,28 @@ export const testResourcePlural = {
                 "many": "Dies ist der viele Fall"
             }
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.equal(rp.getKey(), "asdf");
-        test.deepEqual(rp.getSourceStrings(), {
+        expect(rp.getKey()).toBe("asdf");
+        expect(rp.getSourceStrings()).toStrictEqual({
             "one": "This is singular",
             "two": "This is double",
             "few": "This is the few case",
             "many": "This is the many case"
         });
-        test.equal(rp.getSourceLocale(), "en-US");
-        test.equal(rp.pathName, "a/b/c.java");
-        test.equal(rp.getTargetLocale(), "de-DE");
-        test.deepEqual(rp.getTargetStrings(), {
+        expect(rp.getSourceLocale()).toBe("en-US");
+        expect(rp.pathName).toBe("a/b/c.java");
+        expect(rp.getTargetLocale()).toBe("de-DE");
+        expect(rp.getTargetStrings()).toStrictEqual({
             "one": "Dies ist einzigartig",
             "two": "Dies ist doppelt",
             "few": "Dies ist der wenige Fall",
             "many": "Dies ist der viele Fall"
         });
+    });
 
-        test.done();
-    },
-
-    testResourcePluralConstructorDefaults: function(test) {
-        test.expect(5);
+    test("ResourcePluralConstructorDefaults", () => {
+        expect.assertions(5);
 
         const rp = new ResourcePlural({
             key: "asdf",
@@ -211,21 +197,19 @@ export const testResourcePlural = {
                 "many": "This is the many case"
             }
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
         // got the right one?
-        test.equal(rp.getKey(), "asdf");
+        expect(rp.getKey()).toBe("asdf");
 
         // now the defaults
-        test.equal(rp.getSourceLocale(), "en-US");
-        test.equal(rp.datatype, "x-android-resource");
-        test.equal(rp.resType, "plural");
+        expect(rp.getSourceLocale()).toBe("en-US");
+        expect(rp.datatype).toBe("x-android-resource");
+        expect(rp.resType).toBe("plural");
+    });
 
-        test.done();
-    },
-
-    testResourcePluralGetKey: function(test) {
-        test.expect(2);
+    test("ResourcePluralGetKey", () => {
+        expect.assertions(2);
 
         const rp = new ResourcePlural({
             key: "foo",
@@ -238,14 +222,12 @@ export const testResourcePlural = {
                 "many": "This is the many case"
             }
         });
-        test.ok(rp);
-        test.equal(rp.getKey(), "foo");
+        expect(rp).toBeTruthy();
+        expect(rp.getKey()).toBe("foo");
+    });
 
-        test.done();
-    },
-
-    testResourcePluralGetSource: function(test) {
-        test.expect(5);
+    test("ResourcePluralGetSource", () => {
+        expect.assertions(5);
 
         const rp = new ResourcePlural({
             key: "foo",
@@ -258,17 +240,15 @@ export const testResourcePlural = {
                 "many": "This is the many case"
             }
         });
-        test.ok(rp);
-        test.equal(rp.getSourcePlural("one"), "This is singular");
-        test.equal(rp.getSourcePlural("two"), "This is double");
-        test.equal(rp.getSourcePlural("few"), "This is the few case");
-        test.equal(rp.getSourcePlural("many"), "This is the many case");
+        expect(rp).toBeTruthy();
+        expect(rp.getSourcePlural("one")).toBe("This is singular");
+        expect(rp.getSourcePlural("two")).toBe("This is double");
+        expect(rp.getSourcePlural("few")).toBe("This is the few case");
+        expect(rp.getSourcePlural("many")).toBe("This is the many case");
+    });
 
-        test.done();
-    },
-
-    testResourcePluralGetTarget: function(test) {
-        test.expect(5);
+    test("ResourcePluralGetTarget", () => {
+        expect.assertions(5);
 
         const rp = new ResourcePlural({
             key: "foo",
@@ -288,17 +268,15 @@ export const testResourcePlural = {
                 "many": "Dies ist der viele Fall"
             }
         });
-        test.ok(rp);
-        test.equal(rp.getTargetPlural("one"), "Dies ist einzigartig");
-        test.equal(rp.getTargetPlural("two"), "Dies ist doppelt");
-        test.equal(rp.getTargetPlural("few"), "Dies ist der wenige Fall");
-        test.equal(rp.getTargetPlural("many"), "Dies ist der viele Fall");
+        expect(rp).toBeTruthy();
+        expect(rp.getTargetPlural("one")).toBe("Dies ist einzigartig");
+        expect(rp.getTargetPlural("two")).toBe("Dies ist doppelt");
+        expect(rp.getTargetPlural("few")).toBe("Dies ist der wenige Fall");
+        expect(rp.getTargetPlural("many")).toBe("Dies ist der viele Fall");
+    });
 
-        test.done();
-    },
-
-    testResourcePluralGetNonExistent: function(test) {
-        test.expect(3);
+    test("ResourcePluralGetNonExistent", () => {
+        expect.assertions(3);
 
         const rp = new ResourcePlural({
             key: "foo",
@@ -311,25 +289,21 @@ export const testResourcePlural = {
                 "many": "This is the many case"
             }
         });
-        test.ok(rp);
-        test.ok(!rp.getSourcePlural("zero"));
-        test.ok(!rp.getTargetPlural("zero"));
+        expect(rp).toBeTruthy();
+        expect(!rp.getSourcePlural("zero")).toBeTruthy();
+        expect(!rp.getTargetPlural("zero")).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourcePluralGetKeyEmpty: function(test) {
-        test.expect(2);
+    test("ResourcePluralGetKeyEmpty", () => {
+        expect.assertions(2);
 
         const rp = new ResourcePlural();
-        test.ok(rp);
-        test.ok(!rp.getKey());
+        expect(rp).toBeTruthy();
+        expect(!rp.getKey()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourcePluralGetContext: function(test) {
-        test.expect(2);
+    test("ResourcePluralGetContext", () => {
+        expect.assertions(2);
 
         const rp = new ResourcePlural({
             key: "foo",
@@ -343,14 +317,12 @@ export const testResourcePlural = {
                 "many": "This is the many case"
             }
         });
-        test.ok(rp);
-        test.equal(rp.getContext(), "landscape");
+        expect(rp).toBeTruthy();
+        expect(rp.getContext()).toBe("landscape");
+    });
 
-        test.done();
-    },
-
-    testResourcePluralGetContextEmpty: function(test) {
-        test.expect(2);
+    test("ResourcePluralGetContextEmpty", () => {
+        expect.assertions(2);
 
         const rp = new ResourcePlural({
             key: "foo",
@@ -363,14 +335,12 @@ export const testResourcePlural = {
                 "many": "This is the many case"
             }
         });
-        test.ok(rp);
-        test.ok(!rp.getContext());
+        expect(rp).toBeTruthy();
+        expect(!rp.getContext()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourcePluralGetSourcePlurals: function(test) {
-        test.expect(2);
+    test("ResourcePluralGetSourcePlurals", () => {
+        expect.assertions(2);
 
         const rp = new ResourcePlural({
             key: "foo",
@@ -383,19 +353,17 @@ export const testResourcePlural = {
                 "many": "This is the many case"
             }
         });
-        test.ok(rp);
-        test.deepEqual(rp.getSource(), {
+        expect(rp).toBeTruthy();
+        expect(rp.getSource()).toStrictEqual({
             "one": "This is singular",
             "two": "This is double",
             "few": "This is the few case",
             "many": "This is the many case"
         });
+    });
 
-        test.done();
-    },
-
-    testResourcePluralGetTargetPlurals: function(test) {
-        test.expect(2);
+    test("ResourcePluralGetTargetPlurals", () => {
+        expect.assertions(2);
 
         const rp = new ResourcePlural({
             key: "foo",
@@ -415,35 +383,31 @@ export const testResourcePlural = {
                 "many": "Dies ist der viele Fall"
             }
         });
-        test.ok(rp);
-        test.deepEqual(rp.getTarget(), {
+        expect(rp).toBeTruthy();
+        expect(rp.getTarget()).toStrictEqual({
             "one": "Dies ist einzigartig",
             "two": "Dies ist doppelt",
             "few": "Dies ist der wenige Fall",
             "many": "Dies ist der viele Fall"
         });
-
-        test.done();
-    },
+    });
 
 
-    testResourcePluralGetPluralsEmpty: function(test) {
-        test.expect(2);
+    test("ResourcePluralGetPluralsEmpty", () => {
+        expect.assertions(2);
 
         const rp = new ResourcePlural();
-        test.ok(rp);
+        expect(rp).toBeTruthy();
         const plurals = rp.getSource();
         const count = 0;
         for (const p in plurals) {
             count++;
         }
-        test.equal(count, 0);
+        expect(count).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testResourcePluralClone: function(test) {
-        test.expect(10);
+    test("ResourcePluralClone", () => {
+        expect.assertions(10);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -460,25 +424,23 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
         const rp2 = rp.clone();
 
-        test.ok(rp2);
-        test.equal(rp2.project, rp.project);
-        test.equal(rp2.context, rp.context);
-        test.equal(rp2.getSourceLocale(), rp.getSourceLocale());
-        test.equal(rp2.reskey, rp.reskey);
-        test.deepEqual(rp2.strings, rp.strings);
-        test.equal(rp2.pathName, rp.pathName);
-        test.equal(rp2.comment, rp.comment);
-        test.equal(rp2.state, rp.state);
+        expect(rp2).toBeTruthy();
+        expect(rp2.project).toBe(rp.project);
+        expect(rp2.context).toBe(rp.context);
+        expect(rp2.getSourceLocale()).toBe(rp.getSourceLocale());
+        expect(rp2.reskey).toBe(rp.reskey);
+        expect(rp2.strings).toStrictEqual(rp.strings);
+        expect(rp2.pathName).toBe(rp.pathName);
+        expect(rp2.comment).toBe(rp.comment);
+        expect(rp2.state).toBe(rp.state);
+    });
 
-        test.done();
-    },
-
-    testResourcePluralCloneWithOverrides: function(test) {
-        test.expect(10);
+    test("ResourcePluralCloneWithOverrides", () => {
+        expect.assertions(10);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -495,28 +457,26 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
         const rp2 = rp.clone({
             sourceLocale: "fr-FR",
             state: "asdfasdf"
         });
 
-        test.ok(rp2);
-        test.equal(rp2.project, rp.project);
-        test.equal(rp2.context, rp.context);
-        test.equal(rp2.getSourceLocale(), "fr-FR");
-        test.equal(rp2.reskey, rp.reskey);
-        test.deepEqual(rp2.strings, rp.strings);
-        test.equal(rp2.pathName, rp.pathName);
-        test.equal(rp2.comment, rp.comment);
-        test.equal(rp2.state, "asdfasdf");
+        expect(rp2).toBeTruthy();
+        expect(rp2.project).toBe(rp.project);
+        expect(rp2.context).toBe(rp.context);
+        expect(rp2.getSourceLocale()).toBe("fr-FR");
+        expect(rp2.reskey).toBe(rp.reskey);
+        expect(rp2.strings).toStrictEqual(rp.strings);
+        expect(rp2.pathName).toBe(rp.pathName);
+        expect(rp2.comment).toBe(rp.comment);
+        expect(rp2.state).toBe("asdfasdf");
+    });
 
-        test.done();
-    },
-
-    testResourcePluralAddSource: function(test) {
-        test.expect(3);
+    test("ResourcePluralAddSource", () => {
+        expect.assertions(3);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -533,19 +493,17 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.ok(!rp.getSourcePlural("zero"));
+        expect(!rp.getSourcePlural("zero")).toBeTruthy();
 
         rp.addSourcePlural("zero", "This is the zero one")
 
-        test.equal(rp.getSourcePlural("zero"), "This is the zero one");
+        expect(rp.getSourcePlural("zero")).toBe("This is the zero one");
+    });
 
-        test.done();
-    },
-
-    testResourcePluralAddSourceIsDirty: function(test) {
-        test.expect(5);
+    test("ResourcePluralAddSourceIsDirty", () => {
+        expect.assertions(5);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -562,21 +520,19 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.ok(!rp.getSourcePlural("zero"));
-        test.ok(!rp.isDirty());
+        expect(!rp.getSourcePlural("zero")).toBeTruthy();
+        expect(!rp.isDirty()).toBeTruthy();
 
         rp.addSourcePlural("zero", "This is the zero one")
 
-        test.equal(rp.getSourcePlural("zero"), "This is the zero one");
-        test.ok(rp.isDirty());
+        expect(rp.getSourcePlural("zero")).toBe("This is the zero one");
+        expect(rp.isDirty()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourcePluralAddSourceReplace: function(test) {
-        test.expect(3);
+    test("ResourcePluralAddSourceReplace", () => {
+        expect.assertions(3);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -593,19 +549,17 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.equal(rp.getSourcePlural("two"), "This is double");
+        expect(rp.getSourcePlural("two")).toBe("This is double");
 
         rp.addSourcePlural("two", "This is two at a time")
 
-        test.equal(rp.getSourcePlural("two"), "This is two at a time");
+        expect(rp.getSourcePlural("two")).toBe("This is two at a time");
+    });
 
-        test.done();
-    },
-
-    testResourcePluralAddSourceSize: function(test) {
-        test.expect(3);
+    test("ResourcePluralAddSourceSize", () => {
+        expect.assertions(3);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -621,19 +575,17 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.equal(rp.size(), 3);
+        expect(rp.size()).toBe(3);
 
         rp.addSourcePlural("many", "This is the many one")
 
-        test.equal(rp.size(), 4);
+        expect(rp.size()).toBe(4);
+    });
 
-        test.done();
-    },
-
-    testResourcePluralAddSourceUndefined: function(test) {
-        test.expect(3);
+    test("ResourcePluralAddSourceUndefined", () => {
+        expect.assertions(3);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -649,19 +601,17 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.equal(rp.getSourcePlural("one"), "This is singular");
+        expect(rp.getSourcePlural("one")).toBe("This is singular");
 
         rp.addSourcePlural("one", undefined)
 
-        test.equal(rp.getSourcePlural("one"), "This is singular");
+        expect(rp.getSourcePlural("one")).toBe("This is singular");
+    });
 
-        test.done();
-    },
-
-    testResourcePluralAddSourceNoClass: function(test) {
-        test.expect(3);
+    test("ResourcePluralAddSourceNoClass", () => {
+        expect.assertions(3);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -677,19 +627,17 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.equal(rp.size(), 3);
+        expect(rp.size()).toBe(3);
 
         rp.addSourcePlural(undefined, "foobar")
 
-        test.equal(rp.size(), 3);
+        expect(rp.size()).toBe(3);
+    });
 
-        test.done();
-    },
-
-    testResourcePluralAddSourceEmpty: function(test) {
-        test.expect(3);
+    test("ResourcePluralAddSourceEmpty", () => {
+        expect.assertions(3);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -700,19 +648,17 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.equal(rp.size(), 0);
+        expect(rp.size()).toBe(0);
 
         rp.addSourcePlural("one", "foobar")
 
-        test.equal(rp.size(), 1);
+        expect(rp.size()).toBe(1);
+    });
 
-        test.done();
-    },
-
-    testResourcePluralAddSourceEmptyRightContents: function(test) {
-        test.expect(3);
+    test("ResourcePluralAddSourceEmptyRightContents", () => {
+        expect.assertions(3);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -723,19 +669,17 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.ok(!rp.getSourcePlural("one"));
+        expect(!rp.getSourcePlural("one")).toBeTruthy();
 
         rp.addSourcePlural("one", "foobar")
 
-        test.equal(rp.getSourcePlural("one"), "foobar");
+        expect(rp.getSourcePlural("one")).toBe("foobar");
+    });
 
-        test.done();
-    },
-
-    testResourcePluralAddSourceMultiple: function(test) {
-        test.expect(6);
+    test("ResourcePluralAddSourceMultiple", () => {
+        expect.assertions(6);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -752,22 +696,20 @@ export const testResourcePlural = {
             state: "accepted"
         });
 
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
         rp.addSourcePlural("one", "This is singular");
         rp.addSourcePlural("zero", "This is the zero one");
 
-        test.equal(rp.getSourcePlural("zero"), "This is the zero one");
-        test.equal(rp.getSourcePlural("one"), "This is singular");
-        test.equal(rp.getSourcePlural("two"), "This is double");
-        test.equal(rp.getSourcePlural("few"), "This is the few case");
-        test.equal(rp.getSourcePlural("many"), "This is the many case");
+        expect(rp.getSourcePlural("zero")).toBe("This is the zero one");
+        expect(rp.getSourcePlural("one")).toBe("This is singular");
+        expect(rp.getSourcePlural("two")).toBe("This is double");
+        expect(rp.getSourcePlural("few")).toBe("This is the few case");
+        expect(rp.getSourcePlural("many")).toBe("This is the many case");
+    });
 
-        test.done();
-    },
-
-    testResourcePluralAddTarget: function(test) {
-        test.expect(3);
+    test("ResourcePluralAddTarget", () => {
+        expect.assertions(3);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -791,19 +733,17 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.ok(!rp.getTargetPlural("zero"));
+        expect(!rp.getTargetPlural("zero")).toBeTruthy();
 
         rp.addTargetPlural("zero", "This is the zero one")
 
-        test.equal(rp.getTargetPlural("zero"), "This is the zero one");
+        expect(rp.getTargetPlural("zero")).toBe("This is the zero one");
+    });
 
-        test.done();
-    },
-
-    testResourcePluralAddTargetIsDirty: function(test) {
-        test.expect(5);
+    test("ResourcePluralAddTargetIsDirty", () => {
+        expect.assertions(5);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -827,21 +767,19 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.ok(!rp.isDirty());
-        test.ok(!rp.getTargetPlural("zero"));
+        expect(!rp.isDirty()).toBeTruthy();
+        expect(!rp.getTargetPlural("zero")).toBeTruthy();
 
         rp.addTargetPlural("zero", "This is the zero one")
 
-        test.equal(rp.getTargetPlural("zero"), "This is the zero one");
-        test.ok(rp.isDirty());
+        expect(rp.getTargetPlural("zero")).toBe("This is the zero one");
+        expect(rp.isDirty()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourcePluralAddTargetReplace: function(test) {
-        test.expect(3);
+    test("ResourcePluralAddTargetReplace", () => {
+        expect.assertions(3);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -865,19 +803,17 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.equal(rp.getTargetPlural("two"), "Dies ist doppelt");
+        expect(rp.getTargetPlural("two")).toBe("Dies ist doppelt");
 
         rp.addTargetPlural("two", "This is two at a time")
 
-        test.equal(rp.getTargetPlural("two"), "This is two at a time");
+        expect(rp.getTargetPlural("two")).toBe("This is two at a time");
+    });
 
-        test.done();
-    },
-
-    testResourcePluralAddTargetSize: function(test) {
-        test.expect(3);
+    test("ResourcePluralAddTargetSize", () => {
+        expect.assertions(3);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -899,19 +835,17 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.equal(rp.size(), 3);
+        expect(rp.size()).toBe(3);
 
         rp.addTargetPlural("many", "This is the many one")
 
-        test.equal(rp.size(), 4);
+        expect(rp.size()).toBe(4);
+    });
 
-        test.done();
-    },
-
-    testResourcePluralAddTargetUndefined: function(test) {
-        test.expect(3);
+    test("ResourcePluralAddTargetUndefined", () => {
+        expect.assertions(3);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -934,19 +868,17 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.equal(rp.getTargetPlural("one"), "Dies ist einzigartig");
+        expect(rp.getTargetPlural("one")).toBe("Dies ist einzigartig");
 
         rp.addTargetPlural("one", undefined)
 
-        test.equal(rp.getTargetPlural("one"), "Dies ist einzigartig");
+        expect(rp.getTargetPlural("one")).toBe("Dies ist einzigartig");
+    });
 
-        test.done();
-    },
-
-    testResourcePluralAddTargetNoClass: function(test) {
-        test.expect(3);
+    test("ResourcePluralAddTargetNoClass", () => {
+        expect.assertions(3);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -968,19 +900,17 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.equal(rp.size(), 3);
+        expect(rp.size()).toBe(3);
 
         rp.addTargetPlural(undefined, "foobar")
 
-        test.equal(rp.size(), 3);
+        expect(rp.size()).toBe(3);
+    });
 
-        test.done();
-    },
-
-    testResourcePluralAddTargetEmpty: function(test) {
-        test.expect(3);
+    test("ResourcePluralAddTargetEmpty", () => {
+        expect.assertions(3);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -991,19 +921,17 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.equal(rp.size(), 0);
+        expect(rp.size()).toBe(0);
 
         rp.addTargetPlural("one", "foobar")
 
-        test.equal(rp.size(), 1);
+        expect(rp.size()).toBe(1);
+    });
 
-        test.done();
-    },
-
-    testResourcePluralAddTargetEmptyRightContents: function(test) {
-        test.expect(3);
+    test("ResourcePluralAddTargetEmptyRightContents", () => {
+        expect.assertions(3);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -1014,19 +942,17 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.ok(!rp.getTargetPlural("one"));
+        expect(!rp.getTargetPlural("one")).toBeTruthy();
 
         rp.addTargetPlural("one", "foobar")
 
-        test.equal(rp.getTargetPlural("one"), "foobar");
+        expect(rp.getTargetPlural("one")).toBe("foobar");
+    });
 
-        test.done();
-    },
-
-    testResourcePluralEqualsSourceOnly: function(test) {
-        test.expect(3);
+    test("ResourcePluralEqualsSourceOnly", () => {
+        expect.assertions(3);
 
         const ra1 = new ResourcePlural({
             project: "foo",
@@ -1058,16 +984,14 @@ export const testResourcePlural = {
             state: "accepted"
         });
 
-        test.ok(ra1);
-        test.ok(ra2);
+        expect(ra1).toBeTruthy();
+        expect(ra2).toBeTruthy();
 
-        test.ok(ra1.equals(ra2));
+        expect(ra1.equals(ra2)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourcePluralEqualsFull: function(test) {
-        test.expect(3);
+    test("ResourcePluralEqualsFull", () => {
+        expect.assertions(3);
 
         const ra1 = new ResourcePlural({
             project: "foo",
@@ -1113,16 +1037,14 @@ export const testResourcePlural = {
             state: "accepted"
         });
 
-        test.ok(ra1);
-        test.ok(ra2);
+        expect(ra1).toBeTruthy();
+        expect(ra2).toBeTruthy();
 
-        test.ok(ra1.equals(ra2));
+        expect(ra1.equals(ra2)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourcePluralEqualsSourceOnlyNot: function(test) {
-        test.expect(3);
+    test("ResourcePluralEqualsSourceOnlyNot", () => {
+        expect.assertions(3);
 
         const ra1 = new ResourcePlural({
             project: "foo",
@@ -1154,16 +1076,14 @@ export const testResourcePlural = {
             state: "accepted"
         });
 
-        test.ok(ra1);
-        test.ok(ra2);
+        expect(ra1).toBeTruthy();
+        expect(ra2).toBeTruthy();
 
-        test.ok(!ra1.equals(ra2));
+        expect(!ra1.equals(ra2)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourcePluralEqualsFullNot: function(test) {
-        test.expect(3);
+    test("ResourcePluralEqualsFullNot", () => {
+        expect.assertions(3);
 
         const ra1 = new ResourcePlural({
             project: "foo",
@@ -1209,16 +1129,14 @@ export const testResourcePlural = {
             state: "accepted"
         });
 
-        test.ok(ra1);
-        test.ok(ra2);
+        expect(ra1).toBeTruthy();
+        expect(ra2).toBeTruthy();
 
-        test.ok(!ra1.equals(ra2));
+        expect(!ra1.equals(ra2)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourcePluralEqualsIgnoreSomeFields: function(test) {
-        test.expect(3);
+    test("ResourcePluralEqualsIgnoreSomeFields", () => {
+        expect.assertions(3);
 
         const ra1 = new ResourcePlural({
             project: "foo",
@@ -1250,16 +1168,14 @@ export const testResourcePlural = {
             state: "done"
         });
 
-        test.ok(ra1);
-        test.ok(ra2);
+        expect(ra1).toBeTruthy();
+        expect(ra2).toBeTruthy();
 
-        test.ok(ra1.equals(ra2));
+        expect(ra1.equals(ra2)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourcePluralEqualsContentDifferent: function(test) {
-        test.expect(3);
+    test("ResourcePluralEqualsContentDifferent", () => {
+        expect.assertions(3);
 
         const ra1 = new ResourcePlural({
             project: "foo",
@@ -1291,32 +1207,26 @@ export const testResourcePlural = {
             state: "accepted"
         });
 
-        test.ok(ra1);
-        test.ok(ra2);
+        expect(ra1).toBeTruthy();
+        expect(ra2).toBeTruthy();
 
-        test.ok(!ra1.equals(ra2));
+        expect(!ra1.equals(ra2)).toBeTruthy();
+    });
 
-        test.done();
-    },
+    test("ResourcePluralStaticHashKey", () => {
+        expect.assertions(1);
 
-    testResourcePluralStaticHashKey: function(test) {
-        test.expect(1);
+        expect(ResourcePlural.hashKey("androidapp", "foo", "de-DE", "This is a test")).toBe("rp_androidapp_foo_de-DE_This is a test");
+    });
 
-        test.equal(ResourcePlural.hashKey("androidapp", "foo", "de-DE", "This is a test"), "rp_androidapp_foo_de-DE_This is a test");
+    test("ResourcePluralStaticHashKeyMissingParts", () => {
+        expect.assertions(1);
 
-        test.done();
-    },
+        expect(ResourcePlural.hashKey(undefined, undefined, "de-DE", undefined)).toBe("rp___de-DE_");
+    });
 
-    testResourcePluralStaticHashKeyMissingParts: function(test) {
-        test.expect(1);
-
-        test.equal(ResourcePlural.hashKey(undefined, undefined, "de-DE", undefined), "rp___de-DE_");
-
-        test.done();
-    },
-
-    testResourcePluralSourceOnlyHashKey: function(test) {
-        test.expect(2);
+    test("ResourcePluralSourceOnlyHashKey", () => {
+        expect.assertions(2);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -1332,15 +1242,13 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.equal(rp.hashKey(), "rp_foo_blah_en-US_asdf");
+        expect(rp.hashKey()).toBe("rp_foo_blah_en-US_asdf");
+    });
 
-        test.done();
-    },
-
-    testResourcePluralFullHashKey: function(test) {
-        test.expect(2);
+    test("ResourcePluralFullHashKey", () => {
+        expect.assertions(2);
 
         const rp = new ResourcePlural({
             project: "foo",
@@ -1363,15 +1271,13 @@ export const testResourcePlural = {
             comment: "foobar foo",
             state: "accepted"
         });
-        test.ok(rp);
+        expect(rp).toBeTruthy();
 
-        test.equal(rp.hashKey(), "rp_foo_blah_de-DE_asdf");
+        expect(rp.hashKey()).toBe("rp_foo_blah_de-DE_asdf");
+    });
 
-        test.done();
-    },
-
-    testResourcePluralIsInstanceSame: function(test) {
-        test.expect(3);
+    test("ResourcePluralIsInstanceSame", () => {
+        expect.assertions(3);
 
         const rs = new ResourcePlural({
             context: "a",
@@ -1387,7 +1293,7 @@ export const testResourcePlural = {
                 other: "These are tests"
             }
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
         const dup = new ResourcePlural({
             context: "a",
@@ -1403,15 +1309,13 @@ export const testResourcePlural = {
                 other: "These are tests"
             }
         });
-        test.ok(dup);
+        expect(dup).toBeTruthy();
 
-        test.ok(rs.isInstance(dup));
+        expect(rs.isInstance(dup)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourcePluralIsInstanceDifferingOnlyInWhitespace: function(test) {
-        test.expect(3);
+    test("ResourcePluralIsInstanceDifferingOnlyInWhitespace", () => {
+        expect.assertions(3);
 
         const rs = new ResourcePlural({
             context: "a",
@@ -1427,7 +1331,7 @@ export const testResourcePlural = {
                 other: " These are tests"
             }
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
         const dup = new ResourcePlural({
             context: "a",
@@ -1443,15 +1347,13 @@ export const testResourcePlural = {
                 other: " These  are tests "
             }
         });
-        test.ok(dup);
+        expect(dup).toBeTruthy();
 
-        test.ok(rs.isInstance(dup));
+        expect(rs.isInstance(dup)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourcePluralIsInstanceDifferingInSource: function(test) {
-        test.expect(3);
+    test("ResourcePluralIsInstanceDifferingInSource", () => {
+        expect.assertions(3);
 
         const rs = new ResourcePlural({
             context: "a",
@@ -1467,7 +1369,7 @@ export const testResourcePlural = {
                 other: "These are tests"
             }
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
         const dup = new ResourcePlural({
             context: "a",
@@ -1483,15 +1385,13 @@ export const testResourcePlural = {
                 other: "These are tests."
             }
         });
-        test.ok(dup);
+        expect(dup).toBeTruthy();
 
-        test.ok(!rs.isInstance(dup));
+        expect(!rs.isInstance(dup)).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourcePluralSetSource: function(test) {
-        test.expect(3);
+    test("ResourcePluralSetSource", () => {
+        expect.assertions(3);
 
         const rs = new ResourcePlural({
             context: "a",
@@ -1506,17 +1406,15 @@ export const testResourcePlural = {
             source: { one: "singular", other: "plural" },
             target: { one: "singular", other: "plural" }
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.deepEqual(rs.getSource(), { one: "singular", other: "plural" });
+        expect(rs.getSource()).toStrictEqual({ one: "singular", other: "plural" });
         rs.setSource({ one: "x", other: "y" });
-        test.deepEqual(rs.getSource(), { one: "x", other: "y" });
+        expect(rs.getSource()).toStrictEqual({ one: "x", other: "y" });
+    });
 
-        test.done();
-    },
-
-    testResourcePluralSetSourceIsDirty: function(test) {
-        test.expect(4);
+    test("ResourcePluralSetSourceIsDirty", () => {
+        expect.assertions(4);
 
         const rs = new ResourcePlural({
             context: "a",
@@ -1531,19 +1429,17 @@ export const testResourcePlural = {
             source: { one: "singular", other: "plural" },
             target: { one: "singular", other: "plural" }
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.deepEqual(rs.getSource(), { one: "singular", other: "plural" });
-        test.ok(!rs.isDirty());
+        expect(rs.getSource()).toStrictEqual({ one: "singular", other: "plural" });
+        expect(!rs.isDirty()).toBeTruthy();
 
         rs.setSource({ one: "x", other: "y" });
-        test.ok(rs.isDirty());
+        expect(rs.isDirty()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testResourcePluralSetTarget: function(test) {
-        test.expect(3);
+    test("ResourcePluralSetTarget", () => {
+        expect.assertions(3);
 
         const rs = new ResourcePlural({
             context: "a",
@@ -1558,17 +1454,15 @@ export const testResourcePlural = {
             source: { one: "singular", other: "plural" },
             target: { one: "singular", other: "plural" }
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.deepEqual(rs.getTarget(), { one: "singular", other: "plural" });
+        expect(rs.getTarget()).toStrictEqual({ one: "singular", other: "plural" });
         rs.setTarget({ one: "x", other: "y" });
-        test.deepEqual(rs.getTarget(), { one: "x", other: "y" });
+        expect(rs.getTarget()).toStrictEqual({ one: "x", other: "y" });
+    });
 
-        test.done();
-    },
-
-    testResourcePluralSetTargetIsDirty: function(test) {
-        test.expect(4);
+    test("ResourcePluralSetTargetIsDirty", () => {
+        expect.assertions(4);
 
         const rs = new ResourcePlural({
             context: "a",
@@ -1583,15 +1477,13 @@ export const testResourcePlural = {
             source: { one: "singular", other: "plural" },
             target: { one: "singular", other: "plural" }
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.deepEqual(rs.getTarget(), { one: "singular", other: "plural" });
-        test.ok(!rs.isDirty());
+        expect(rs.getTarget()).toStrictEqual({ one: "singular", other: "plural" });
+        expect(!rs.isDirty()).toBeTruthy();
 
         rs.setTarget({ one: "x", other: "y" });
-        test.ok(rs.isDirty());
+        expect(rs.isDirty()).toBeTruthy();
+    });
 
-        test.done();
-    }
-
-};
+});

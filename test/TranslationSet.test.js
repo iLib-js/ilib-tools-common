@@ -1,7 +1,7 @@
 /*
- * testTranslationSet.js - test the Translation Set object.
+ * TranslationSet.test.js - test the Translation Set object.
  *
- * Copyright © 2016-2017, 2022 HealthTap, Inc. and JEDLSoft
+ * Copyright © 2016-2017, 2023  2022-2023HealthTap, Inc. and JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,37 +21,34 @@ import TranslationSet from "../src/TranslationSet.js";
 import ResourceString from "../src/ResourceString.js";
 import ResourceArray from "../src/ResourceArray.js";
 
-export const testTranslationSet = {
-     testTranslationSetConstructor: function(test) {
-        test.expect(1);
+describe("testTranslationSet", () => {
+     test("TranslationSetConstructor", () => {
+        expect.assertions(1);
 
         const ts = new TranslationSet();
-        test.ok(ts);
-        test.done();
-    },
+        expect(ts).toBeTruthy();
+    });
 
-    testTranslationSetRightSourceLocaleDefault: function(test) {
-        test.expect(1);
+    test("TranslationSetRightSourceLocaleDefault", () => {
+        expect.assertions(1);
 
         const ts = new TranslationSet();
 
-        test.equal(ts.sourceLocale, "zxx-XX");
-        test.done();
-    },
+        expect(ts.sourceLocale).toBe("zxx-XX");
+    });
 
-    testTranslationSetGetEmpty: function(test) {
-        test.expect(1);
+    test("TranslationSetGetEmpty", () => {
+        expect.assertions(1);
 
         const ts = new TranslationSet();
 
         const r = ts.get("asdf");
 
-        test.ok(!r);
-        test.done();
-    },
+        expect(!r).toBeTruthy();
+    });
 
-    testTranslationSetGet: function(test) {
-        test.expect(2);
+    test("TranslationSetGet", () => {
+        expect.assertions(2);
 
         const ts = new TranslationSet();
         const res = new ResourceString({
@@ -66,23 +63,20 @@ export const testTranslationSet = {
 
         const r = ts.get(ResourceString.hashKey("foo", res.getSourceLocale(), "asdf", "html"));
 
-        test.equal(r.getKey(), "asdf");
-        test.equal(r.getSource(), "This is a test");
-        test.done();
-    },
+        expect(r.getKey()).toBe("asdf");
+        expect(r.getSource()).toBe("This is a test");
+    });
 
-    testTranslationIsDirtyNew: function(test) {
-        test.expect(1);
+    test("TranslationIsDirtyNew", () => {
+        expect.assertions(1);
 
         const ts = new TranslationSet();
 
-        test.ok(!ts.isDirty());
+        expect(!ts.isDirty()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testTranslationIsDirtyTrue: function(test) {
-        test.expect(1);
+    test("TranslationIsDirtyTrue", () => {
+        expect.assertions(1);
 
         const ts = new TranslationSet();
         const res = new ResourceString({
@@ -92,13 +86,11 @@ export const testTranslationSet = {
 
         ts.add(res);
 
-        test.ok(ts.isDirty());
+        expect(ts.isDirty()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testTranslationIsDirtyFalse: function(test) {
-        test.expect(1);
+    test("TranslationIsDirtyFalse", () => {
+        expect.assertions(1);
 
         const ts = new TranslationSet();
         const res = new ResourceString({
@@ -109,13 +101,11 @@ export const testTranslationSet = {
         ts.add(res);
         ts.setClean();
 
-        test.ok(!ts.isDirty());
+        expect(!ts.isDirty()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testTranslationIsDirtyTrue2: function(test) {
-        test.expect(2);
+    test("TranslationIsDirtyTrue2", () => {
+        expect.assertions(2);
 
         const ts = new TranslationSet();
         let res = new ResourceString({
@@ -126,7 +116,7 @@ export const testTranslationSet = {
         ts.add(res);
         ts.setClean();
 
-        test.ok(!ts.isDirty());
+        expect(!ts.isDirty()).toBeTruthy();
 
         res = new ResourceString({
             key: "asdfasdfasdf",
@@ -135,13 +125,11 @@ export const testTranslationSet = {
 
         ts.add(res);
 
-        test.ok(ts.isDirty());
+        expect(ts.isDirty()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testTranslationIsDirtyAddSameResourceTwice: function(test) {
-        test.expect(2);
+    test("TranslationIsDirtyAddSameResourceTwice", () => {
+        expect.assertions(2);
 
         const ts = new TranslationSet();
         const res = new ResourceString({
@@ -152,19 +140,17 @@ export const testTranslationSet = {
         ts.add(res);
         ts.setClean();
 
-        test.ok(!ts.isDirty());
+        expect(!ts.isDirty()).toBeTruthy();
 
         // should not set the flag to dirty because the resource
         // is already there, so nothing is added
         ts.add(res);
 
-        test.ok(!ts.isDirty());
+        expect(!ts.isDirty()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testTranslationIsDirtyUpdateSource: function(test) {
-        test.expect(2);
+    test("TranslationIsDirtyUpdateSource", () => {
+        expect.assertions(2);
 
         const ts = new TranslationSet();
         let res = new ResourceString({
@@ -177,7 +163,7 @@ export const testTranslationSet = {
         ts.add(res);
         ts.setClean();
 
-        test.ok(!ts.isDirty());
+        expect(!ts.isDirty()).toBeTruthy();
 
         res = new ResourceString({
             key: "asdf",
@@ -190,13 +176,11 @@ export const testTranslationSet = {
         // is already there, so nothing is added
         ts.add(res);
 
-        test.ok(ts.isDirty());
+        expect(ts.isDirty()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testTranslationSetGetIgnoreContext: function(test) {
-        test.expect(3);
+    test("TranslationSetGetIgnoreContext", () => {
+        expect.assertions(3);
 
         const ts = new TranslationSet();
         let res = new ResourceString({
@@ -219,15 +203,13 @@ export const testTranslationSet = {
 
         const r = ts.get(ResourceString.hashKey(undefined, res.getSourceLocale(), "asdf", "plaintext"));
 
-        test.equal(r.getKey(), "asdf");
-        test.equal(r.getSource(), "This is a test");
-        test.ok(!r.getContext());
+        expect(r.getKey()).toBe("asdf");
+        expect(r.getSource()).toBe("This is a test");
+        expect(!r.getContext()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testTranslationSetGetDifferentTypesSameKeyIsOkay: function(test) {
-        test.expect(6);
+    test("TranslationSetGetDifferentTypesSameKeyIsOkay", () => {
+        expect.assertions(6);
 
         const ts = new TranslationSet();
         const res1 = new ResourceArray({
@@ -247,31 +229,28 @@ export const testTranslationSet = {
         // default type is string
         let r = ts.get(ResourceString.hashKey(undefined, res2.getSourceLocale(), "asdf", "plaintext"));
 
-        test.equal(r.getKey(), "asdf");
-        test.equal(r.resType, "string");
-        test.equal(r.getSource(), "This is a test");
+        expect(r.getKey()).toBe("asdf");
+        expect(r.resType).toBe("string");
+        expect(r.getSource()).toBe("This is a test");
 
         r = ts.get(ResourceArray.hashKey(undefined, undefined, res1.getSourceLocale(), "asdf"));
 
-        test.equal(r.getKey(), "asdf");
-        test.equal(r.resType, "array");
-        test.deepEqual(r.getSource(), ["This is a test", "this too"]);
+        expect(r.getKey()).toBe("asdf");
+        expect(r.resType).toBe("array");
+        expect(r.getSource()).toStrictEqual(["This is a test", "this too"]);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetGetUndefined: function(test) {
-        test.expect(1);
+    test("TranslationSetGetUndefined", () => {
+        expect.assertions(1);
 
         const ts = new TranslationSet();
         const r = ts.get();
 
-        test.ok(!r);
-        test.done();
-    },
+        expect(!r).toBeTruthy();
+    });
 
-    testTranslationSetGetFromMany: function(test) {
-        test.expect(4);
+    test("TranslationSetGetFromMany", () => {
+        expect.assertions(4);
 
         const ts = new TranslationSet();
         let res = new ResourceString({
@@ -290,18 +269,17 @@ export const testTranslationSet = {
 
         let r = ts.get(ResourceString.hashKey(undefined, res.getSourceLocale(), "asdf", "plaintext"));
 
-        test.equal(r.getKey(), "asdf");
-        test.equal(r.getSource(), "This is a test");
+        expect(r.getKey()).toBe("asdf");
+        expect(r.getSource()).toBe("This is a test");
 
         r = ts.get(ResourceString.hashKey(undefined, res.getSourceLocale(), "qwerty", "plaintext"));
 
-        test.equal(r.getKey(), "qwerty");
-        test.equal(r.getSource(), "This is another test");
-        test.done();
-    },
+        expect(r.getKey()).toBe("qwerty");
+        expect(r.getSource()).toBe("This is another test");
+    });
 
-    testTranslationSetGetBySource: function(test) {
-        test.expect(2);
+    test("TranslationSetGetBySource", () => {
+        expect.assertions(2);
 
         const ts = new TranslationSet();
         const res = new ResourceString({
@@ -314,13 +292,12 @@ export const testTranslationSet = {
 
         const r = ts.getBySource("This is a test");
 
-        test.equal(r.getKey(), "asdf");
-        test.equal(r.getSource(), "This is a test");
-        test.done();
-    },
+        expect(r.getKey()).toBe("asdf");
+        expect(r.getSource()).toBe("This is a test");
+    });
 
-    testTranslationSetGetBySourceNonAutoKey: function(test) {
-        test.expect(1);
+    test("TranslationSetGetBySourceNonAutoKey", () => {
+        expect.assertions(1);
 
         const ts = new TranslationSet();
         const res = new ResourceString({
@@ -332,13 +309,11 @@ export const testTranslationSet = {
 
         const r = ts.getBySource("This is a test");
 
-        test.ok(!r);
+        expect(!r).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testTranslationSetGetBySourceFromMany: function(test) {
-        test.expect(4);
+    test("TranslationSetGetBySourceFromMany", () => {
+        expect.assertions(4);
 
         const ts = new TranslationSet();
         let res = new ResourceString({
@@ -359,28 +334,26 @@ export const testTranslationSet = {
 
         let r = ts.getBySource("This is a test");
 
-        test.equal(r.getKey(), "asdf");
-        test.equal(r.getSource(), "This is a test");
+        expect(r.getKey()).toBe("asdf");
+        expect(r.getSource()).toBe("This is a test");
 
         r = ts.getBySource("This is another test");
 
-        test.equal(r.getKey(), "qwerty");
-        test.equal(r.getSource(), "This is another test");
-        test.done();
-    },
+        expect(r.getKey()).toBe("qwerty");
+        expect(r.getSource()).toBe("This is another test");
+    });
 
-    testTranslationSetGetBySourceUndefined: function(test) {
-        test.expect(1);
+    test("TranslationSetGetBySourceUndefined", () => {
+        expect.assertions(1);
 
         const ts = new TranslationSet();
         const r = ts.getBySource();
 
-        test.ok(!r);
-        test.done();
-    },
+        expect(!r).toBeTruthy();
+    });
 
-    testTranslationSetGetBySourceWithContext: function(test) {
-        test.expect(6);
+    test("TranslationSetGetBySourceWithContext", () => {
+        expect.assertions(6);
 
         const ts = new TranslationSet();
         let res = new ResourceString({
@@ -404,21 +377,19 @@ export const testTranslationSet = {
 
         let r = ts.getBySource("This is a test");
 
-        test.equal(r.getKey(), "asdf");
-        test.equal(r.getSource(), "This is a test");
-        test.ok(!r.getContext());
+        expect(r.getKey()).toBe("asdf");
+        expect(r.getSource()).toBe("This is a test");
+        expect(!r.getContext()).toBeTruthy();
 
         r = ts.getBySource("This is a test", "foo");
 
-        test.equal(r.getKey(), "asdf");
-        test.equal(r.getSource(), "This is a test");
-        test.equal(r.getContext(), "foo");
+        expect(r.getKey()).toBe("asdf");
+        expect(r.getSource()).toBe("This is a test");
+        expect(r.getContext()).toBe("foo");
+    });
 
-        test.done();
-    },
-
-    testTranslationSetGetBySourceOnlyAutoKeys: function(test) {
-        test.expect(6);
+    test("TranslationSetGetBySourceOnlyAutoKeys", () => {
+        expect.assertions(6);
 
         const ts = new TranslationSet();
         let res = new ResourceString({
@@ -438,24 +409,22 @@ export const testTranslationSet = {
 
         let r = ts.getBySource("This is a test");
 
-        test.equal(r.getKey(), "r3423423");
-        test.equal(r.getSource(), "This is a test");
+        expect(r.getKey()).toBe("r3423423");
+        expect(r.getSource()).toBe("This is a test");
 
         r = ts.get(ResourceString.hashKey(undefined, res.getSourceLocale(), "explicit_id", "plaintext"));
 
-        test.equal(r.getKey(), "explicit_id");
-        test.equal(r.getSource(), "This is a test");
+        expect(r.getKey()).toBe("explicit_id");
+        expect(r.getSource()).toBe("This is a test");
 
         r = ts.get(ResourceString.hashKey(undefined, res.getSourceLocale(), "r3423423", "plaintext"));
 
-        test.equal(r.getKey(), "r3423423");
-        test.equal(r.getSource(), "This is a test");
+        expect(r.getKey()).toBe("r3423423");
+        expect(r.getSource()).toBe("This is a test");
+    });
 
-        test.done();
-    },
-
-    testTranslationSetGetAll: function(test) {
-        test.expect(6);
+    test("TranslationSetGetAll", () => {
+        expect.assertions(6);
 
         const ts = new TranslationSet();
         let res = new ResourceString({
@@ -473,34 +442,31 @@ export const testTranslationSet = {
         ts.add(res);
 
         const resources = ts.getAll();
-        test.ok(resources);
-        test.equal(resources.length, 2);
+        expect(resources).toBeTruthy();
+        expect(resources.length).toBe(2);
 
         let r = resources[0];
 
-        test.equal(r.getKey(), "asdf");
-        test.equal(r.getSource(), "This is a test");
+        expect(r.getKey()).toBe("asdf");
+        expect(r.getSource()).toBe("This is a test");
 
         r = resources[1];
 
-        test.equal(r.getKey(), "qwerty");
-        test.equal(r.getSource(), "This is another test");
-        test.done();
-    },
+        expect(r.getKey()).toBe("qwerty");
+        expect(r.getSource()).toBe("This is another test");
+    });
 
-    testTranslationSetGetAllEmpty: function(test) {
-        test.expect(2);
+    test("TranslationSetGetAllEmpty", () => {
+        expect.assertions(2);
 
         const ts = new TranslationSet();
         const r = ts.getAll();
-        test.ok(r);
-        test.equal(r.length, 0);
+        expect(r).toBeTruthy();
+        expect(r.length).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetAddTranslationMerged: function(test) {
-        test.expect(2);
+    test("TranslationSetAddTranslationMerged", () => {
+        expect.assertions(2);
 
         const ts = new TranslationSet();
         let res = new ResourceString({
@@ -520,13 +486,12 @@ export const testTranslationSet = {
         ts.add(res);
 
         const resources = ts.getAll();
-        test.ok(resources);
-        test.equal(resources.length, 2);
-        test.done();
-    },
+        expect(resources).toBeTruthy();
+        expect(resources.length).toBe(2);
+    });
 
-    testTranslationSetAddTranslationDifferentContext: function(test) {
-        test.expect(2);
+    test("TranslationSetAddTranslationDifferentContext", () => {
+        expect.assertions(2);
 
         const ts = new TranslationSet();
         let res = new ResourceString({
@@ -549,13 +514,12 @@ export const testTranslationSet = {
         ts.add(res);
 
         const resources = ts.getAll();
-        test.ok(resources);
-        test.equal(resources.length, 2);
-        test.done();
-    },
+        expect(resources).toBeTruthy();
+        expect(resources.length).toBe(2);
+    });
 
-    testTranslationSetAddAll: function(test) {
-        test.expect(2);
+    test("TranslationSetAddAll", () => {
+        expect.assertions(2);
 
         const ts = new TranslationSet();
 
@@ -572,13 +536,12 @@ export const testTranslationSet = {
 
         const r = ts.get(ResourceString.hashKey(undefined, "en-US", "asdf", "plaintext"));
 
-        test.equal(r.getKey(), "asdf");
-        test.equal(r.getSource(), "This is a test");
-        test.done();
-    },
+        expect(r.getKey()).toBe("asdf");
+        expect(r.getSource()).toBe("This is a test");
+    });
 
-    testTranslationSetAddAllDifferentContexts: function(test) {
-        test.expect(8);
+    test("TranslationSetAddAllDifferentContexts", () => {
+        expect.assertions(8);
 
         const ts = new TranslationSet();
 
@@ -596,29 +559,28 @@ export const testTranslationSet = {
         ]);
 
         const resources = ts.getAll();
-        test.ok(resources);
-        test.equal(resources.length, 2);
+        expect(resources).toBeTruthy();
+        expect(resources.length).toBe(2);
 
         let r = resources[0];
 
-        test.equal(r.getKey(), "asdf");
-        test.equal(r.getSource(), "This is a test");
-        test.ok(!r.getContext());
+        expect(r.getKey()).toBe("asdf");
+        expect(r.getSource()).toBe("This is a test");
+        expect(!r.getContext()).toBeTruthy();
 
         r = resources[1];
 
-        test.equal(r.getKey(), "asdf");
-        test.equal(r.getSource(), "This is a test");
-        test.equal(r.getContext(), "foo");
-        test.done();
-    },
+        expect(r.getKey()).toBe("asdf");
+        expect(r.getSource()).toBe("This is a test");
+        expect(r.getContext()).toBe("foo");
+    });
 
-    testTranslationSetAddAllRightSize: function(test) {
-        test.expect(2);
+    test("TranslationSetAddAllRightSize", () => {
+        expect.assertions(2);
 
         const ts = new TranslationSet();
 
-        test.equal(ts.size(), 0);
+        expect(ts.size()).toBe(0);
 
         ts.addAll([
             new ResourceString({
@@ -631,57 +593,49 @@ export const testTranslationSet = {
             })
         ]);
 
-        test.equal(ts.size(), 2);
+        expect(ts.size()).toBe(2);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetAddTranslationUndefined: function(test) {
-        test.expect(2);
+    test("TranslationSetAddTranslationUndefined", () => {
+        expect.assertions(2);
 
         const ts = new TranslationSet();
 
         try {
-            test.equal(ts.size(), 0);
+            expect(ts.size()).toBe(0);
             ts.add(undefined);
-            test.equal(ts.size(), 0);
+            expect(ts.size()).toBe(0);
         } catch (e) {
             test.fail();
         }
+    });
 
-        test.done();
-    },
-
-    testTranslationSetAddAllEmpty: function(test) {
-        test.expect(2);
+    test("TranslationSetAddAllEmpty", () => {
+        expect.assertions(2);
 
         const ts = new TranslationSet();
 
-        test.equal(ts.size(), 0);
+        expect(ts.size()).toBe(0);
 
         ts.addAll([]);
 
-        test.equal(ts.size(), 0);
+        expect(ts.size()).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetAddAllUndefined: function(test) {
-        test.expect(2);
+    test("TranslationSetAddAllUndefined", () => {
+        expect.assertions(2);
 
         const ts = new TranslationSet();
 
-        test.equal(ts.size(), 0);
+        expect(ts.size()).toBe(0);
 
         ts.addAll(undefined);
 
-        test.equal(ts.size(), 0);
+        expect(ts.size()).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetSize: function(test) {
-        test.expect(1);
+    test("TranslationSetSize", () => {
+        expect.assertions(1);
 
         const ts = new TranslationSet();
         const res = new ResourceString({
@@ -691,12 +645,11 @@ export const testTranslationSet = {
 
         ts.add(res);
 
-        test.equal(ts.size(), 1);
-        test.done();
-    },
+        expect(ts.size()).toBe(1);
+    });
 
-    testTranslationSetSizeMultiple: function(test) {
-        test.expect(1);
+    test("TranslationSetSizeMultiple", () => {
+        expect.assertions(1);
 
         const ts = new TranslationSet();
         let res = new ResourceString({
@@ -716,26 +669,23 @@ export const testTranslationSet = {
 
         ts.add(res);
 
-        test.equal(ts.size(), 2);
+        expect(ts.size()).toBe(2);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetEmpty: function(test) {
-        test.expect(1);
+    test("TranslationSetEmpty", () => {
+        expect.assertions(1);
 
         const ts = new TranslationSet();
 
-        test.equal(ts.size(), 0);
-        test.done();
-    },
+        expect(ts.size()).toBe(0);
+    });
 
-    testTranslationSetSizeMerged: function(test) {
-        test.expect(3);
+    test("TranslationSetSizeMerged", () => {
+        expect.assertions(3);
 
         const ts = new TranslationSet();
 
-        test.equal(ts.size(), 0);
+        expect(ts.size()).toBe(0);
 
         let res = new ResourceString({
             key: "asdf",
@@ -744,7 +694,7 @@ export const testTranslationSet = {
 
         ts.add(res);
 
-        test.equal(ts.size(), 1);
+        expect(ts.size()).toBe(1);
 
         res = new ResourceString({
             key: "asdf",
@@ -755,17 +705,15 @@ export const testTranslationSet = {
 
         ts.add(res);
 
-        test.equal(ts.size(), 2);
+        expect(ts.size()).toBe(2);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetSizeAddAll: function(test) {
-        test.expect(2);
+    test("TranslationSetSizeAddAll", () => {
+        expect.assertions(2);
 
         const ts = new TranslationSet();
 
-        test.equal(ts.size(), 0);
+        expect(ts.size()).toBe(0);
 
         ts.addAll([
             new ResourceString({
@@ -778,13 +726,11 @@ export const testTranslationSet = {
             })
         ]);
 
-        test.equal(ts.size(), 2);
+        expect(ts.size()).toBe(2);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetAddSet: function(test) {
-        test.expect(2);
+    test("TranslationSetAddSet", () => {
+        expect.assertions(2);
 
         const ts1 = new TranslationSet(),
             ts2 = new TranslationSet();
@@ -811,17 +757,15 @@ export const testTranslationSet = {
             })
         ]);
 
-        test.equal(ts1.size(), 2);
+        expect(ts1.size()).toBe(2);
 
         ts1.addSet(ts2);
 
-        test.equal(ts1.size(), 4);
+        expect(ts1.size()).toBe(4);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetAddSetRightContents: function(test) {
-        test.expect(10);
+    test("TranslationSetAddSetRightContents", () => {
+        expect.assertions(10);
 
         const ts1 = new TranslationSet(),
             ts2 = new TranslationSet();
@@ -852,26 +796,24 @@ export const testTranslationSet = {
 
         const r = ts1.getAll();
 
-        test.ok(r);
-        test.equal(r.length, 4);
+        expect(r).toBeTruthy();
+        expect(r.length).toBe(4);
 
-        test.equal(r[0].reskey, "asdf");
-        test.equal(r[0].getSource(), "This is a test");
+        expect(r[0].reskey).toBe("asdf");
+        expect(r[0].getSource()).toBe("This is a test");
 
-        test.equal(r[1].reskey, "qwerty");
-        test.equal(r[1].getSource(), "This is another test");
+        expect(r[1].reskey).toBe("qwerty");
+        expect(r[1].getSource()).toBe("This is another test");
 
-        test.equal(r[2].reskey, "foobar");
-        test.equal(r[2].getSource(), "This is yet another test");
+        expect(r[2].reskey).toBe("foobar");
+        expect(r[2].getSource()).toBe("This is yet another test");
 
-        test.equal(r[3].reskey, "blahblah");
-        test.equal(r[3].getSource(), "One of its feet is both the same.");
+        expect(r[3].reskey).toBe("blahblah");
+        expect(r[3].getSource()).toBe("One of its feet is both the same.");
+    });
 
-        test.done();
-    },
-
-    testTranslationSetAddSetMerge: function(test) {
-        test.expect(2);
+    test("TranslationSetAddSetMerge", () => {
+        expect.assertions(2);
 
         const ts1 = new TranslationSet(),
             ts2 = new TranslationSet();
@@ -898,17 +840,15 @@ export const testTranslationSet = {
             })
         ]);
 
-        test.equal(ts1.size(), 2);
+        expect(ts1.size()).toBe(2);
 
         ts1.addSet(ts2);
 
-        test.equal(ts1.size(), 3);
+        expect(ts1.size()).toBe(3);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetAddSetMergeRightContents: function(test) {
-        test.expect(8);
+    test("TranslationSetAddSetMergeRightContents", () => {
+        expect.assertions(8);
 
         const ts1 = new TranslationSet(),
             ts2 = new TranslationSet();
@@ -939,23 +879,21 @@ export const testTranslationSet = {
 
         const r = ts1.getAll();
 
-        test.ok(r);
-        test.equal(r.length, 3);
+        expect(r).toBeTruthy();
+        expect(r.length).toBe(3);
 
-        test.equal(r[0].reskey, "asdf");
-        test.equal(r[0].getSource(), "This is a test");
+        expect(r[0].reskey).toBe("asdf");
+        expect(r[0].getSource()).toBe("This is a test");
 
-        test.equal(r[1].reskey, "qwerty");
-        test.equal(r[1].getSource(), "This is another test");
+        expect(r[1].reskey).toBe("qwerty");
+        expect(r[1].getSource()).toBe("This is another test");
 
-        test.equal(r[2].reskey, "blahblah");
-        test.equal(r[2].getSource(), "One of its feet is both the same.");
+        expect(r[2].reskey).toBe("blahblah");
+        expect(r[2].getSource()).toBe("One of its feet is both the same.");
+    });
 
-        test.done();
-    },
-
-    testTranslationSetAddSetEmpty: function(test) {
-        test.expect(2);
+    test("TranslationSetAddSetEmpty", () => {
+        expect.assertions(2);
 
         const ts1 = new TranslationSet(),
             ts2 = new TranslationSet();
@@ -971,17 +909,15 @@ export const testTranslationSet = {
             })
         ]);
 
-        test.equal(ts1.size(), 2);
+        expect(ts1.size()).toBe(2);
 
         ts1.addSet(ts2);
 
-        test.equal(ts1.size(), 2);
+        expect(ts1.size()).toBe(2);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetAddSetEmptyRightContents: function(test) {
-        test.expect(6);
+    test("TranslationSetAddSetEmptyRightContents", () => {
+        expect.assertions(6);
 
         const ts1 = new TranslationSet(),
             ts2 = new TranslationSet();
@@ -1001,20 +937,18 @@ export const testTranslationSet = {
 
         const r = ts1.getAll();
 
-        test.ok(r);
-        test.equal(r.length, 2);
+        expect(r).toBeTruthy();
+        expect(r.length).toBe(2);
 
-        test.equal(r[0].reskey, "asdf");
-        test.equal(r[0].getSource(), "This is a test");
+        expect(r[0].reskey).toBe("asdf");
+        expect(r[0].getSource()).toBe("This is a test");
 
-        test.equal(r[1].reskey, "qwerty");
-        test.equal(r[1].getSource(), "This is another test");
+        expect(r[1].reskey).toBe("qwerty");
+        expect(r[1].getSource()).toBe("This is another test");
+    });
 
-        test.done();
-    },
-
-    testTranslationSetAddSetUndefined: function(test) {
-        test.expect(2);
+    test("TranslationSetAddSetUndefined", () => {
+        expect.assertions(2);
 
         const ts1 = new TranslationSet();
 
@@ -1029,17 +963,15 @@ export const testTranslationSet = {
             })
         ]);
 
-        test.equal(ts1.size(), 2);
+        expect(ts1.size()).toBe(2);
 
         ts1.addSet(undefined);
 
-        test.equal(ts1.size(), 2);
+        expect(ts1.size()).toBe(2);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetAddSetUndefinedRightContents: function(test) {
-        test.expect(6);
+    test("TranslationSetAddSetUndefinedRightContents", () => {
+        expect.assertions(6);
 
         const ts1 = new TranslationSet();
 
@@ -1058,20 +990,18 @@ export const testTranslationSet = {
 
         const r = ts1.getAll();
 
-        test.ok(r);
-        test.equal(r.length, 2);
+        expect(r).toBeTruthy();
+        expect(r.length).toBe(2);
 
-        test.equal(r[0].reskey, "asdf");
-        test.equal(r[0].getSource(), "This is a test");
+        expect(r[0].reskey).toBe("asdf");
+        expect(r[0].getSource()).toBe("This is a test");
 
-        test.equal(r[1].reskey, "qwerty");
-        test.equal(r[1].getSource(), "This is another test");
+        expect(r[1].reskey).toBe("qwerty");
+        expect(r[1].getSource()).toBe("This is another test");
+    });
 
-        test.done();
-    },
-
-    testTranslationSetGetBySingleField: function(test) {
-        test.expect(6);
+    test("TranslationSetGetBySingleField", () => {
+        expect.assertions(6);
 
         const ts = new TranslationSet();
 
@@ -1158,20 +1088,18 @@ export const testTranslationSet = {
             project: "yowza"
         });
 
-        test.ok(r);
-        test.equal(r.length, 2);
+        expect(r).toBeTruthy();
+        expect(r.length).toBe(2);
 
-        test.equal(r[0].reskey, "llashdfoi");
-        test.equal(r[0].getTarget(), "blah blah blah");
+        expect(r[0].reskey).toBe("llashdfoi");
+        expect(r[0].getTarget()).toBe("blah blah blah");
 
-        test.equal(r[1].reskey, "ajajsdjdsj");
-        test.equal(r[1].getTarget(), "blah blah blah en espanol");
+        expect(r[1].reskey).toBe("ajajsdjdsj");
+        expect(r[1].getTarget()).toBe("blah blah blah en espanol");
+    });
 
-        test.done();
-    },
-
-    testTranslationSetGetByDoubleFields: function(test) {
-        test.expect(17);
+    test("TranslationSetGetByDoubleFields", () => {
+        expect.assertions(17);
 
         const ts = new TranslationSet();
 
@@ -1255,32 +1183,30 @@ export const testTranslationSet = {
             targetLocale: "de-DE"
         });
 
-        test.ok(r);
-        test.equal(r.length, 3);
+        expect(r).toBeTruthy();
+        expect(r.length).toBe(3);
 
-        test.equal(r[0].reskey, "asdf");
-        test.equal(r[0].getSource(), "This is a test");
-        test.equal(r[0].getProject(), "foo");
-        test.equal(r[0].getTargetLocale(), "de-DE");
-        test.equal(r[0].getContext(), "bar");
+        expect(r[0].reskey).toBe("asdf");
+        expect(r[0].getSource()).toBe("This is a test");
+        expect(r[0].getProject()).toBe("foo");
+        expect(r[0].getTargetLocale()).toBe("de-DE");
+        expect(r[0].getContext()).toBe("bar");
 
-        test.equal(r[1].reskey, "qwerty");
-        test.equal(r[1].getSource(), "This is another test");
-        test.equal(r[1].getProject(), "foo");
-        test.equal(r[1].getTargetLocale(), "de-DE");
-        test.equal(r[1].getContext(), "bar");
+        expect(r[1].reskey).toBe("qwerty");
+        expect(r[1].getSource()).toBe("This is another test");
+        expect(r[1].getProject()).toBe("foo");
+        expect(r[1].getTargetLocale()).toBe("de-DE");
+        expect(r[1].getContext()).toBe("bar");
 
-        test.equal(r[2].reskey, "qwerty");
-        test.equal(r[2].getSource(), "This is another test");
-        test.equal(r[2].getProject(), "foo");
-        test.equal(r[2].getTargetLocale(), "de-DE");
-        test.ok(!r[2].getContext());
+        expect(r[2].reskey).toBe("qwerty");
+        expect(r[2].getSource()).toBe("This is another test");
+        expect(r[2].getProject()).toBe("foo");
+        expect(r[2].getTargetLocale()).toBe("de-DE");
+        expect(!r[2].getContext()).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testTranslationSetGetByOrOperator: function(test) {
-        test.expect(17);
+    test("TranslationSetGetByOrOperator", () => {
+        expect.assertions(17);
 
         const ts = new TranslationSet();
 
@@ -1365,34 +1291,32 @@ export const testTranslationSet = {
             targetLocale: ["en-US", "de-DE"]
         });
 
-        test.ok(r);
-        test.equal(r.length, 5);
+        expect(r).toBeTruthy();
+        expect(r.length).toBe(5);
 
-        test.equal(r[0].reskey, "asdf");
-        test.equal(r[0].getSource(), "This is a test");
-        test.equal(r[0].getTargetLocale(), "de-DE");
+        expect(r[0].reskey).toBe("asdf");
+        expect(r[0].getSource()).toBe("This is a test");
+        expect(r[0].getTargetLocale()).toBe("de-DE");
 
-        test.equal(r[1].reskey, "qwerty");
-        test.equal(r[1].getSource(), "This is another test");
-        test.equal(r[1].getTargetLocale(), "de-DE");
+        expect(r[1].reskey).toBe("qwerty");
+        expect(r[1].getSource()).toBe("This is another test");
+        expect(r[1].getTargetLocale()).toBe("de-DE");
 
-        test.equal(r[2].reskey, "qwerty");
-        test.equal(r[2].getSource(), "This is another test");
-        test.equal(r[2].getTargetLocale(), "de-DE");
+        expect(r[2].reskey).toBe("qwerty");
+        expect(r[2].getSource()).toBe("This is another test");
+        expect(r[2].getTargetLocale()).toBe("de-DE");
 
-        test.equal(r[3].reskey, "qwerty");
-        test.equal(r[3].getSource(), "This is yet another test");
-        test.equal(r[3].getTargetLocale(), "de-DE");
+        expect(r[3].reskey).toBe("qwerty");
+        expect(r[3].getSource()).toBe("This is yet another test");
+        expect(r[3].getTargetLocale()).toBe("de-DE");
 
-        test.equal(r[4].reskey, "llashdfoi");
-        test.equal(r[4].getSource(), "blah blah blah");
-        test.equal(r[4].getTargetLocale(), "en-US");
+        expect(r[4].reskey).toBe("llashdfoi");
+        expect(r[4].getSource()).toBe("blah blah blah");
+        expect(r[4].getTargetLocale()).toBe("en-US");
+    });
 
-        test.done();
-    },
-
-    testTranslationSetGetProjects: function(test) {
-        test.expect(5);
+    test("TranslationSetGetProjects", () => {
+        expect.assertions(5);
 
         const ts = new TranslationSet();
 
@@ -1473,30 +1397,26 @@ export const testTranslationSet = {
 
         const projects = ts.getProjects();
 
-        test.ok(projects);
-        test.equal(projects.length, 3);
+        expect(projects).toBeTruthy();
+        expect(projects.length).toBe(3);
 
-        test.equal(projects[0], "foo");
-        test.equal(projects[1], "asdf");
-        test.equal(projects[2], "yowza");
+        expect(projects[0]).toBe("foo");
+        expect(projects[1]).toBe("asdf");
+        expect(projects[2]).toBe("yowza");
+    });
 
-        test.done();
-    },
-
-    testTranslationSetGetProjectsEmpty: function(test) {
-        test.expect(1);
+    test("TranslationSetGetProjectsEmpty", () => {
+        expect.assertions(1);
 
         const ts = new TranslationSet();
 
         const projects = ts.getProjects();
 
-        test.ok(!projects);
+        expect(!projects).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testTranslationSetGetContexts: function(test) {
-        test.expect(4);
+    test("TranslationSetGetContexts", () => {
+        expect.assertions(4);
 
         const ts = new TranslationSet();
 
@@ -1577,29 +1497,25 @@ export const testTranslationSet = {
 
         const contexts = ts.getContexts("foo");
 
-        test.ok(contexts);
-        test.equal(contexts.length, 2);
+        expect(contexts).toBeTruthy();
+        expect(contexts.length).toBe(2);
 
-        test.equal(contexts[0], "bar");
-        test.equal(contexts[1], "");
+        expect(contexts[0]).toBe("bar");
+        expect(contexts[1]).toBe("");
+    });
 
-        test.done();
-    },
-
-    testTranslationSetGetContextsEmpty: function(test) {
-        test.expect(1);
+    test("TranslationSetGetContextsEmpty", () => {
+        expect.assertions(1);
 
         const ts = new TranslationSet();
 
         const contexts = ts.getContexts("foo");
 
-        test.ok(!contexts);
+        expect(!contexts).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testTranslationSetGetContextsOnlyRoot: function(test) {
-        test.expect(3);
+    test("TranslationSetGetContextsOnlyRoot", () => {
+        expect.assertions(3);
 
         const ts = new TranslationSet();
 
@@ -1679,16 +1595,14 @@ export const testTranslationSet = {
 
         const contexts = ts.getContexts("yowza");
 
-        test.ok(contexts);
-        test.equal(contexts.length, 1);
+        expect(contexts).toBeTruthy();
+        expect(contexts.length).toBe(1);
 
-        test.equal(contexts[0], "");
+        expect(contexts[0]).toBe("");
+    });
 
-        test.done();
-    },
-
-    testTranslationSetGetLocales: function(test) {
-        test.expect(5);
+    test("TranslationSetGetLocales", () => {
+        expect.assertions(5);
 
         const ts = new TranslationSet();
 
@@ -1769,30 +1683,26 @@ export const testTranslationSet = {
 
         const locales = ts.getLocales("foo", "bar");
 
-        test.ok(locales);
-        test.equal(locales.length, 3);
+        expect(locales).toBeTruthy();
+        expect(locales.length).toBe(3);
 
-        test.equal(locales[0], "de-DE");
-        test.equal(locales[1], "fr-FR");
-        test.equal(locales[2], "nl-NL");
+        expect(locales[0]).toBe("de-DE");
+        expect(locales[1]).toBe("fr-FR");
+        expect(locales[2]).toBe("nl-NL");
+    });
 
-        test.done();
-    },
-
-    testTranslationSetGetLocalesEmpty: function(test) {
-        test.expect(1);
+    test("TranslationSetGetLocalesEmpty", () => {
+        expect.assertions(1);
 
         const ts = new TranslationSet();
 
         const locales = ts.getLocales("foo", "bar");
 
-        test.ok(!locales);
+        expect(!locales).toBeTruthy();
+    });
 
-        test.done();
-    },
-
-    testTranslationSetClear: function(test) {
-        test.expect(2);
+    test("TranslationSetClear", () => {
+        expect.assertions(2);
 
         const ts = new TranslationSet();
 
@@ -1871,17 +1781,15 @@ export const testTranslationSet = {
             })
         ]);
 
-        test.equal(ts.size(), 10);
+        expect(ts.size()).toBe(10);
 
         ts.clear();
 
-        test.equal(ts.size(), 0);
+        expect(ts.size()).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetClearReallyGone: function(test) {
-        test.expect(4);
+    test("TranslationSetClearReallyGone", () => {
+        expect.assertions(4);
 
         const ts = new TranslationSet();
 
@@ -1962,21 +1870,19 @@ export const testTranslationSet = {
 
         let resources = ts.getBy({project: "yowza"})
 
-        test.ok(resources);
-        test.equal(resources.length, 2);
+        expect(resources).toBeTruthy();
+        expect(resources.length).toBe(2);
 
         ts.clear();
 
         resources = ts.getBy({project: "yowza"})
 
-        test.ok(resources);
-        test.equal(resources.length, 0);
+        expect(resources).toBeTruthy();
+        expect(resources.length).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetRemoveRightSize: function(test) {
-        test.expect(3);
+    test("TranslationSetRemoveRightSize", () => {
+        expect.assertions(3);
 
         const ts = new TranslationSet();
 
@@ -2054,22 +1960,20 @@ export const testTranslationSet = {
             })
         ]);
 
-        test.equal(ts.size(), 10);
+        expect(ts.size()).toBe(10);
 
-        test.ok(ts.remove(new ResourceString({
+        expect(ts.remove(new ResourceString({
             project: "asdf",
             context: "bar",
             targetLocale: "ja-JP",
             key: "foobarfoo"
-        })));
+        }))).toBeTruthy();
 
-        test.equal(ts.size(), 9);
+        expect(ts.size()).toBe(9);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetRemoveReallyGone: function(test) {
-        test.expect(10);
+    test("TranslationSetRemoveReallyGone", () => {
+        expect.assertions(10);
 
         const ts = new TranslationSet();
 
@@ -2155,20 +2059,20 @@ export const testTranslationSet = {
             resType: "string"
         });
 
-        test.ok(res);
-        test.equal(res.length, 1);
-        test.equal(res[0].getProject(), "asdf");
-        test.equal(res[0].getContext(), "bar");
-        test.equal(res[0].getTargetLocale(), "ja-JP");
-        test.equal(res[0].getKey(), "foobarfoo");
-        test.equal(res[0].getSource(), "test test blah");
+        expect(res).toBeTruthy();
+        expect(res.length).toBe(1);
+        expect(res[0].getProject()).toBe("asdf");
+        expect(res[0].getContext()).toBe("bar");
+        expect(res[0].getTargetLocale()).toBe("ja-JP");
+        expect(res[0].getKey()).toBe("foobarfoo");
+        expect(res[0].getSource()).toBe("test test blah");
 
-        test.ok(ts.remove(new ResourceString({
+        expect(ts.remove(new ResourceString({
             project: "asdf",
             context: "bar",
             targetLocale: "ja-JP",
             key: "foobarfoo"
-        })));
+        }))).toBeTruthy();
 
         res = ts.getBy({
             project: "asdf",
@@ -2178,14 +2082,12 @@ export const testTranslationSet = {
             resType: "string"
         });
 
-        test.ok(res);
-        test.equal(res.length, 0);
+        expect(res).toBeTruthy();
+        expect(res.length).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetRemoveInsufficientFields: function(test) {
-        test.expect(3);
+    test("TranslationSetRemoveInsufficientFields", () => {
+        expect.assertions(3);
 
         const ts = new TranslationSet();
 
@@ -2263,18 +2165,16 @@ export const testTranslationSet = {
             })
         ]);
 
-        test.equal(ts.size(), 10);
+        expect(ts.size()).toBe(10);
 
         // have to specify everything needed to identify a single resource
-        test.ok(!ts.remove(ResourceString.hashKey(undefined, "bar", "ja-JP", "foobarfoo")));
+        expect(!ts.remove(ResourceString.hashKey(undefined, "bar", "ja-JP", "foobarfoo"))).toBeTruthy();
 
-        test.equal(ts.size(), 10);
+        expect(ts.size()).toBe(10);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetRemoveBogusInput: function(test) {
-        test.expect(3);
+    test("TranslationSetRemoveBogusInput", () => {
+        expect.assertions(3);
 
         const ts = new TranslationSet();
 
@@ -2352,18 +2252,16 @@ export const testTranslationSet = {
             })
         ]);
 
-        test.equal(ts.size(), 10);
+        expect(ts.size()).toBe(10);
 
         // have to specify everything needed to identify a single resource
-        test.ok(!ts.remove(undefined));
+        expect(!ts.remove(undefined)).toBeTruthy();
 
-        test.equal(ts.size(), 10);
+        expect(ts.size()).toBe(10);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetRemoveNoMatch: function(test) {
-        test.expect(3);
+    test("TranslationSetRemoveNoMatch", () => {
+        expect.assertions(3);
 
         const ts = new TranslationSet();
 
@@ -2441,18 +2339,16 @@ export const testTranslationSet = {
             })
         ]);
 
-        test.equal(ts.size(), 10);
+        expect(ts.size()).toBe(10);
 
         // does not match anything
-        test.ok(!ts.remove(ResourceString.hashKey("ai jai jai", "blech", "en-NZ", "juicy")));
+        expect(!ts.remove(ResourceString.hashKey("ai jai jai", "blech", "en-NZ", "juicy"))).toBeTruthy();
 
-        test.equal(ts.size(), 10);
+        expect(ts.size()).toBe(10);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetDiffRightSize: function(test) {
-        test.expect(2);
+    test("TranslationSetDiffRightSize", () => {
+        expect.assertions(2);
 
         const ts1 = new TranslationSet();
         const ts2 = new TranslationSet();
@@ -2528,14 +2424,12 @@ export const testTranslationSet = {
 
         const diff = ts1.diff(ts2);
 
-        test.ok(diff);
-        test.equal(diff.size(), 2);
+        expect(diff).toBeTruthy();
+        expect(diff.size()).toBe(2);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetDiffRightContents: function(test) {
-        test.expect(14);
+    test("TranslationSetDiffRightContents", () => {
+        expect.assertions(14);
 
         const ts1 = new TranslationSet();
         const ts2 = new TranslationSet();
@@ -2611,33 +2505,31 @@ export const testTranslationSet = {
 
         const diff = ts1.diff(ts2);
 
-        test.ok(diff);
+        expect(diff).toBeTruthy();
 
         let resources = diff.getAll();
-        test.ok(resources);
-        test.equal(resources.length, 2);
+        expect(resources).toBeTruthy();
+        expect(resources.length).toBe(2);
 
         // guarantee the order of the array elements
         resources = resources.sort(function(left, right) {return left.getTarget() < right.getTarget() ? 1 : (left.getTarget() > right.getTarget() ? -1 : 0)})
 
-        test.equal(resources[0].getKey(), "qwerty");
-        test.equal(resources[0].getSource(), "This is another test");
-        test.equal(resources[0].getProject(), "foo");
-        test.equal(resources[0].getContext(), "bar");
-        test.equal(resources[0].getTargetLocale(), "nl-NL");
-        test.equal(resources[0].getTarget(), "gossie");
+        expect(resources[0].getKey()).toBe("qwerty");
+        expect(resources[0].getSource()).toBe("This is another test");
+        expect(resources[0].getProject()).toBe("foo");
+        expect(resources[0].getContext()).toBe("bar");
+        expect(resources[0].getTargetLocale()).toBe("nl-NL");
+        expect(resources[0].getTarget()).toBe("gossie");
 
-        test.equal(resources[1].getKey(), "qwerty");
-        test.equal(resources[1].getSource(), "This is another test");
-        test.equal(resources[1].getTarget(), "Dies ist nochmals einen Test");
-        test.equal(resources[1].getProject(), "foo");
-        test.equal(resources[1].getTargetLocale(), "de-DE");
+        expect(resources[1].getKey()).toBe("qwerty");
+        expect(resources[1].getSource()).toBe("This is another test");
+        expect(resources[1].getTarget()).toBe("Dies ist nochmals einen Test");
+        expect(resources[1].getProject()).toBe("foo");
+        expect(resources[1].getTargetLocale()).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTranslationSetDiffNoOverlap: function(test) {
-        test.expect(14);
+    test("TranslationSetDiffNoOverlap", () => {
+        expect.assertions(14);
 
         const ts1 = new TranslationSet();
         const ts2 = new TranslationSet();
@@ -2689,33 +2581,31 @@ export const testTranslationSet = {
 
         const diff = ts1.diff(ts2);
 
-        test.ok(diff);
+        expect(diff).toBeTruthy();
 
         let resources = diff.getAll();
-        test.ok(resources);
-        test.equal(resources.length, 2);
+        expect(resources).toBeTruthy();
+        expect(resources.length).toBe(2);
 
         // guarantee the order of the array elements
         resources = resources.sort(function(left, right) {return left.getTarget() < right.getTarget() ? 1 : (left.getTarget() > right.getTarget() ? -1 : 0)})
 
-        test.equal(resources[0].getKey(), "qwerty");
-        test.equal(resources[0].getSource(), "This is another test");
-        test.equal(resources[0].getTarget(), "gossie");
-        test.equal(resources[0].getProject(), "foo");
-        test.equal(resources[0].getContext(), "bar");
-        test.equal(resources[0].getTargetLocale(), "nl-NL");
+        expect(resources[0].getKey()).toBe("qwerty");
+        expect(resources[0].getSource()).toBe("This is another test");
+        expect(resources[0].getTarget()).toBe("gossie");
+        expect(resources[0].getProject()).toBe("foo");
+        expect(resources[0].getContext()).toBe("bar");
+        expect(resources[0].getTargetLocale()).toBe("nl-NL");
 
-        test.equal(resources[1].getKey(), "qwerty");
-        test.equal(resources[1].getSource(), "This is another test");
-        test.equal(resources[1].getProject(), "foo");
-        test.equal(resources[1].getTarget(), "Dies ist nochmals einen Test");
-        test.equal(resources[1].getTargetLocale(), "de-DE");
+        expect(resources[1].getKey()).toBe("qwerty");
+        expect(resources[1].getSource()).toBe("This is another test");
+        expect(resources[1].getProject()).toBe("foo");
+        expect(resources[1].getTarget()).toBe("Dies ist nochmals einen Test");
+        expect(resources[1].getTargetLocale()).toBe("de-DE");
+    });
 
-        test.done();
-    },
-
-    testTranslationSetDiffNoDiff: function(test) {
-        test.expect(2);
+    test("TranslationSetDiffNoDiff", () => {
+        expect.assertions(2);
 
         const ts1 = new TranslationSet();
         const ts2 = new TranslationSet();
@@ -2776,15 +2666,13 @@ export const testTranslationSet = {
 
         const diff = ts1.diff(ts2);
 
-        test.ok(diff);
+        expect(diff).toBeTruthy();
 
-        test.equal(diff.size(), 0);
+        expect(diff.size()).toBe(0);
+    });
 
-        test.done();
-    },
-
-    testTranslationSetDiffChangedFields: function(test) {
-        test.expect(8);
+    test("TranslationSetDiffChangedFields", () => {
+        expect.assertions(8);
 
         const ts1 = new TranslationSet();
         const ts2 = new TranslationSet();
@@ -2845,18 +2733,16 @@ export const testTranslationSet = {
 
         const diff = ts1.diff(ts2);
 
-        test.ok(diff);
+        expect(diff).toBeTruthy();
 
         const resources = diff.getAll();
-        test.ok(resources);
-        test.equal(resources.length, 1);
+        expect(resources).toBeTruthy();
+        expect(resources.length).toBe(1);
 
-        test.equal(resources[0].getKey(), "qwerty");
-        test.equal(resources[0].getSource(), "This is yet another test");
-        test.equal(resources[0].getProject(), "foo");
-        test.equal(resources[0].getContext(), "bar");
-        test.equal(resources[0].getTargetLocale(), "de-DE");
-
-        test.done();
-    }
-};
+        expect(resources[0].getKey()).toBe("qwerty");
+        expect(resources[0].getSource()).toBe("This is yet another test");
+        expect(resources[0].getProject()).toBe("foo");
+        expect(resources[0].getContext()).toBe("bar");
+        expect(resources[0].getTargetLocale()).toBe("de-DE");
+    });
+});
