@@ -21,6 +21,15 @@ limitations under the License.
 
 ## Release Notes
 
+### v1.9.0
+
+- added data about HTML in the Utils
+    - nonBreakingTags - a hash of all HTML tags that do not break a string
+    - selfClosingTags - a hash of all HTML tags that are commonly self-closing
+    - ignoreTags - a hash of HTML tags where the content is ignored, such as <script>
+    - localizableAttributes - a hash of all tags that contain attributes which
+      have localizable values
+
 ### v1.8.1
 
 - update dependencies
