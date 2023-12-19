@@ -436,3 +436,100 @@ export function hashKey(source) {
 
     return value;
 };
+
+/**
+ * A hash containing a list of HTML tags that do not
+ * cause a break in a resource string. These tags should
+ * be included in the middle of the string.
+ */
+export const nonBreakingTags = {
+    "a": true,
+    "abbr": true,
+    "b": true,
+    "bdi": true,
+    "bdo": true,
+    "br": true,
+    "dfn": true,
+    "del": true,
+    "em": true,
+    "i": true,
+    "ins": true,
+    "mark": true,
+    "ruby": true,
+    "rt": true,
+    "span": true,
+    "strong": true,
+    "sub": true,
+    "sup": true,
+    "time": true,
+    "u": true,
+    "var": true,
+    "wbr": true
+};
+
+/**
+ * A hash containing a list of HTML tags that are
+ * typically self-closing. That is, in HTML4 and earlier,
+ * the close tag was not needed for these.
+ */
+export const selfClosingTags = {
+    "area": true,
+    "base": true,
+    "bdi": true,
+    "bdo": true,
+    "br": true,
+    "embed": true,
+    "hr": true,
+    "img": true,
+    "input": true,
+    "link": true,
+    "option": true,
+    "param": true,
+    "source": true,
+    "track": true
+};
+
+/**
+ * A hash containing a list of HTML tags where
+ * the text content inside of those tags should be
+ * ignored for localization purposes. Instead,
+ * those contents should just be copied to the
+ * localized file unmodified.
+ */
+export const ignoreTags = {
+    "code": true,
+    "output": true,
+    "samp": true,
+    "script": true,
+    "style": true
+};
+
+/**
+ * List of html5 tags and their attributes that contain localizable strings.
+ * The "*" indicates it applies to the given attributes on every tag.
+ * Also added ARIA attributes to localize for accessibility. For more details,
+ * see https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/
+ */
+export const localizableAttributes = {
+    "area": {"alt":true},
+    "img": {"alt":true},
+    "input": {
+        "alt": true,
+        "placeholder": true
+    },
+    "optgroup": {"label":true},
+    "option": {"label":true},
+    "textarea": {"placeholder":true},
+    "track": {"label":true},
+    "*": {
+        "title": true,
+        "aria-braillelabel": true,
+        "aria-brailleroledescription": true,
+        "aria-description": true,
+        "aria-label": true,
+        "aria-placeholder": true,
+        "aria-roledescription": true,
+        "aria-rowindextext": true,
+        "aria-valuetext": true
+    }
+};

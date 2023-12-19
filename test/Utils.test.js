@@ -28,7 +28,11 @@ import {
     makeDirs,
     containsActualText,
     objectMap,
-    hashKey
+    hashKey,
+    nonBreakingTags,
+    selfClosingTags,
+    ignoreTags,
+    localizableAttributes
 } from "../src/utils.js";
 
 /**
@@ -554,5 +558,21 @@ describe("testUtils", () => {
         makeDirs("./testfiles/testdir");
         expect(fs.existsSync("./testfiles/testdir")).toBeTruthy();
         rmr("./testfiles/testdir");
+    });
+
+    test("that the HTML data is exported properly", () => {
+        expect.assertions(8);
+
+        expect(nonBreakingTags.a).toBe(true);
+        expect(nonBreakingTags.abbr).toBe(true);
+
+        expect(selfClosingTags.area).toBe(true);
+        expect(selfClosingTags.base).toBe(true);
+
+        expect(ignoreTags.code).toBe(true);
+        expect(ignoreTags.output).toBe(true);
+
+        expect(localizableAttributes.area.alt).toBe(true);
+        expect(localizableAttributes["*"]["aria-label"]).toBe(true);
     });
 });
