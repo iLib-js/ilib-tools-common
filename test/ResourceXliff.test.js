@@ -1,7 +1,7 @@
 /*
  * Xliff.test.js - test the Xliff object.
  *
- * Copyright © 2016-2017, 2023 2019-2023 HealthTap, Inc. and JEDLSoft
+ * Copyright © 2016-2017, 2019-2023 HealthTap, Inc. and JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,10 +19,7 @@
 
 import fs from "fs";
 
-import ResourceArray from "../src/ResourceArray.js";
-import ResourcePlural from "../src/ResourcePlural.js";
-import ResourceString from "../src/ResourceString.js";
-import ResourceXliff from "../src/ResourceXliff.js";
+import { ResourceArray, ResourcePlural, ResourceString, ResourceXliff } from "../src/index.js";
 
 function diff(a, b) {
     const min = Math.min(a.length, b.length);

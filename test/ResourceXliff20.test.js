@@ -19,10 +19,7 @@
 
 import fs from "fs";
 
-import ResourceArray from "../src/ResourceArray.js";
-import ResourcePlural from "../src/ResourcePlural.js";
-import ResourceString from "../src/ResourceString.js";
-import ResourceXliff from "../src/ResourceXliff.js";
+import { ResourceArray, ResourcePlural, ResourceString, ResourceXliff } from "../src/index.js";
 
 function diff(a, b) {
     var min = Math.min(a.length, b.length);

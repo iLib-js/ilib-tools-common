@@ -21,6 +21,10 @@ limitations under the License.
 
 ## Release Notes
 
+### v1.9.1
+
+- forgot to export the HTML data in the previous version from the main entry point
+
 ### v1.9.0
 
 - added data about HTML in the Utils

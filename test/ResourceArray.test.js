@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import ResourceArray from "../src/ResourceArray.js";
+import { ResourceArray } from "../src/index.js";
 
 describe("testResourceArray", () => {
     test("ResourceArrayConstructorEmpty", () => {

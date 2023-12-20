@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import ResourcePlural from "../src/ResourcePlural.js";
+import { ResourcePlural } from "../src/index.js";
 
 describe("testResourcePlural", () => {
     test("ResourcePluralConstructorEmpty", () => {
