@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import TranslationVariant from "../src/TranslationVariant.js";
+import { TranslationVariant } from "../src/index.js";
 
 describe("testTranslationVariant", () => {
      test("TranslationVariantConstructorEmpty", () => {

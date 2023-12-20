@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import ResourceString from "../src/ResourceString.js";
+import { ResourceString } from "../src/index.js";
 
 describe("testResourceString", () => {
     test("ResourceStringConstructorEmpty", () => {

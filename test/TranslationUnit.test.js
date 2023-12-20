@@ -17,8 +17,7 @@
  * limitations under the License.
  */
 
-import TranslationUnit from "../src/TranslationUnit.js";
-import TranslationVariant from "../src/TranslationVariant.js";
+import { TranslationUnit, TranslationVariant } from "../src/index.js";
 
 describe("testTranslationUnit", () => {
      test("TranslationUnitConstructor", () => {

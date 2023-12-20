@@ -1,7 +1,7 @@
 /*
  * TranslationSet.test.js - test the Translation Set object.
  *
- * Copyright © 2016-2017, 2023  2022-2023HealthTap, Inc. and JEDLSoft
+ * Copyright © 2016-2017, 2022-2023 HealthTap, Inc. and JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,7 @@
  * limitations under the License.
  */
 
-import TranslationSet from "../src/TranslationSet.js";
-import ResourceString from "../src/ResourceString.js";
-import ResourceArray from "../src/ResourceArray.js";
+import { TranslationSet, ResourceString, ResourceArray } from "../src/index.js";
 
 describe("testTranslationSet", () => {
      test("TranslationSetConstructor", () => {

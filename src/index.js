@@ -33,7 +33,12 @@ import {
     isEmpty,
     makeDirs,
     containsActualText,
-    objectMap
+    objectMap,
+    hashKey,
+    nonBreakingTags,
+    selfClosingTags,
+    ignoreTags,
+    localizableAttributes
 } from './utils.js';
 
 export {
@@ -52,5 +57,10 @@ export {
     isEmpty,
     makeDirs,
     containsActualText,
-    objectMap
+    objectMap,
+    hashKey,
+    nonBreakingTags,
+    selfClosingTags,
+    ignoreTags,
+    localizableAttributes
 };

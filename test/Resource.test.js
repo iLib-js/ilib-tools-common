@@ -17,7 +17,7 @@
  * limitations under the License.
  */
 
-import ResourceString from "../src/ResourceString.js";
+import { ResourceString } from "../src/index.js";
 
 // For the most part, we need to test ResourceString instead of Resource
 // directly because you cannot instantiate an abstract class. But, we

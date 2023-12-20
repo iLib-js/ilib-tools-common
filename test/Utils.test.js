@@ -33,7 +33,7 @@ import {
     selfClosingTags,
     ignoreTags,
     localizableAttributes
-} from "../src/utils.js";
+} from "../src/index.js";
 
 /**
  * @private
