@@ -24,6 +24,7 @@ limitations under the License.
 ### v1.10.0
 
 - now ships with commonjs code as well as modern ESM in the same package
+- updated dependencies
 
 ### v1.9.1
 
