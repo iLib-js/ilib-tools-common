@@ -4,7 +4,7 @@ Common code shared between the command-line tools such as loctool and i18nlint
 
 ## License
 
-Copyright © 2022-2023, JEDLSoft
+Copyright © 2022-2024, JEDLSoft
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -20,6 +20,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 ## Release Notes
+
+### v1.10.0
+
+- now ships with commonjs code as well as modern ESM in the same package
+- updated dependencies
 
 ### v1.9.1
 
