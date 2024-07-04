@@ -25,6 +25,7 @@ import TranslationSet from './TranslationSet.js';
 import ResourceXliff from './ResourceXliff.js';
 import TranslationUnit from './TranslationUnit.js';
 import TranslationVariant from './TranslationVariant.js';
+import Location from './Location.js';
 import {
     formatPath,
     parsePath,
@@ -62,5 +63,6 @@ export {
     nonBreakingTags,
     selfClosingTags,
     ignoreTags,
-    localizableAttributes
+    localizableAttributes,
+    Location
 };
