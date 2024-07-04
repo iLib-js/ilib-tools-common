@@ -1,7 +1,7 @@
 /*
  * Resource.js - super class that represents a resource
  *
- * Copyright © 2022-2023 JEDLSoft
+ * Copyright © 2022-2024 JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,6 +61,13 @@ class Resource {
      * <li>pathName {String} - pathName to the file where the string was extracted from
      * <li>autoKey {boolean} - true if the key was generated based on the source text
      * <li>state {String} - current state of the resource (ie. "new", "translated", or "accepted")
+     * <li>id {String} - the id of the current resource
+     * <li>comment {String} - the comment (translator's note) of this resource
+     * <li>dnt {boolean} - Do not translate this resource when this is set to true. Default: false
+     * <li>datatype {String} - the type of file that this resource came from
+     * <li>flavor {String} - the "flavor" of this string, if any. (Android)
+     * <li>location {Location} - the location in the file given in pathName where this this resource
+     * is located
      * </ul>
      *
      * @constructor
@@ -479,10 +486,11 @@ class Resource {
      * line number and character within that line where the representation of the resource
      * instance starts.
      *
-     * @returns {Object<{line, char}>} the location information
+     * @returns {Location|undefined} the location information, or undefined if no location
+     * information is available
      */
     getLocation() {
-        return this.location;
+        return this.location?.getLocation();
     }
 }
 

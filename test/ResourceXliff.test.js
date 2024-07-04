@@ -1097,7 +1097,7 @@ describe("testResourceXliff", () => {
     });
 
     test("ResourceXliffParseWithSourceOnly", () => {
-        expect.assertions(21);
+        expect.assertions(23);
 
         const x = new ResourceXliff();
         expect(x).toBeTruthy();
@@ -1136,6 +1136,10 @@ describe("testResourceXliff", () => {
         expect(reslist[0].getProject()).toBe("androidapp");
         expect(reslist[0].resType).toBe("string");
         expect(reslist[0].getId()).toBe("1");
+        expect(reslist[0].getLocation()).toStrictEqual({
+            line: 4,
+            char: 7
+        });
 
         expect(reslist[1].getSource()).toBe("baby baby");
         expect(reslist[1].getSourceLocale()).toBe("en-US");
@@ -1146,10 +1150,14 @@ describe("testResourceXliff", () => {
         expect(reslist[1].getProject()).toBe("webapp");
         expect(reslist[1].resType).toBe("string");
         expect(reslist[1].getId()).toBe("2");
+        expect(reslist[1].getLocation()).toStrictEqual({
+            line: 11,
+            char: 7
+        });
     });
 
     test("ResourceXliffParseWithSourceAndTarget", () => {
-        expect.assertions(21);
+        expect.assertions(23);
 
         const x = new ResourceXliff();
         expect(x).toBeTruthy();
@@ -1192,6 +1200,10 @@ describe("testResourceXliff", () => {
         expect(reslist[0].getId()).toBe("1");
         expect(reslist[0].getTarget()).toBe("foobarfoo");
         expect(reslist[0].getTargetLocale()).toBe("de-DE");
+        expect(reslist[0].getLocation()).toStrictEqual({
+            line: 4,
+            char: 7
+        });
 
         expect(reslist[1].getSource()).toBe("baby baby");
         expect(reslist[1].getSourceLocale()).toBe("en-US");
@@ -1202,6 +1214,10 @@ describe("testResourceXliff", () => {
         expect(reslist[1].getId()).toBe("2");
         expect(reslist[1].getTarget()).toBe("bebe bebe");
         expect(reslist[1].getTargetLocale()).toBe("fr-FR");
+        expect(reslist[1].getLocation()).toStrictEqual({
+            line: 12,
+            char: 7
+        });
     });
 
     test("ResourceXliffParseGetLines", () => {
@@ -1462,7 +1478,7 @@ describe("testResourceXliff", () => {
     });
 
     test("ResourceXliffParseWithPlurals", () => {
-        expect.assertions(10);
+        expect.assertions(11);
 
         const x = new ResourceXliff();
         expect(x).toBeTruthy();
@@ -1502,6 +1518,10 @@ describe("testResourceXliff", () => {
         expect(reslist[0].getProject()).toBe("androidapp");
         expect(reslist[0].resType).toBe("plural");
         expect(reslist[0].getId()).toBe("1");
+        expect(reslist[0].getLocation()).toStrictEqual({
+            line: 4,
+            char: 7
+        });
     });
 
     test("ResourceXliffParseWithPluralsTranslated", () => {
@@ -1557,7 +1577,7 @@ describe("testResourceXliff", () => {
     });
 
     test("ResourceXliffParseWithArrays", () => {
-        expect.assertions(10);
+        expect.assertions(11);
 
         const x = new ResourceXliff();
         expect(x).toBeTruthy();
@@ -1593,6 +1613,10 @@ describe("testResourceXliff", () => {
         expect(reslist[0].getProject()).toBe("androidapp");
         expect(reslist[0].resType).toBe("array");
         expect(!reslist[0].getTargetArray()).toBeTruthy();
+        expect(reslist[0].getLocation()).toStrictEqual({
+            line: 4,
+            char: 7
+        });
     });
 
     test("ResourceXliffParseWithArraysTranslated", () => {

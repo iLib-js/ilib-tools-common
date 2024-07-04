@@ -24,6 +24,8 @@ import ResourceString from './ResourceString.js';
 import ResourceArray from './ResourceArray.js';
 import ResourcePlural from './ResourcePlural.js';
 import TranslationSet from './TranslationSet.js';
+import Location from './Location.js';
+
 import { isEmpty } from './utils.js';
 
 const logger = log4js.getLogger("tools-common.ResourceXliff");
@@ -129,7 +131,8 @@ class ResourceXliff {
                     comment: res.comment,
                     resType: res.resType,
                     datatype: res.datatype,
-                    flavor: res.getFlavor ? res.getFlavor() : undefined
+                    flavor: res.getFlavor ? res.getFlavor() : undefined,
+                    location: res.getLocation()
                 });
                 units.push(tu);
                 break;
@@ -152,7 +155,8 @@ class ResourceXliff {
                     comment: res.comment,
                     resType: res.resType,
                     datatype: res.datatype,
-                    flavor: res.getFlavor ? res.getFlavor() : undefined
+                    flavor: res.getFlavor ? res.getFlavor() : undefined,
+                    location: res.getLocation()
                 });
 
                 for (let j = 0; j < sarr.length; j++) {
@@ -188,7 +192,8 @@ class ResourceXliff {
                     context: res.context,
                     resType: res.resType,
                     datatype: res.datatype,
-                    flavor: res.getFlavor ? res.getFlavor() : undefined
+                    flavor: res.getFlavor ? res.getFlavor() : undefined,
+                    location: res.getLocation()
                 });
 
                 const sp = res.getSource();
@@ -249,7 +254,7 @@ class ResourceXliff {
                 datatype: tu.datatype,
                 state: tu.state,
                 flavor: tu.flavor,
-                location: tu.location
+                location: new Location(tu.location)
             });
 
             if (tu.target) {
@@ -275,7 +280,7 @@ class ResourceXliff {
                 datatype: tu.datatype,
                 state: tu.state,
                 flavor: tu.flavor,
-                location: tu.location
+                location: new Location(tu.location)
             });
 
             if (tu.target) {
@@ -301,7 +306,7 @@ class ResourceXliff {
                 datatype: tu.datatype,
                 state: tu.state,
                 flavor: tu.flavor,
-                location: tu.location
+                location: new Location(tu.location)
             });
 
             if (tu.target) {
@@ -392,7 +397,6 @@ class ResourceXliff {
         if (this.ts.size() > 0) {
             // first convert the resources into translation units
             let resources = this.ts.getAll();
-            let tu;
 
             if (this.allowDups) {
                 // only look at the initial set of resources
