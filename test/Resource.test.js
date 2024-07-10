@@ -937,12 +937,11 @@ describe("testResource", () => {
 
         rs.setComment("asdf");
 
-        test.ok(rs.isDirty());
-        test.done();
-    },
+        expect(rs.isDirty()).toBeTruthy();
+    });
 
-    testResourceSetDNT: function(test) {
-        test.expect(3);
+    test("ResourceSetDNT", () => {
+        expect.assertions(3);
 
         const rs = new ResourceString({
             context: "a",
@@ -958,18 +957,17 @@ describe("testResource", () => {
             state: "new",
             comment: "comment"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.ok(!rs.getDNT());
+        expect(rs.getDNT()).toBeFalsy();
 
         rs.setDNT(true);
 
-        test.ok(rs.getDNT());
-        test.done();
-    },
+        expect(rs.getDNT()).toBeTruthy();
+    });
 
-    testResourceSetDNTIsDirty: function(test) {
-        test.expect(3);
+    test("ResourceSetDNTIsDirty", () => {
+        expect.assertions(3);
 
         const rs = new ResourceString({
             context: "a",
@@ -984,9 +982,9 @@ describe("testResource", () => {
             pathName: "a/b/c.md",
             state: "new"
         });
-        test.ok(rs);
+        expect(rs).toBeTruthy();
 
-        test.ok(!rs.isDirty())
+        expect(rs.isDirty()).toBeFalsy();
 
         rs.setDNT(true);
 
