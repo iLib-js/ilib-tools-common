@@ -21,6 +21,12 @@ limitations under the License.
 
 ## Release Notes
 
+### v1.11.0
+
+- added location information to the TranslationUnit and Resource constructors
+  plus a Location class to keep track of the location in the source file
+  where the resources come from.
+
 ### v1.10.0
 
 - now ships with commonjs code as well as modern ESM in the same package

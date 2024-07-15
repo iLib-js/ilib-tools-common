@@ -1,7 +1,7 @@
 /*
  * TranslationUnit.js - model a translation unit in a translation file
  *
- * Copyright © 2023 JEDLSoft
+ * Copyright © 2023-2024 JEDLSoft
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -53,7 +53,8 @@ class TranslationUnit {
      * <li><i>state</i> - the state of the current unit (optional)
      * <li><i>comment</i> - the translator's comment for this unit (optional)
      * <li><i>datatype</i> - the source of the data of this unit (optional)
-     * <li><i>flavor</i> - the flavor that this string comes from(optional)
+     * <li><i>flavor</i> - the flavor that this string comes from (optional)
+     * <li><i>location</i> - the location information where this string is encoded in the file
      * </ul>
      *
      * If the required properties are not given, the constructor throws an exception.<p>
@@ -88,7 +89,7 @@ class TranslationUnit {
                 throw new Error("Missing required parameters in the TranslationUnit constructor: " + missing.join(", "));
             }
 
-            const otherFields = ["key", "file", "project", "target", "targetLocale", "resType", "state", "comment", "datatype", "flavor"];
+            const otherFields = ["key", "file", "project", "target", "targetLocale", "resType", "state", "comment", "datatype", "flavor", "location"];
             for (var p of otherFields) {
                 this[p] = options[p];
             }

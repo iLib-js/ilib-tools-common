@@ -1086,7 +1086,7 @@ describe("testResourceXliff20", () => {
     });
 
     test("Xliff20ParseWithSourceOnly", () => {
-        expect.assertions(21);
+        expect.assertions(23);
 
         var x = new ResourceXliff();
         expect(x).toBeTruthy();
@@ -1126,6 +1126,10 @@ describe("testResourceXliff20", () => {
         expect(reslist[0].getProject()).toBe("androidapp");
         expect(reslist[0].resType).toBe("string");
         expect(reslist[0].getId()).toBe("1");
+        expect(reslist[0].getLocation()).toStrictEqual({
+            line: 4,
+            char: 5
+        });
 
         expect(reslist[1].getSource()).toBe("baby baby");
         expect(reslist[1].getSourceLocale()).toBe("en-US");
@@ -1136,10 +1140,14 @@ describe("testResourceXliff20", () => {
         expect(reslist[1].getProject()).toBe("webapp");
         expect(reslist[1].resType).toBe("string");
         expect(reslist[1].getId()).toBe("2");
+        expect(reslist[1].getLocation()).toStrictEqual({
+            line: 11,
+            char: 5
+        });
     });
 
     test("Xliff20ParseWithSourceAndTarget", () => {
-        expect.assertions(21);
+        expect.assertions(23);
 
         var x = new ResourceXliff();
         expect(x).toBeTruthy();
@@ -1182,6 +1190,10 @@ describe("testResourceXliff20", () => {
         expect(reslist[0].getId()).toBe("1");
         expect(reslist[0].getTarget()).toBe("foobarfoo");
         expect(reslist[0].getTargetLocale()).toBe("de-DE");
+        expect(reslist[0].getLocation()).toStrictEqual({
+            line: 3,
+            char: 5
+        });
 
         expect(reslist[1].getSource()).toBe("baby baby");
         expect(reslist[1].getSourceLocale()).toBe("en-US");
@@ -1192,6 +1204,10 @@ describe("testResourceXliff20", () => {
         expect(reslist[1].getId()).toBe("2");
         expect(reslist[1].getTarget()).toBe("bebe bebe");
         expect(reslist[1].getTargetLocale()).toBe("de-DE");
+        expect(reslist[1].getLocation()).toStrictEqual({
+            line: 11,
+            char: 5
+        });
     });
 
     test("Xliff20ParseGetLines", () => {
