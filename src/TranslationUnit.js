@@ -55,6 +55,7 @@ class TranslationUnit {
      * <li><i>datatype</i> - the source of the data of this unit (optional)
      * <li><i>flavor</i> - the flavor that this string comes from (optional)
      * <li><i>location</i> - the location information where this string is encoded in the file
+     * <li><i>translate</i> - flag that tells whether to translate this unit (optional)
      * </ul>
      *
      * If the required properties are not given, the constructor throws an exception.<p>
@@ -89,7 +90,7 @@ class TranslationUnit {
                 throw new Error("Missing required parameters in the TranslationUnit constructor: " + missing.join(", "));
             }
 
-            const otherFields = ["key", "file", "project", "target", "targetLocale", "resType", "state", "comment", "datatype", "flavor", "location"];
+            const otherFields = ["key", "file", "project", "target", "targetLocale", "resType", "state", "comment", "datatype", "flavor", "location", "translate"];
             for (var p of otherFields) {
                 this[p] = options[p];
             }

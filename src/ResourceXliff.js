@@ -132,6 +132,7 @@ class ResourceXliff {
                     resType: res.resType,
                     datatype: res.datatype,
                     flavor: res.getFlavor ? res.getFlavor() : undefined,
+                    translate: !res.getDNT(),
                     location: res.getLocation()
                 });
                 units.push(tu);
@@ -156,6 +157,7 @@ class ResourceXliff {
                     resType: res.resType,
                     datatype: res.datatype,
                     flavor: res.getFlavor ? res.getFlavor() : undefined,
+                    translate: !res.getDNT(),
                     location: res.getLocation()
                 });
 
@@ -193,7 +195,8 @@ class ResourceXliff {
                     resType: res.resType,
                     datatype: res.datatype,
                     flavor: res.getFlavor ? res.getFlavor() : undefined,
-                    location: res.getLocation()
+                    location: res.getLocation(),
+                    translate: !res.getDNT()
                 });
 
                 const sp = res.getSource();
@@ -313,6 +316,10 @@ class ResourceXliff {
                 res.addTargetPlural(tu.quantity, tu.target);
             }
             break;
+        }
+
+        if (typeof(tu.translate) === "boolean") {
+            res.setDNT(!tu.translate);
         }
 
         return res;

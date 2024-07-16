@@ -83,7 +83,7 @@ describe("testResource", () => {
         expect(rs.getId()).toBe(4);
         expect(rs.formatted).toBeTruthy();
         expect(rs.getComment()).toBe("c");
-        expect(rs.dnt).toBeTruthy();
+        expect(rs.getDNT()).toBeTruthy();
         expect(rs.getDataType()).toBe("d");
         expect(rs.localize).toBeTruthy();
         expect(rs.getFlavor()).toBe("e");
@@ -936,6 +936,57 @@ describe("testResource", () => {
         expect(rs.isDirty()).toBeFalsy();
 
         rs.setComment("asdf");
+
+        expect(rs.isDirty()).toBeTruthy();
+    });
+
+    test("ResourceSetDNT", () => {
+        expect.assertions(3);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            pathName: "a/b/c.md",
+            state: "new",
+            comment: "comment"
+        });
+        expect(rs).toBeTruthy();
+
+        expect(rs.getDNT()).toBeFalsy();
+
+        rs.setDNT(true);
+
+        expect(rs.getDNT()).toBeTruthy();
+    });
+
+    test("ResourceSetDNTIsDirty", () => {
+        expect.assertions(3);
+
+        const rs = new ResourceString({
+            context: "a",
+            datatype: "markdown",
+            dnt: false,
+            flavor: "asdf",
+            project: "foo",
+            reskey: "test.string",
+            resType: "string",
+            sourceLocale: "en-US",
+            targetLocale: "ja-JP",
+            pathName: "a/b/c.md",
+            state: "new"
+        });
+        expect(rs).toBeTruthy();
+
+        expect(rs.isDirty()).toBeFalsy();
+
+        rs.setDNT(true);
 
         expect(rs.isDirty()).toBeTruthy();
     });

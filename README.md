@@ -21,6 +21,11 @@ limitations under the License.
 
 ## Release Notes
 
+### v1.12.0
+
+- Added support for the dnt flag (do not translate) in Resources
+    - also for the "translate" flag of translation units
+
 ### v1.11.0
 
 - added location information to the TranslationUnit and Resource constructors
