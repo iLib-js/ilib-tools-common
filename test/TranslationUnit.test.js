@@ -78,7 +78,7 @@ describe("testTranslationUnit", () => {
     });
 
     test("TranslationUnitRightFields", () => {
-        expect.assertions(14);
+        expect.assertions(15);
 
         const tu = new TranslationUnit({
             source: "a",
