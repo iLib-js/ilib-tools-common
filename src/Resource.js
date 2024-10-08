@@ -305,10 +305,11 @@ class Resource {
      * @param {boolean} flag set the dnt flag to this value
      */
     setDNT(flag) {
-        if (typeof(flag) === 'boolean') {
-            this.dnt = flag;
-            this.dirty = true;
+        if (typeof(flag) !== 'boolean') {
+            throw new TypeError('value must be boolean');
         }
+        this.dnt = flag;
+        this.dirty = true;
     }
 
     /**
