@@ -78,7 +78,7 @@ describe("testTranslationUnit", () => {
     });
 
     test("TranslationUnitRightFields", () => {
-        expect.assertions(14);
+        expect.assertions(15);
 
         const tu = new TranslationUnit({
             source: "a",
@@ -93,6 +93,7 @@ describe("testTranslationUnit", () => {
             comment: "no comment",
             datatype: "javascript",
             flavor: "chocolate",
+            translate: true,
             location: {
                 offset: 23,
                 line: 3,
@@ -113,6 +114,7 @@ describe("testTranslationUnit", () => {
         expect(tu.comment).toBe("no comment");
         expect(tu.datatype).toBe("javascript");
         expect(tu.flavor).toBe("chocolate");
+        expect(tu.translate).toBeTruthy();
         expect(tu.location).toStrictEqual({
             offset: 23,
             line: 3,

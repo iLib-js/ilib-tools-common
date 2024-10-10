@@ -290,6 +290,29 @@ class Resource {
     }
 
     /**
+     * Get the "do not translate" flag for this resource.
+     *
+     * @returns {boolean} true means that the current resource should not
+     * be translated, and false means it will be translated.
+     */
+    getDNT() {
+        return typeof(this.dnt) === 'boolean' ? this.dnt : false;
+    }
+
+    /**
+     * Set the "do not translate" flag for this resource.
+     *
+     * @param {boolean} flag set the dnt flag to this value
+     */
+    setDNT(flag) {
+        if (typeof(flag) !== 'boolean') {
+            throw new TypeError('value must be boolean');
+        }
+        this.dnt = flag;
+        this.dirty = true;
+    }
+
+    /**
      * Return the database id if this resource has previously been saved in the
      * database.
      *
