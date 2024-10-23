@@ -2089,7 +2089,7 @@ describe("testResourceXliff", () => {
         expect(reslist[0].getProject()).toBe("webapp");
         expect(reslist[0].resType).toBe("string");
         expect(reslist[0].getId()).toBe("2");
-
+            // it should preserve whitespace between inline elements
         expect(reslist[0].getTarget()).toBe("This is segment 1. This is segment 2. This is segment 3.");
         expect(reslist[0].getTargetLocale()).toBe("fr-FR");
     });
@@ -2125,8 +2125,8 @@ describe("testResourceXliff", () => {
         expect(reslist[0].getProject()).toBe("webapp");
         expect(reslist[0].resType).toBe("string");
         expect(reslist[0].getId()).toBe("2");
-
-        expect(reslist[0].getTarget()).toBe("This is segment 1.This is segment 2.This is segment 3.");
+        // it should preserve whitespace between inline elements
+        expect(reslist[0].getTarget()).toBe("This is segment 1. This is segment 2. This is segment 3.");
         expect(reslist[0].getTargetLocale()).toBe("zh-Hans-CN");
     });
 
